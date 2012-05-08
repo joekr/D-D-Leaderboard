@@ -19,7 +19,7 @@ Template.characters.events = {
 };
 
 Template.character_list.characters = function () {
-  return CharacterList.find({}, {sort: {initiative: -1}});
+  return CharacterList.find({}, {sort: {initiative: -1,name:1}});
 };
 
 Template.character.events = {
@@ -45,7 +45,7 @@ var activeRecord = function(){
 $(document).keydown(function(evt) {
 if (evt.keyCode == 32) {
   // GROSS!!! but it works for now
-      var cur = CharacterList.find({}, {sort: {initiative: -1}});
+      var cur = CharacterList.find({}, {sort: {initiative: -1,name:1}});
       var nextShouldBeActive = false;
       var skip = false;
       var hasOneActive = hasActiveChar();
