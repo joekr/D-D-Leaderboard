@@ -4,22 +4,29 @@ Template.characters.events = {
 	'click #add-button': function () {
 		var newInitiative = $("#new-initiative");
 		var newChar = $("#new-character");
+		var newEnemy = $('#new-enemy');
 		console.debug(parseInt(newInitiative.val(), 10));
-		var obj = CharacterList.findOne({name:newChar.val()});
+		var obj = CharacterList.findOne({name: newChar.val()});
+		var isEnemy = newEnemy.is(':checked');
+		var initiativeVal = parseInt(newInitiative.val(), 10);
+		var name = newChar.val();
 		if (null == obj){
 			CharacterList.insert({
-				name: newChar.val(),
-				initiative: parseInt(newInitiative.val(), 10),
-				active: false
+				name: name,
+				initiative: initiativeVal,
+				active: false,
+				isEnemy: isEnemy
 			});
 			newChar.val("");
 			newInitiative.val("");
+			newEnemy.attr('checked', false);
 		} else {
 			CharacterList.update({
-				name:newChar.val()
+				name: name,
+				isEnemy: isEnemy
 			}, {
 				$set: {
-					initiative:parseInt(newInitiative.val(), 10)
+					initiative: initiativeVal
 				}
 			});
 		}
@@ -32,7 +39,7 @@ Template.character_list.characters = function () {
 		{
 			sort: {
 				initiative: -1,
-				name:1
+				name: 1
 			}
 		}
 	);
@@ -41,20 +48,22 @@ Template.character_list.characters = function () {
 Template.character.events = {
 	'click .delete': function() {
 		console.debug('delete' + this);
-		CharacterList.remove(this._id);
+		if (confirm("Are you sure you want to delete character " + this.name + "?")) {
+			CharacterList.remove(this._id);
+		}
 	},
-	'click .char_name': function(){
+	'click .char-name': function() {
 		console.debug('edit' + this.active);
 		$("#new-character").val(this.name);
 		$("#new-initiative").val(this.initiative);
 	}
 };
 
-var hasActiveChar = function(){
+var hasActiveChar = function() {
 	return (CharacterList.find({active: true}).count() > 0);
 }
 
-var activeRecord = function(){
+var activeRecord = function() {
 	return CharacterList.findOne({active: true});
 }
 

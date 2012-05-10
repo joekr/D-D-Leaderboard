@@ -1,60 +1,67 @@
 <head>
-  <title>dnd</title>
+	<title>dnd</title>
 </head>
 
 <body>
-  {{> characters}}
-  <div id="test"></div>
+	{{> characters}}
+	<div id="test"></div>
 </body>
 
 <template name="characters">
-  <div id="characters-view">
+	<div id="characters-view">
 		<div class="navbar">
-		  <div class="navbar-inner">
-    		<div id="new-character-box" class="container">
+			<div class="navbar-inner">
+				<div id="new-character-box" class="container">
 					<a class="brand" href="#">D&amp;D Leaderboard</a>
 					<div class="nav-collapse">
-						<form class="pull-right navbar-form">
+						<form class="pull-right navbar-form form-inline">
 							<label for="new-character">Name</label>
 							<input type="text" id="new-character" placeholder="New character">
 							<label for="new-initiative">Initiative</label>
-				      <input type="text" id="new-initiative" placeholder="Initiative">
-				      <input type="button" id="add-button" class="btn btn-primary" value="Add Character">
+							<input type="text" class="input-small" id="new-initiative" placeholder="Initiative">
+							<input type="checkbox" id="new-enemy">
+							<label for="new-enemy">Enemy?</label>
+							<input type="button" id="add-button" class="btn btn-primary" value="Add">
+							<input type="reset" id="reset-button" class="btn btn-mini btn-danger" value="Reset">
 						</form>
 					</div>
-		    </div>
+				</div>
 			</div>
 		</div>
-    {{> character_list}}  
-  </div>
+		<div class="container">
+			<div class="row-fluid">
+				{{> character_list}}
+			</div>
+		</div>
+	</div>
 </template>
 
 <template name="character_list">
-  <div class="span6">
-  <table id="character-table" class="table">
-    <thead>
-      <tr>
-        <th>Name</th>
-        <th>Initiative</th>
-      </tr>
-    </thead>
-    <tbody>
-      {{#each characters}}
-        {{> character}}
-      {{/each}}
-    </tbody>
-  </table>
-</div>
+	<div class="span6">
+		<table id="character-table" class="table table-striped">
+			<thead>
+				<tr>
+					<th scope="col">Name</th>
+					<th scope="col">Initiative</th>
+				</tr>
+			</thead>
+			<tbody>
+				{{#each characters}}
+				{{> character}}
+				{{/each}}
+			</tbody>
+		</table>
+	</div>
 </template>
 
-<template name="character">  
-    {{#if active}}
-    <tr id={{_id}} class="active">
-    {{else}}
-    <tr id={{_id}}>
-    {{/if}}
-  		<td class="char_name"><h1>{{name}}</h1></td>
-      <td class="char_initiative">{{initiative}}</td>
-      <td><input type="button" value="X" class="delete"/></td>
-    </tr>  
-</template>
+<template name="character">
+	{{#if active}}
+		<tr id={{_id}} class="active enemy-{{isEnemy}}">
+	{{else}}
+		<tr id={{_id}} class="enemy-{{isEnemy}}">
+	{{/if}}
+			<td class="char-name">{{name}}</td>
+			<td class="char-initiative">{{initiative}}</td>
+			<td><input type="button" value="X" class="delete btn btn-danger"></td>
+		</tr>  
+	</template>
