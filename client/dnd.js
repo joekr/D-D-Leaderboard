@@ -56,6 +56,7 @@ Template.character.events = {
 		console.debug('edit' + this.active);
 		$("#new-character").val(this.name);
 		$("#new-initiative").val(this.initiative);
+		$('#new-enemy').attr('checked', this.isEnemy);
 	}
 };
 
