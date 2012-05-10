@@ -19,3 +19,7 @@
 	width: 20%;
 	display: inline;
 }*/
+.navbar label {
+	color: white;
+	display: none;
+}

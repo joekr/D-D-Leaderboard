@@ -3,19 +3,28 @@
 </head>
 
 <body>
-  <div class="container">
-    {{> characters}}  
-  </div>
+  {{> characters}}
   <div id="test"></div>
 </body>
 
 <template name="characters">
   <div id="characters-view">
-    <div id="new-character-box">
-      <input type="text" id="new-character" placeholder="New character" />
-      <input type="text" id="new-Initiative" placeholder="Initiative" />
-      <input type="button" id="add_button" value="Add Character" />
-    </div>    
+		<div class="navbar">
+		  <div class="navbar-inner">
+    		<div id="new-character-box" class="container">
+					<a class="brand" href="#">D&amp;D Leaderboard</a>
+					<div class="nav-collapse">
+						<form class="pull-right navbar-form">
+							<label for="new-character">Name</label>
+							<input type="text" id="new-character" placeholder="New character">
+							<label for="new-initiative">Initiative</label>
+				      <input type="text" id="new-initiative" placeholder="Initiative">
+				      <input type="button" id="add-button" class="btn btn-primary" value="Add Character">
+						</form>
+					</div>
+		    </div>
+			</div>
+		</div>
     {{> character_list}}  
   </div>
 </template>
