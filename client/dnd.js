@@ -77,14 +77,25 @@ var activeRecord = function() {
 
 $(document).keydown(function(evt) {
 	if (evt.keyCode == 32) {
-		var tr = $('#character-table tr.active');
-		tr.removeClass('active');
-		CharacterList.update({_id: tr.attr('id')}, {$set: {active: false}});
-		var nextTr = tr.next();
-		if (nextTr.length < 1) {
-			nextTr = tr.parent().children('tr:first-child');
+		var setActiveTr = function(tr) {
+			tr.addClass('active');
+			CharacterList.update({_id: tr.attr('id')}, {$set: {active: true}});
+		};
+		var tr = $('#character-table tbody tr.active');
+		if (tr.length < 1) {
+			// No current active character, start with the first in the table,
+			// i.e., the one with highest initiative
+			setActiveTr($('#character-table tbody tr:first-child'));
+		} else {
+			// Move to next character in the table, i.e., the one with the
+			// next highest initiative
+			tr.removeClass('active');
+			CharacterList.update({_id: tr.attr('id')}, {$set: {active: false}});
+			var nextTr = tr.next();
+			if (nextTr.length < 1) {
+				nextTr = tr.parent().children('tr:first-child');
+			}
+			setActiveTr(nextTr);
 		}
-		nextTr.addClass('active');
-		CharacterList.update({_id: nextTr.attr('id')}, {$set: {active: true}});
 	}
 });
