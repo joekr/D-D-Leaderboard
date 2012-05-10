@@ -1,12 +1,12 @@
 CharacterList = new Meteor.Collection("characters");
 
 Template.characters.events = {
-	'click #add-button': function () {
+	'click #add-button': function() {
 		var newInitiative = $("#new-initiative");
 		var newChar = $("#new-character");
 		var newEnemy = $('#new-enemy');
-		console.debug(parseInt(newInitiative.val(), 10));
-		var obj = CharacterList.findOne({name: newChar.val()});
+		var id = $('#character-id').val();
+		var obj = CharacterList.findOne({_id: id});
 		var isEnemy = newEnemy.is(':checked');
 		var initiativeVal = parseInt(newInitiative.val(), 10);
 		var name = newChar.val();
@@ -17,19 +17,24 @@ Template.characters.events = {
 				active: false,
 				isEnemy: isEnemy
 			});
-			newChar.val("");
-			newInitiative.val("");
-			newEnemy.attr('checked', false);
 		} else {
+			console.debug("Updating ID " + id);
 			CharacterList.update({
-				name: name,
-				isEnemy: isEnemy
+				_id: id
 			}, {
 				$set: {
-					initiative: initiativeVal
+					initiative: initiativeVal,
+					isEnemy: isEnemy,
+					name: name
 				}
 			});
-		}
+		}	
+		$('#reset-button').click();
+	},
+	'click #reset-button': function() {
+		$('#new-enemy').attr('checked', false);
+		$('#add-button').val('Add');
+		$('#character-id').val('');
 	}
 };
 
@@ -57,6 +62,8 @@ Template.character.events = {
 		$("#new-character").val(this.name);
 		$("#new-initiative").val(this.initiative);
 		$('#new-enemy').attr('checked', this.isEnemy);
+		$('#character-id').val(this._id);
+		$('#add-button').val('Edit');
 	}
 };
 

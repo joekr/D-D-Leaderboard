@@ -18,6 +18,7 @@
 }
 .table tr.enemy-true td {
 	color: #802420;
+	font-style: italic;
 }
 .table tr.active.enemy-true td,
 .table tr.active,
