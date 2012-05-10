@@ -77,33 +77,14 @@ var activeRecord = function() {
 
 $(document).keydown(function(evt) {
 	if (evt.keyCode == 32) {
-		// GROSS!!! but it works for now
-		var cur = CharacterList.find(
-			{},
-			{
-				sort: {
-					initiative: -1,
-					name: 1
-				}
-			}
-		);
-		var nextShouldBeActive = false;
-		var skip = false;
-		var hasOneActive = hasActiveChar();
-		var activeChar = activeRecord();
-		cur.forEach(function(c) {        
-			console.debug(JSON.stringify(c) + " - ");
-			if (nextShouldBeActive || !hasOneActive){
-				CharacterList.update(c, {$set: {active: true}});
-				skip = true;
-				hasOneActive = true;
-				nextShouldBeActive = false;
-			}
-			if (undefined != c && undefined != activeChar && c._id == activeChar._id){
-				CharacterList.update(c, {$set: {active: false}});
-				nextShouldBeActive = true;
-			}    
-			skip = false;              
-		});
+		var tr = $('#character-table tr.active');
+		tr.removeClass('active');
+		CharacterList.update({_id: tr.attr('id')}, {$set: {active: false}});
+		var nextTr = tr.next();
+		if (nextTr.length < 1) {
+			nextTr = tr.parent().children('tr:first-child');
+		}
+		nextTr.addClass('active');
+		CharacterList.update({_id: nextTr.attr('id')}, {$set: {active: true}});
 	}
 });

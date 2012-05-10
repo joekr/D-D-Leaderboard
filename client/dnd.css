@@ -16,16 +16,20 @@
 	font-size: 3em;
 	line-height: 1;
 }
-.table tr.enemy-true td {
-	color: #802420;
+.table tr.enemy-true td,
+.table-striped tbody tr.active.enemy-true:nth-child(odd) td {
+	color: #FF4D4D;
 	font-style: italic;
+}
+.table tr.active,
+.table-striped tbody tr.active:nth-child(odd) td {
 }
 .table tr.active.enemy-true td,
 .table tr.active,
 .table-striped tbody tr.active:nth-child(odd) td,
 .table-striped tbody tr.active.enemy-true:nth-child(odd) td,
 .table-striped tbody tr.active.enemy-true:nth-child(odd):hover td {
-	background-color: #FFE065;
+	background-color: #FFE300;
 }
 .table-striped tbody tr.enemy-true:nth-child(odd) td {
 	background-color: #FFEEEE;
