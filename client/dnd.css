@@ -2,15 +2,31 @@
 	color: white;
 	display: none;
 }
+.navbar input[type=checkbox] {
+	margin-top: 0.5em;
+}
 .navbar input[type=checkbox] + label {
 	display: inline-block;
+	vertical-align: bottom;
 }
 .navbar input[type=text],
 .navbar input[type=checkbox] + label {
 	margin-right: 9px;
 }
+.table td,
+.table th {
+	text-align: center;
+}
 .table td {
 	line-height: 3;
+}
+.table td.char-initiative {
+	font-size: 1.5em;
+	line-height: 2.25;
+}
+.table td.char-name,
+.table th.char-name {
+	text-align: left;
 }
 .table td.char-name {
 	font-size: 3em;
@@ -27,9 +43,13 @@
 .table tr.active.enemy-true td,
 .table tr.active,
 .table-striped tbody tr.active:nth-child(odd) td,
-.table-striped tbody tr.active.enemy-true:nth-child(odd) td,
-.table-striped tbody tr.active.enemy-true:nth-child(odd):hover td {
+.table-striped tbody tr.active.enemy-true:nth-child(odd) td {
 	background-color: #FFE300;
+}
+.table tr.active:hover,
+.table tr.active:hover td,
+.table-striped tbody tr.active.enemy-true:nth-child(odd):hover td {
+	background-color: #FFD700;
 }
 .table-striped tbody tr.enemy-true:nth-child(odd) td {
 	background-color: #FFEEEE;

@@ -75,11 +75,23 @@ var activeRecord = function() {
 	return CharacterList.findOne({active: true});
 }
 
+var playCharacterName = function(charName) {
+	console.debug("Going to play character audio " + charName);
+	var audio = $('#char-name-audio');
+	if ('xavia' == charName) {
+		audio.attr('src', '/xavia.mp3');
+		console.log(audio);
+		audio.get(0).play();
+	}
+}
+
 $(document).keydown(function(evt) {
 	if (evt.keyCode == 32) {
 		var setActiveTr = function(tr) {
 			tr.addClass('active');
 			CharacterList.update({_id: tr.attr('id')}, {$set: {active: true}});
+			var activeCharName = $('.char-name', tr).text().toLowerCase();
+			playCharacterName(activeCharName);
 		};
 		var tr = $('#character-table tbody tr.active');
 		if (tr.length < 1) {

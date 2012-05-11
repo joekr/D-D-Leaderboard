@@ -5,6 +5,7 @@
 <body>
 	{{> characters}}
 	<div id="test"></div>
+	<audio id="char-name-audio" style="display: none;"></audio>
 </body>
 
 <template name="characters">
@@ -42,8 +43,8 @@
 		<table id="character-table" class="table table-striped">
 			<thead>
 				<tr>
-					<th scope="col">Character</th>
-					<th scope="col">Initiative</th>
+					<th scope="col" class="char-name">Character</th>
+					<th scope="col" class="char-initiative">Initiative</th>
 				</tr>
 			</thead>
 			<tbody>
