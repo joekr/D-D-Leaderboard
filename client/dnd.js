@@ -3,13 +3,18 @@ CharacterList = new Meteor.Collection("characters");
 var playCharacterName = function(charName) {
 	//console.debug("Going to play character audio " + charName);
 	var audio = $('#char-name-audio');
+	var audioPlayer = audio.get(0);
+	if (typeof audio.attr('src') != 'undefined') {
+		audioPlayer.pause();
+		audioPlayer.currentTime = 0;
+	}
 	var audibleNames = ['xavia', 'thar'];
 	var mp3Path = '/' + charName + '.mp3';
 	var m4aPath = '/' + charName + '.m4a';
 	if ($.inArray(charName, audibleNames) > -1) {
 		audio.attr('src', mp3Path);
 		//console.debug(audio);
-		audio.get(0).play();
+		audioPlayer.play();
 	}
 };
 
