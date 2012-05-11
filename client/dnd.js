@@ -1,5 +1,43 @@
 CharacterList = new Meteor.Collection("characters");
 
+var playCharacterName = function(charName) {
+	//console.debug("Going to play character audio " + charName);
+	var audio = $('#char-name-audio');
+	var audibleNames = ['xavia', 'thar'];
+	var mp3Path = '/' + charName + '.mp3';
+	var m4aPath = '/' + charName + '.m4a';
+	if ($.inArray(charName, audibleNames) > -1) {
+		audio.attr('src', mp3Path);
+		//console.debug(audio);
+		audio.get(0).play();
+	}
+};
+
+var nextCharacter = function() {
+	var setActiveTr = function(tr) {
+		tr.addClass('active');
+		CharacterList.update({_id: tr.attr('id')}, {$set: {active: true}});
+		var activeCharName = $('.char-name', tr).text().toLowerCase();
+		playCharacterName(activeCharName);
+	};
+	var tr = $('#character-table tbody tr.active');
+	if (tr.length < 1) {
+		// No current active character, start with the first in the table,
+		// i.e., the one with highest initiative
+		setActiveTr($('#character-table tbody tr:first-child'));
+	} else {
+		// Move to next character in the table, i.e., the one with the
+		// next highest initiative
+		tr.removeClass('active');
+		CharacterList.update({_id: tr.attr('id')}, {$set: {active: false}});
+		var nextTr = tr.next();
+		if (nextTr.length < 1) {
+			nextTr = tr.parent().children('tr:first-child');
+		}
+		setActiveTr(nextTr);
+	}
+};
+
 Template.characters.events = {
 	'click #add-button': function() {
 		var newInitiative = $("#new-initiative");
@@ -35,6 +73,10 @@ Template.characters.events = {
 		$('#new-enemy').attr('checked', false);
 		$('#add-button').val('Add');
 		$('#character-id').val('');
+	},
+	'click #next-character-link': function() {
+		nextCharacter();
+		return false;
 	}
 };
 
@@ -69,45 +111,14 @@ Template.character.events = {
 
 var hasActiveChar = function() {
 	return (CharacterList.find({active: true}).count() > 0);
-}
+};
 
 var activeRecord = function() {
 	return CharacterList.findOne({active: true});
-}
-
-var playCharacterName = function(charName) {
-	console.debug("Going to play character audio " + charName);
-	var audio = $('#char-name-audio');
-	if ('xavia' == charName) {
-		audio.attr('src', '/xavia.mp3');
-		console.log(audio);
-		audio.get(0).play();
-	}
-}
+};
 
 $(document).keydown(function(evt) {
 	if (evt.keyCode == 32) {
-		var setActiveTr = function(tr) {
-			tr.addClass('active');
-			CharacterList.update({_id: tr.attr('id')}, {$set: {active: true}});
-			var activeCharName = $('.char-name', tr).text().toLowerCase();
-			playCharacterName(activeCharName);
-		};
-		var tr = $('#character-table tbody tr.active');
-		if (tr.length < 1) {
-			// No current active character, start with the first in the table,
-			// i.e., the one with highest initiative
-			setActiveTr($('#character-table tbody tr:first-child'));
-		} else {
-			// Move to next character in the table, i.e., the one with the
-			// next highest initiative
-			tr.removeClass('active');
-			CharacterList.update({_id: tr.attr('id')}, {$set: {active: false}});
-			var nextTr = tr.next();
-			if (nextTr.length < 1) {
-				nextTr = tr.parent().children('tr:first-child');
-			}
-			setActiveTr(nextTr);
-		}
+		nextCharacter();
 	}
 });
