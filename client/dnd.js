@@ -8,12 +8,17 @@ var playCharacterName = function(charName) {
 		audioPlayer.pause();
 		audioPlayer.currentTime = 0;
 	}
-	var audibleNames = ['xavia', 'thar'];
+	var audibleNames = ['xavia', 'thar', 'dragon'];
 	var mp3Path = '/' + charName + '.mp3';
-	var m4aPath = '/' + charName + '.m4a';
+	//var m4aPath = '/' + charName + '.m4a';
 	if ($.inArray(charName, audibleNames) > -1) {
 		audio.attr('src', mp3Path);
 		//console.debug(audio);
+		audioPlayer.play();
+	} else if ('enemy' == charName ||
+			'enemies' == charName ||
+			'baddies' == charName) {
+		audio.attr('src', '/dragon.mp3');
 		audioPlayer.play();
 	}
 };
