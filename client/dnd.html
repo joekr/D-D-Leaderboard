@@ -14,6 +14,11 @@
     <div id="new-character-box">
       <input type="text" id="new-character" placeholder="New character" />
       <input type="text" id="new-Initiative" placeholder="Initiative" />
+      <input type="text" id="char-ac" placeholder="AC" />
+      <input type="text" id="char-fort" placeholder="Fort" />
+      <input type="text" id="char-ref" placeholder="Ref" />
+      <input type="text" id="char-will" placeholder="Will" />
+      <input type="text" id="char-dmg" placeholder="Default Damage" />
       <input type="button" id="add_button" value="Add Character" />
     </div>    
     {{> character_list}}  
@@ -26,6 +31,8 @@
     <thead>
       <tr>
         <th>Name</th>
+        <th>Defenses</th>
+        <th>Default Dmg<th>
         <th>Initiative</th>
       </tr>
     </thead>
@@ -45,7 +52,16 @@
     <tr id={{_id}}>
     {{/if}}
   		<td class="char_name"><h1>{{name}}</h1></td>
-      <td class="char_initiative">{{initiative}}</td>
+      <td class="char_defenses">
+        <h2>AC: {{char_ac}}
+          F: {{char_fort}}
+          <br>
+          R: {{char_ref}}
+          W: {{char_will}}
+        </h2>
+      </td>
+      <td class="char_damage"><h1>{{damage}}</h1></td>
+      <td class="char_initiative">{{initiative}}</td>      
       <td><input type="button" value="X" class="delete"/></td>
     </tr>  
 </template>

@@ -13,7 +13,14 @@ Template.characters.events = {
       $("#new-character").val("");
       $("#new-Initiative").val("");
     }else{
-      CharacterList.update({name:$("#new-character").val()},{$set: {initiative:parseInt($("#new-Initiative").val())}});
+      CharacterList.update({name:$("#new-character").val()},
+        {$set: {initiative:parseInt($("#new-Initiative").val()),
+        char_ac:parseInt($("#char-ac").val()),
+        char_fort:parseInt($("#char-fort").val()),
+        char_ref:parseInt($("#char-ref").val()),
+        char_will:parseInt($("#char-will").val()),
+        damage:parseInt($("#char-dmg").val()),
+      }});
     }
   }
 };
@@ -31,6 +38,11 @@ Template.character.events = {
     console.debug('edit'+this.active);
     $("#new-character").val(this.name);
     $("#new-Initiative").val(this.initiative);
+    $("#char-ac").val(this.char_ac);
+    $("#char-fort").val(this.char_fort);
+    $("#char-ref").val(this.char_ref);
+    $("#char-will").val(this.char_will); 
+    $("#char-dmg").val(this.damage);    
   }
 };
 
