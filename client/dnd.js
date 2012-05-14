@@ -20,7 +20,10 @@ var playCharacterName = function(charName) {
 			'baddies' == charName) {
 		audio.attr('src', '/dragon.mp3');
 		audioPlayer.play();
-	}
+	}else{
+    audio.attr('src', '/next_character.mp3');
+    audioPlayer.play();
+  }
 };
 
 var nextCharacter = function() {
