@@ -1,8 +1,0 @@
-Install Meteor
-$ curl install.meteor.com | /bin/sh
-
-$ cd <dir>
-$ meteor
-
-
-TODO: Add conditions

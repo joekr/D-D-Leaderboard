@@ -1,57 +1,82 @@
 <head>
-  <title>dnd</title>
+	<title>dnd</title>
 </head>
 
 <body>
-  <div class="container">
-    {{> characters}}  
-  </div>
-  <div id="test"></div>
+	{{> characters}}
+	<div id="test"></div>
+	<audio id="char-name-audio" style="display: none;"></audio>
 </body>
 
 <template name="characters">
-  <div id="characters-view">
-    <div id="new-character-box">
-      <input type="text" id="new-character" placeholder="New character" />
-      <input type="text" id="new-Initiative" placeholder="Initiative" />
-      <input type="text" id="char-ac" placeholder="AC" />
-      <input type="text" id="char-fort" placeholder="Fort" />
-      <input type="text" id="char-ref" placeholder="Ref" />
-      <input type="text" id="char-will" placeholder="Will" />
-      <input type="text" id="char-dmg" placeholder="Default Damage" />
-      <input type="button" id="add_button" value="Add Character" />
-    </div>    
-    {{> character_list}}  
-  </div>
+	<div id="characters-view">
+		<div class="navbar">
+			<div class="navbar-inner">
+				<div id="new-character-box" class="container">
+					<a class="brand" href="#">D&amp;D Leaderboard</a>
+					<div class="nav-collapse">
+						<ul class="nav">
+							<li><a href="#" id="next-character-link">Next Character</a></li>
+						</ul>
+						<form class="pull-right navbar-form form-inline">
+							<input type="hidden" id="character-id" value="">
+							<label for="new-character">Name</label>
+							<input type="text" id="new-character" placeholder="New character">
+							<label for="new-initiative">Initiative</label>
+							<input type="text" class="input-small" id="new-initiative" placeholder="Initiative">
+              <input type="text" id="char-ac" placeholder="AC" />
+              <input type="text" id="char-fort" placeholder="Fort" />
+              <input type="text" id="char-ref" placeholder="Ref" />
+              <input type="text" id="char-will" placeholder="Will" />
+              <input type="text" id="char-dmg" placeholder="Default Damage" />
+							<input type="checkbox" id="new-enemy">
+							<label for="new-enemy">Enemy?</label>
+							<input type="button" id="add-button" class="btn btn-primary" value="Add">
+							<input type="reset" id="reset-button" class="btn btn-mini btn-danger" value="Reset">
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="container">
+			<div class="row-fluid">
+				{{> character_list}}
+			</div>
+		</div>
+	</div>
 </template>
 
 <template name="character_list">
-  <div class="span6">
-  <table id="character-table" class="table">
-    <thead>
-      <tr>
-        <th>Name</th>
-        <th>Defenses</th>
-        <th>Default Dmg<th>
-        <th>Initiative</th>
-      </tr>
-    </thead>
-    <tbody>
-      {{#each characters}}
-        {{> character}}
-      {{/each}}
-    </tbody>
-  </table>
-</div>
+	<div class="span6">
+		<table id="character-table" class="table table-striped">
+			<thead>
+				<tr>
+					<th scope="col" class="char-name">Character</th>
+					<th scope="col" class="char-initiative">Initiative</th>
+          <tr>
+            <th>Name</th>
+            <th>Defenses</th>
+            <th>Default Dmg<th>
+            <th>Initiative</th>
+          </tr>
+				</tr>
+			</thead>
+			<tbody>
+				{{#each characters}}
+				{{> character}}
+				{{/each}}
+			</tbody>
+		</table>
+	</div>
 </template>
 
-<template name="character">  
-    {{#if active}}
-    <tr id={{_id}} class="active">
-    {{else}}
-    <tr id={{_id}}>
-    {{/if}}
-  		<td class="char_name"><h1>{{name}}</h1></td>
+<template name="character">
+	{{#if active}}
+		<tr id={{_id}} class="active enemy-{{isEnemy}}">
+	{{else}}
+		<tr id={{_id}} class="enemy-{{isEnemy}}">
+	{{/if}}
+			<td class="char-name">{{name}}</td>			
       <td class="char_defenses">
         <h2>AC: {{char_ac}}
           F: {{char_fort}}
@@ -61,7 +86,7 @@
         </h2>
       </td>
       <td class="char_damage"><h1>{{damage}}</h1></td>
-      <td class="char_initiative">{{initiative}}</td>      
-      <td><input type="button" value="X" class="delete"/></td>
-    </tr>  
-</template>
+      <td class="char-initiative">{{initiative}}</td>
+			<td><input type="button" value="X" class="delete btn btn-danger"></td>
+		</tr>  
+	</template>

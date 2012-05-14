@@ -1,21 +1,59 @@
-/* CSS declarations go here */
-.active{
-	background-color:yellow;
+.navbar label {
+	color: white;
+	display: none;
 }
-/*ul.char_list{
-	list-style-type:none;
+.navbar input[type=checkbox] {
+	margin-top: 0.5em;
 }
-
-.char_name{
-	position: relative;
-	float: left;
-	width: 20%;
-	display: inline;
+.navbar input[type=checkbox] + label {
+	display: inline-block;
+	vertical-align: bottom;
 }
-
-.char_initiative{
-	position: relative;
-	float: left;
-	width: 20%;
-	display: inline;
-}*/
+.navbar input[type=text],
+.navbar input[type=checkbox] + label {
+	margin-right: 9px;
+}
+.table td,
+.table th {
+	text-align: center;
+}
+.table td {
+	line-height: 3;
+}
+.table td.char-initiative {
+	font-size: 1.5em;
+	line-height: 2.25;
+}
+.table td.char-name,
+.table th.char-name {
+	text-align: left;
+}
+.table td.char-name {
+	font-size: 3em;
+	line-height: 1;
+}
+.table tr.enemy-true td,
+.table-striped tbody tr.active.enemy-true:nth-child(odd) td {
+	color: #FF4D4D;
+	font-style: italic;
+}
+.table tr.active,
+.table-striped tbody tr.active:nth-child(odd) td {
+}
+.table tr.active.enemy-true td,
+.table tr.active,
+.table-striped tbody tr.active:nth-child(odd) td,
+.table-striped tbody tr.active.enemy-true:nth-child(odd) td {
+	background-color: #FFE300;
+}
+.table tr.active:hover,
+.table tr.active:hover td,
+.table-striped tbody tr.active.enemy-true:nth-child(odd):hover td {
+	background-color: #FFD700;
+}
+.table-striped tbody tr.enemy-true:nth-child(odd) td {
+	background-color: #FFEEEE;
+}
+.table-striped tbody tr.enemy-true:nth-child(odd):hover td {
+	background-color: #FFE4E4;
+}
