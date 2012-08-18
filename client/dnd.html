@@ -4,6 +4,8 @@
 
 <body>
 	{{> characters}}
+	<h2>not playing</h2>
+	{{> out-game-character}}
 	<div id="test"></div>
 	<audio id="char-name-audio" style="display: none;"></audio>
 </body>
@@ -31,6 +33,8 @@
               <input type="text" id="char-dmg" placeholder="Default Damage" />
 							<input type="checkbox" id="new-enemy">
 							<label for="new-enemy">Enemy?</label>
+							<input type="checkbox" id="in-game">
+							<label for="in-game">In Game?</label>
 							<input type="button" id="add-button" class="btn btn-primary" value="Add">
 							<input type="reset" id="reset-button" class="btn btn-mini btn-danger" value="Reset">
 						</form>
@@ -76,7 +80,11 @@
 	{{else}}
 		<tr id={{_id}} class="enemy-{{isEnemy}}">
 	{{/if}}
-			<td class="char-name">{{name}}</td>			
+			<td class="char-name">{{name}}</td>
+	 {{#if isEnemy}}
+	 <td></td>
+	 <td></td>
+	 {{else}}
       <td class="char_defenses">
         <h2>AC: {{char_ac}}
           F: {{char_fort}}
@@ -86,7 +94,44 @@
         </h2>
       </td>
       <td class="char_damage"><h1>{{damage}}</h1></td>
+      {{/if}}
       <td class="char-initiative">{{initiative}}</td>
 			<td><input type="button" value="X" class="delete btn btn-danger"></td>
 		</tr>  
 	</template>
+
+<template name="out-game-character">	
+	<div class="container">
+		<div class="row-fluid">
+			{{> out_game_character_list}}
+		</div>
+	</div>
+</template>
+
+<template name="out_game_character_list">
+	<div class="span6">
+		<table id="out-game-character-table" class="table table-striped">
+			<tbody>
+				{{#each characters}}
+				{{> out-character}}
+				{{/each}}
+			</tbody>
+		</table>
+	</div>
+</template>
+
+<template name="out-character">
+	{{#if active}}
+		<tr id={{_id}} class="active enemy-{{isEnemy}}">
+	{{else}}
+		<tr id={{_id}} class="enemy-{{isEnemy}}">
+	{{/if}}
+			<td class="char-name">{{name}}</td>
+			<td></td>
+	 		<td></td>     
+	 		<td></td>
+	 		<td></td>
+			<td><input type="button" value="X" class="delete btn btn-danger"></td>
+		</tr>  
+</template>
+

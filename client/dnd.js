@@ -56,9 +56,11 @@ Template.characters.events = {
 		var newInitiative = $("#new-initiative");
 		var newChar = $("#new-character");
 		var newEnemy = $('#new-enemy');
+		var inGame = $('#in-game');
 		var id = $('#character-id').val();
 		var obj = CharacterList.findOne({_id: id});
 		var isEnemy = newEnemy.is(':checked');
+		var isInGame = inGame.is(':checked');
 		var initiativeVal = parseInt(newInitiative.val(), 10);
 		var name = newChar.val();
     var charAc = parseInt($("#char-ac").val());
@@ -72,9 +74,10 @@ Template.characters.events = {
 				initiative: initiativeVal,
 				active: false,
 				isEnemy: isEnemy
+				//TODO: need to build out object on new
 			});
 		} else {
-			console.debug("Updating ID " + id);
+			console.debug("Updating ID " + id + " " +isInGame);
 			CharacterList.update({
 				_id: id
 			}, {
@@ -86,7 +89,8 @@ Template.characters.events = {
           char_fort: charFort,
           char_ref: charRef,
           char_will: charWill,
-          damage: damage
+          damage: damage,
+          char_in_game: isInGame
 				}
 			});
 		}	
@@ -94,6 +98,7 @@ Template.characters.events = {
 	},
 	'click #reset-button': function() {
 		$('#new-enemy').attr('checked', false);
+		$('#in-game').attr('checked', false);
 		$('#add-button').val('Add');
 		$('#character-id').val('');
 	},
@@ -105,7 +110,7 @@ Template.characters.events = {
 
 Template.character_list.characters = function () {
 	return CharacterList.find(
-		{},
+		{char_in_game: true},
 		{
 			sort: {
 				initiative: -1,
@@ -132,9 +137,22 @@ Template.character.events = {
     $("#char-will").val(this.char_will); 
     $("#char-dmg").val(this.damage);    
 		$('#new-enemy').attr('checked', this.isEnemy);
+		$('#in-game').attr('checked', this.char_in_game);
 		$('#character-id').val(this._id);
 		$('#add-button').val('Edit');
 	}
+};
+
+Template.out_game_character_list.characters = function () {
+	return CharacterList.find(
+		{char_in_game: false},
+		{
+			sort: {
+				initiative: -1,
+				name: 1
+			}
+		}
+	);
 };
 
 var hasActiveChar = function() {
@@ -146,7 +164,8 @@ var activeRecord = function() {
 };
 
 $(document).keydown(function(evt) {
-	if (evt.keyCode == 32) {
+	if (evt.keyCode == 32) {	
+		evt.preventDefault();	
 		nextCharacter();
 	}
 });
