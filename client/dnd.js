@@ -155,6 +155,29 @@ Template.out_game_character_list.characters = function () {
 	);
 };
 
+Template.out_game_character_list.events = {
+	'click .delete': function() {
+		console.debug('delete' + this);
+		if (confirm("Are you sure you want to delete character " + this.name + "?")) {
+			CharacterList.remove(this._id);
+		}
+	},
+	'click .char-name': function() {
+		console.debug('edit' + this.active);
+		$("#new-character").val(this.name);
+		$("#new-initiative").val(this.initiative);
+    $("#char-ac").val(this.char_ac);
+    $("#char-fort").val(this.char_fort);
+    $("#char-ref").val(this.char_ref);
+    $("#char-will").val(this.char_will); 
+    $("#char-dmg").val(this.damage);    
+		$('#new-enemy').attr('checked', this.isEnemy);
+		$('#in-game').attr('checked', this.char_in_game);
+		$('#character-id').val(this._id);
+		$('#add-button').val('Edit');
+	}
+};
+
 var hasActiveChar = function() {
 	return (CharacterList.find({active: true}).count() > 0);
 };
