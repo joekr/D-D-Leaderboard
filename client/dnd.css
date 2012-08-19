@@ -9,7 +9,11 @@
 	display: inline-block;
 	vertical-align: bottom;
 }
+.navbar input[type=number] {
+	width: 4em;
+}
 .navbar input[type=text],
+.navbar input[type=number],
 .navbar input[type=checkbox] + label {
 	margin-right: 9px;
 }

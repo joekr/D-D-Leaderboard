@@ -25,12 +25,17 @@
 							<label for="new-character">Name</label>
 							<input type="text" id="new-character" placeholder="New character">
 							<label for="new-initiative">Initiative</label>
-							<input type="text" class="input-small" id="new-initiative" placeholder="Initiative">
-              <input type="text" id="char-ac" placeholder="AC" />
-              <input type="text" id="char-fort" placeholder="Fort" />
-              <input type="text" id="char-ref" placeholder="Ref" />
-              <input type="text" id="char-will" placeholder="Will" />
-              <input type="text" id="char-dmg" placeholder="Default Damage" />
+							<input type="number" class="integer" id="new-initiative" placeholder="Init">
+							<label for="char-ac">Armor class</label>
+              <input type="number" id="char-ac" placeholder="AC" class="integer">
+							<label for="char-fort">Fortitude</label>
+              <input type="number" id="char-fort" placeholder="Fort" class="integer">
+							<label for="char-ref">Reflex</label>
+              <input type="number" id="char-ref" placeholder="Ref" class="integer">
+							<label for="char-will">Willpower</label>
+              <input type="number" id="char-will" placeholder="Will" class="integer">
+							<label for="char-dmg">Default damage</label>
+              <input type="number" id="char-dmg" placeholder="~Dmg">
 							<input type="checkbox" id="new-enemy">
 							<label for="new-enemy">Enemy?</label>
 							<input type="checkbox" id="in-game">
