@@ -29,6 +29,20 @@
 .navbar .form-actions {
 	display: inline-block;
 }
+.navbar .control-group.error .checkbox,
+.navbar .control-group.error .radio,
+.navbar .control-group.error input,
+.navbar .control-group.error select,
+.navbar .control-group.error textarea {
+	background-color: #FFDDD7;
+}
+.navbar fieldset {
+	display: inline-block;
+	border-left: 1px solid rgb(90,90,90);
+	border-right: 1px solid rgb(90,90,90);
+	padding: 0 0 0 9px;
+	margin: 0 7px 0 0;
+}
 .navbar .form-actions {
 	padding: 0;
 	margin: 0;
@@ -38,6 +52,12 @@
 .navbar label {
 	color: white;
 	display: none;
+}
+.navbar label:after {
+	content: ": ";
+}
+.navbar label[for=new-initiative] {
+	display: inline;
 }
 .navbar input[type=checkbox] {
 }

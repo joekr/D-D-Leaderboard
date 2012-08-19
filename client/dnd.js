@@ -125,6 +125,8 @@ Template.navbar.events = {
 		$('#in-game').attr('checked', true);
 		$('#add-button').val('Add');
 		$('#character-id').val('');
+		console.log($('.navbar .control-group.error'));
+		$('.navbar .control-group.error').removeClass('error');
 	},
 	'click #next-character-link': function() {
 		nextCharacter();
@@ -163,6 +165,16 @@ Template.character.events = {
 		$('#in-game').attr('checked', this.char_in_game);
 		$('#character-id').val(this._id);
 		$('#add-button').val('Edit');
+	},
+	'click a[href=#retire]': function() {
+		console.debug("Retiring " + this.name);
+		CharacterList.update({
+			_id: this._id
+		}, {
+			$set: {
+				char_in_game: false
+			}
+		});
 	}
 };
 
@@ -171,7 +183,6 @@ Template.out_game_character_list.characters = function() {
 		char_in_game: false
 	}, {
 		sort: {
-			initiative: -1,
 			name: 1
 		}
 	});
@@ -180,7 +191,7 @@ Template.out_game_character_list.characters = function() {
 Template.out_game_character_list.events = {
 	'click .delete': function() {
 		console.debug('delete' + this);
-		if (confirm("Are you sure you want to delete character " + this.name + "?")) {
+		if (confirm("Are you sure you want to delete " + this.name + "?")) {
 			CharacterList.remove(this._id);
 		}
 	},
@@ -200,6 +211,19 @@ Template.out_game_character_list.events = {
 	}
 };
 
+Template.out_character.events = {
+	'click a[href=#bring-back]': function() {
+		console.debug("Returning " + this.name + " to the fray!");
+		CharacterList.update({
+			_id: this._id
+		}, {
+			$set: {
+				char_in_game: true
+			}
+		});
+	}
+};
+
 var hasActiveChar = function() {
 		return (CharacterList.find({
 			active: true
@@ -213,7 +237,7 @@ var activeRecord = function() {
 	};
 
 $(document).keydown(function(evt) {
-	if (evt.keyCode == 32) {
+	if (evt.keyCode == 32) { // space
 		evt.preventDefault();
 		nextCharacter();
 	}
