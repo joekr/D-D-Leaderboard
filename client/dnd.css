@@ -68,6 +68,9 @@
 	display: inline-block;
 	vertical-align: baseline;
 }
+.navbar input[type=checkbox] + label:after {
+	content: "";
+}
 .navbar input[type=number] {
 	width: 4em;
 }

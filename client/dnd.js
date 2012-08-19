@@ -124,8 +124,12 @@ Template.navbar.events = {
 		$('#new-enemy').attr('checked', false);
 		$('#in-game').attr('checked', true);
 		$('#add-button').val('Add');
+		$("#char-ac").val('');
+		$("#char-fort").val('');
+		$("#char-ref").val('');
+		$("#char-will").val('');
+		$("#char-dmg").val('');
 		$('#character-id').val('');
-		console.log($('.navbar .control-group.error'));
 		$('.navbar .control-group.error').removeClass('error');
 	},
 	'click #next-character-link': function() {
@@ -176,6 +180,7 @@ Template.character.events = {
 				char_in_game: false
 			}
 		});
+		return false;
 	}
 };
 
@@ -223,6 +228,7 @@ Template.out_character.events = {
 				char_in_game: true
 			}
 		});
+		return false;
 	}
 };
 
