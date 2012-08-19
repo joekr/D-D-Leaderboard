@@ -1,13 +1,39 @@
+.char_damage {
+	font-size: 200%;
+	font-weight: 700;
+}
+	.char_damage .icon-sword {
+		margin-top: 0.275em;
+	}
+.defense {
+	display: inline-block;
+	font-size: 150%;
+}
+.defense + .defense-label {
+	margin-left: 1em;
+}
+.defense-label {
+	display: inline-block;
+	font-variant: small-caps;
+}
+.defense-label:after {
+	content: ": ";
+}
+.icon-sword {
+	background-position: left top;
+	background-image: url('/icon-sword.gif');
+	width: 16px;
+	height: 16px;
+}
 .navbar label {
 	color: white;
 	display: none;
 }
 .navbar input[type=checkbox] {
-	margin-top: 0.5em;
 }
 .navbar input[type=checkbox] + label {
 	display: inline-block;
-	vertical-align: bottom;
+	vertical-align: baseline;
 }
 .navbar input[type=number] {
 	width: 4em;
@@ -17,24 +43,28 @@
 .navbar input[type=checkbox] + label {
 	margin-right: 9px;
 }
+.navbar-form input,
+.navbar-form select,
+.navbar-form .radio,
+.navbar-form .checkbox {
+	margin-top: 0;
+}
 .table td,
 .table th {
 	text-align: center;
 }
 .table td {
-	line-height: 3;
+	line-height: 42px;
 }
 .table td.char-initiative {
 	font-size: 1.5em;
-	line-height: 2.25;
 }
 .table td.char-name,
 .table th.char-name {
 	text-align: left;
 }
 .table td.char-name {
-	font-size: 3em;
-	line-height: 1;
+	font-size: 42px;
 }
 .table tr.enemy-true td,
 .table-striped tbody tr.active.enemy-true:nth-child(odd) td {

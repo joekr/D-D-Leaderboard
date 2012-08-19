@@ -38,9 +38,9 @@
               <input type="number" id="char-dmg" placeholder="~Dmg">
 							<input type="checkbox" id="new-enemy">
 							<label for="new-enemy">Enemy?</label>
-							<input type="checkbox" id="in-game">
-							<label for="in-game">In Game?</label>
-							<input type="button" id="add-button" class="btn btn-primary" value="Add">
+							<input type="checkbox" id="in-game" checked="checked">
+							<label for="in-game">Playing?</label>
+							<input type="button" id="add-button" class="btn btn-primary btn-large" value="Add">
 							<input type="reset" id="reset-button" class="btn btn-mini btn-danger" value="Reset">
 						</form>
 					</div>
@@ -56,18 +56,12 @@
 </template>
 
 <template name="character_list">
-	<div class="span6">
+	<div class="span12">
 		<table id="character-table" class="table table-striped">
 			<thead>
 				<tr>
-					<th scope="col" class="char-name">Character</th>
+					<th scope="col" class="char-name" colspan="3">Character</th>
 					<th scope="col" class="char-initiative">Initiative</th>
-          <tr>
-            <th>Name</th>
-            <th>Defenses</th>
-            <th>Default Dmg<th>
-            <th>Initiative</th>
-          </tr>
 				</tr>
 			</thead>
 			<tbody>
@@ -91,14 +85,19 @@
 	 <td></td>
 	 {{else}}
       <td class="char_defenses">
-        <h2>AC: {{char_ac}}
-          F: {{char_fort}}
-          <br>
-          R: {{char_ref}}
-          W: {{char_will}}
-        </h2>
+        <span class="defense-label">AC</span>
+				<span class="armor-class defense">{{char_ac}}</span>
+        <span class="defense-label">Fort</span>
+				<span class="fortitude defense">{{char_fort}}</span>
+        <span class="defense-label">Ref</span>
+				<span class="reflex defense">{{char_ref}}</span>
+        <span class="defense-label">Will</span>
+				<span class="willpower defense">{{char_will}}</span>
       </td>
-      <td class="char_damage"><h1>{{damage}}</h1></td>
+      <td class="char_damage">
+				<i class="icon-sword"></i>
+				{{damage}}
+			</td>
       {{/if}}
       <td class="char-initiative">{{initiative}}</td>
 			<td><input type="button" value="X" class="delete btn btn-danger"></td>
