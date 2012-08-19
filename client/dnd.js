@@ -17,7 +17,10 @@ var playCharacterName = function(charName) {
 		audioPlayer.play();
 	} else if ('enemy' == charName ||
 			'enemies' == charName ||
-			'baddies' == charName) {
+			'baddies' == charName
+            || 'zombies' == charName
+            || 'hobgoblins' == charName) {
+
 		audio.attr('src', '/dragon.mp3');
 		audioPlayer.play();
 	}else{

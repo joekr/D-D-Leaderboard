@@ -20,7 +20,7 @@
 			<key>filename</key>
 			<string>README.md</string>
 			<key>lastUsed</key>
-			<date>2012-05-10T03:46:45Z</date>
+			<date>2012-05-11T03:01:44Z</date>
 		</dict>
 		<dict>
 			<key>expanded</key>
@@ -39,14 +39,22 @@
 			<date>2012-05-10T04:01:23Z</date>
 		</dict>
 		<dict>
-			<key>expanded</key>
-			<true/>
 			<key>name</key>
 			<string>.meteor</string>
 			<key>regexFolderFilter</key>
 			<string>!.*/(\.[^/]*|CVS|_darcs|_MTN|\{arch\}|blib|.*~\.nib|.*\.(framework|app|pbproj|pbxproj|xcode(proj)?|bundle))$</string>
 			<key>sourceDirectory</key>
 			<string>.meteor</string>
+		</dict>
+		<dict>
+			<key>expanded</key>
+			<true/>
+			<key>name</key>
+			<string>public</string>
+			<key>regexFolderFilter</key>
+			<string>!.*/(\.[^/]*|CVS|_darcs|_MTN|\{arch\}|blib|.*~\.nib|.*\.(framework|app|pbproj|pbxproj|xcode(proj)?|bundle))$</string>
+			<key>sourceDirectory</key>
+			<string>public</string>
 		</dict>
 	</array>
 	<key>fileHierarchyDrawerWidth</key>
@@ -72,9 +80,9 @@
 			<key>caret</key>
 			<dict>
 				<key>column</key>
-				<integer>62</integer>
+				<integer>19</integer>
 				<key>line</key>
-				<integer>25</integer>
+				<integer>5</integer>
 			</dict>
 			<key>firstVisibleColumn</key>
 			<integer>0</integer>
@@ -86,35 +94,35 @@
 			<key>caret</key>
 			<dict>
 				<key>column</key>
-				<integer>56</integer>
+				<integer>52</integer>
 				<key>line</key>
-				<integer>40</integer>
+				<integer>7</integer>
 			</dict>
 			<key>firstVisibleColumn</key>
 			<integer>0</integer>
 			<key>firstVisibleLine</key>
-			<integer>27</integer>
+			<integer>0</integer>
 		</dict>
 		<key>client/dnd.js</key>
 		<dict>
 			<key>caret</key>
 			<dict>
 				<key>column</key>
-				<integer>48</integer>
+				<integer>45</integer>
 				<key>line</key>
-				<integer>58</integer>
+				<integer>10</integer>
 			</dict>
 			<key>firstVisibleColumn</key>
 			<integer>0</integer>
 			<key>firstVisibleLine</key>
-			<integer>44</integer>
+			<integer>0</integer>
 		</dict>
 	</dict>
 	<key>openDocuments</key>
 	<array>
-		<string>client/dnd.html</string>
 		<string>README.md</string>
 		<string>client/dnd.css</string>
+		<string>client/dnd.html</string>
 		<string>client/dnd.js</string>
 	</array>
 	<key>showFileHierarchyDrawer</key>
