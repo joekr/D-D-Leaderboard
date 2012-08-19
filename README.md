@@ -1,5 +1,7 @@
 # Dungeons and Dragons Leaderboard
 
+![Dungeons and Dragons Leaderboard in Chrome](https://raw.github.com/joekr/D-D-Leaderboard/master/screenshot-1.png "Viewed in Chrome")
+
 ## Install Meteor
     $ curl install.meteor.com | /bin/sh
 
