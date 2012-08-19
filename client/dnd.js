@@ -73,7 +73,8 @@ Template.characters.events = {
 				name: name,
 				initiative: initiativeVal,
 				active: false,
-				isEnemy: isEnemy
+				isEnemy: isEnemy,
+				char_in_game: true
 				//TODO: need to build out object on new
 			});
 		} else {
