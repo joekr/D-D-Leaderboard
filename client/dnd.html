@@ -1,76 +1,99 @@
 <head>
-	<title>dnd</title>
+	<title>Dungeons and Dragons</title>
 </head>
 
 <body>
-	{{> characters}}
-	<h2>not playing</h2>
-	{{> out-game-character}}
-	<div id="test"></div>
-	<audio id="char-name-audio" style="display: none;"></audio>
-</body>
-
-<template name="characters">
-	<div id="characters-view">
-		<div class="navbar">
-			<div class="navbar-inner">
-				<div id="new-character-box" class="container">
-					<a class="brand" href="#">D&amp;D Leaderboard</a>
-					<div class="nav-collapse">
-						<ul class="nav">
-							<li><a href="#" id="next-character-link">Next Character</a></li>
-						</ul>
-						<form class="pull-right navbar-form form-inline">
-							<input type="hidden" id="character-id" value="">
-							<label for="new-character">Name</label>
-							<input type="text" id="new-character" placeholder="New character">
-							<label for="new-initiative">Initiative</label>
-							<input type="number" class="integer" id="new-initiative" placeholder="Init">
-							<label for="char-ac">Armor class</label>
-              <input type="number" id="char-ac" placeholder="AC" class="integer">
-							<label for="char-fort">Fortitude</label>
-              <input type="number" id="char-fort" placeholder="Fort" class="integer">
-							<label for="char-ref">Reflex</label>
-              <input type="number" id="char-ref" placeholder="Ref" class="integer">
-							<label for="char-will">Willpower</label>
-              <input type="number" id="char-will" placeholder="Will" class="integer">
-							<label for="char-dmg">Default damage</label>
-              <input type="number" id="char-dmg" placeholder="~Dmg">
-							<input type="checkbox" id="new-enemy">
-							<label for="new-enemy">Enemy?</label>
-							<input type="checkbox" id="in-game" checked="checked">
-							<label for="in-game">Playing?</label>
-							<input type="button" id="add-button" class="btn btn-primary btn-large" value="Add">
-							<input type="reset" id="reset-button" class="btn btn-mini btn-danger" value="Reset">
-						</form>
-					</div>
+	<div class="navbar">
+		<div class="navbar-inner">
+			<div id="new-character-box" class="container">
+				<a class="brand" href="#">D&amp;D Leaderboard</a>
+				<div class="nav-collapse">
+					{{> navbar}}
 				</div>
 			</div>
 		</div>
-		<div class="container">
-			<div class="row-fluid">
+	</div>
+	<div class="container">
+		{{> characters}}
+		{{> out-game-character}}
+		<div id="test"></div>
+	</div>
+	<audio id="char-name-audio" style="display: none;"></audio>
+</body>
+
+<template name="navbar">
+	<ul class="nav">
+		<li><a href="#" id="next-character-link">Next Character</a></li>
+	</ul>
+	<form class="pull-right navbar-form form-inline">
+		<input type="hidden" id="character-id" value="">
+		<div class="control-group">
+			<label for="new-character">Name</label>
+			<input type="text" id="new-character" placeholder="New character">
+		</div>
+		<div class="control-group">
+			<label for="new-initiative">Initiative</label>
+			<input type="number" class="integer" id="new-initiative" placeholder="Init">
+		</div>
+		<div class="control-group">
+			<label for="char-ac">Armor class</label>
+    	<input type="number" id="char-ac" placeholder="AC" class="integer">
+		</div>
+		<div class="control-group">
+			<label for="char-fort">Fortitude</label>
+    	<input type="number" id="char-fort" placeholder="Fort" class="integer">
+		</div>
+		<div class="control-group">
+			<label for="char-ref">Reflex</label>
+    	<input type="number" id="char-ref" placeholder="Ref" class="integer">
+		</div>
+		<div class="control-group">
+			<label for="char-will">Willpower</label>
+    	<input type="number" id="char-will" placeholder="Will" class="integer">
+		</div>
+		<div class="control-group">
+			<label for="char-dmg">Default damage</label>
+    	<input type="number" id="char-dmg" placeholder="~Dmg">
+		</div>
+		<div class="control-group">
+			<input type="checkbox" id="new-enemy">
+			<label for="new-enemy">Enemy?</label>
+		</div>
+		<div class="control-group">
+			<input type="checkbox" id="in-game" checked="checked">
+			<label for="in-game">Playing?</label>
+		</div>
+		<div class="form-actions">
+			<input type="button" id="add-button" class="btn btn-primary btn-large" value="Add">
+			<input type="reset" id="reset-button" class="btn btn-mini btn-danger" value="Reset">
+		</div>
+	</form>
+</template>
+
+<template name="characters">
+	<section id="characters-view">
+		<div class="row-fluid">
+			<div class="span12">
 				{{> character_list}}
 			</div>
 		</div>
-	</div>
+	</section>
 </template>
 
 <template name="character_list">
-	<div class="span12">
-		<table id="character-table" class="table table-striped">
-			<thead>
-				<tr>
-					<th scope="col" class="char-name" colspan="3">Character</th>
-					<th scope="col" class="char-initiative">Initiative</th>
-				</tr>
-			</thead>
-			<tbody>
-				{{#each characters}}
-				{{> character}}
-				{{/each}}
-			</tbody>
-		</table>
-	</div>
+	<table id="character-table" class="table table-striped">
+		<thead>
+			<tr>
+				<th scope="col" class="char-name" colspan="3">Character</th>
+				<th scope="col" class="char-initiative">Initiative</th>
+			</tr>
+		</thead>
+		<tbody>
+			{{#each characters}}
+			{{> character}}
+			{{/each}}
+		</tbody>
+	</table>
 </template>
 
 <template name="character">
@@ -104,32 +127,31 @@
 		</tr>  
 	</template>
 
-<template name="out-game-character">	
-	<div class="container">
-		<div class="row-fluid">
-			{{> out_game_character_list}}
+<template name="out-game-character">
+	<section class="out-of-game">
+		<div class="page-header">
+			<h2 class="section-title">Out of the Game</h2>
 		</div>
-	</div>
+		<div class="row-fluid">
+			<div class="span12">
+				{{> out_game_character_list}}
+			</div>
+		</div>
+	</section>
 </template>
 
 <template name="out_game_character_list">
-	<div class="span6">
-		<table id="out-game-character-table" class="table table-striped">
-			<tbody>
-				{{#each characters}}
+	<table id="out-game-character-table" class="table table-striped">
+		<tbody>
+			{{#each characters}}
 				{{> out-character}}
-				{{/each}}
-			</tbody>
-		</table>
-	</div>
+			{{/each}}
+		</tbody>
+	</table>
 </template>
 
 <template name="out-character">
-	{{#if active}}
-		<tr id={{_id}} class="active enemy-{{isEnemy}}">
-	{{else}}
 		<tr id={{_id}} class="enemy-{{isEnemy}}">
-	{{/if}}
 			<td class="char-name">{{name}}</td>
 			<td></td>
 	 		<td></td>     
