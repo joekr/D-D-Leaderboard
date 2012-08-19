@@ -66,6 +66,7 @@ var nextCharacter = function() {
 	
 var setupDMView = function() {
 		console.debug("Setting up DM view");
+		$('body').addClass('dm');
 		$('#character-list-span').removeClass('span12').addClass('span6');
 		$('#dm-view').show();
 	};

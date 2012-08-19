@@ -1,3 +1,16 @@
+body.dm .table td.char-name {
+	font-size: 28px;
+}
+body.dm .char_damage {
+	font-size: 18px;
+}
+body.dm .char_damage .icon-sword {
+	margin-top: 0.175em;
+}
+body.dm .defense-label:nth-child(5n) {
+	clear: left;
+	margin-left: 0;
+}
 .btn + .btn {
 	margin-left: 5px;
 }
@@ -14,16 +27,20 @@
 .current-and-max-hp {
 	cursor: pointer;
 }
+.defense,
+.defense-label {
+	float: left;
+	display: block;
+}
 .defense {
-	display: inline-block;
 	font-size: 150%;
 }
 .defense + .defense-label {
 	margin-left: 1em;
 }
 .defense-label {
-	display: inline-block;
 	font-variant: small-caps;
+	padding-right: 0.25em;
 }
 .defense-label:after {
 	content: ": ";
