@@ -1,23 +1,22 @@
 CharacterList = new Meteor.Collection("characters");
 EnemyList = new Meteor.Collection("enemies");
 
-var playCharacterName = function(charName) {
-		//console.debug("Going to play character audio " + charName);
+var playCharacterAudio = function(char) {
+		//console.debug("Going to play character audio " + char.name);
 		var audio = $('#char-name-audio');
 		var audioPlayer = audio.get(0);
 		if (typeof audio.attr('src') != 'undefined') {
 			audioPlayer.pause();
 			audioPlayer.currentTime = 0;
 		}
-		var audibleNames = ['xavia', 'thar', 'dragon'];
-		var enemyNames = ['enemy', 'enemies', 'baddies', 'zombies', 'hobgoblins'];
-		var mp3Path = '/' + charName + '.mp3';
-		//var m4aPath = '/' + charName + '.m4a';
-		if ($.inArray(charName, audibleNames) > -1) {
+		var audibleNames = ['xavia', 'thar'];
+		var mp3Path = '/' + char.name + '.mp3';
+		//var m4aPath = '/' + char.name + '.m4a';
+		if ($.inArray(char.name, audibleNames) > -1) {
 			audio.attr('src', mp3Path);
 			//console.debug(audio);
 			audioPlayer.play();
-		} else if ($.inArray(charName, enemyNames) > -1) {
+		} else if (char.isEnemy) {
 			audio.attr('src', '/dragon.mp3');
 			audioPlayer.play();
 		} else {
@@ -35,8 +34,9 @@ var setActiveTr = function(tr) {
 				active: true
 			}
 		});
+		var char = CharacterList.findOne({_id:tr.attr('id')});
 		var activeCharName = $('.char-name', tr).text().toLowerCase();
-		playCharacterName(activeCharName);
+		playCharacterAudio(char);
 	};
 
 var nextCharacter = function() {
