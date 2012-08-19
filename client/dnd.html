@@ -21,6 +21,28 @@
 	<audio id="char-name-audio" style="display: none;"></audio>
 </body>
 
+<template name="enemy_form">
+	<form id="enemy-form">
+		<input type="hidden" id="enemy-id" value="">
+		<div class="control-group">
+			<label for="enemy-name">Name</label>
+			<input type="text" id="enemy-name" placeholder="New enemy">
+		</div>
+		<div class="control-group">
+			<label for="enemy-initiative">Initiative</label>
+			<input type="number" class="integer" id="enemy-initiative" placeholder="Init">
+		</div>
+		<div class="control-group">
+			<label for="enemy-max-hp">Health</label>
+			<input type="number" class="integer" id="enemy-max-hp" placeholder="HP">
+		</div>
+		<div class="form-actions">
+			<input type="button" id="enemy-add-button" class="btn btn-primary" value="Add">
+			<input type="reset" id="enemy-reset-button" class="btn btn-danger" value="Reset">
+		</div>
+	</form>
+</template>
+
 <template name="navbar">
 	<ul class="nav">
 		<li><a href="#" id="next-character-link">Next Character</a></li>
@@ -78,9 +100,17 @@
 			<div class="span12" id="character-list-span">
 				{{> character_list}}
 			</div>
+			{{> dm_view}}
 		</div>
 	</section>
 	{{onCharactersLoaded}}
+</template>
+
+<template name="dm_view">
+	<div id="dm-view" class="span6">
+		{{> enemy_list}}
+		{{> enemy_form}}
+	</div>
 </template>
 
 <template name="char_table_header">
@@ -95,12 +125,48 @@
 	</thead>
 </template>
 
+<template name="enemy_list">
+	<table id="enemy-table" class="table table-striped">
+		<thead>
+			<tr>
+				<th scope="col">Enemy</th>
+				<th scope="col">Health</th>
+				<th scope="col">Options</th>
+			</tr>
+		</thead>
+		<tbody>
+			{{#each enemies}}
+				{{> enemy}}
+			{{/each}}
+		</tbody>
+	</table>
+</template>
+
+<template name="enemy">
+	<tr>
+		<td>{{name}}</td>
+		<td>
+			{{#if isBloodied}}
+				<i class="icon-blood"></i>
+			{{/if}}
+			<span class="current-and-max-hp">
+				<span class="current-hp">{{currentHP}}</span> / 
+				<span class="max-hp">{{maxHP}}</span>
+			</span>
+		</td>
+		<td>
+			<a href="#delete" class="delete btn btn-danger"><i class="icon-white icon-trash"></i></a>
+			<a href="#retire" title="Move enemy out of game" class="btn"><i class="icon-arrow-down"></i></a>
+		</td>
+	</tr>
+</template>
+
 <template name="character_list">
 	<table id="character-table" class="table table-striped">
 		{{> char_table_header}}
 		<tbody>
 			{{#each characters}}
-			{{> character}}
+				{{> character}}
 			{{/each}}
 		</tbody>
 	</table>

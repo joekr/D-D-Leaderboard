@@ -8,6 +8,12 @@
 	.char_damage .icon-sword {
 		margin-top: 0.275em;
 	}
+.control-group {
+	margin-bottom: 0;
+}
+.current-and-max-hp {
+	cursor: pointer;
+}
 .defense {
 	display: inline-block;
 	font-size: 150%;
@@ -22,14 +28,30 @@
 .defense-label:after {
 	content: ": ";
 }
+#dm-view {
+	display: none;
+}
+#enemy-form {
+}
+	#enemy-form label {
+		display: none;
+	}
+.icon-blood,
 .icon-sword {
 	background-position: left top;
-	background-image: url('/icon-sword.gif');
 	width: 16px;
 	height: 16px;
 }
+.icon-blood {
+	background-image: url('/icon-blood.png');
+}
+.icon-sword {
+	background-image: url('/icon-sword.gif');
+}
 .navbar .control-group,
-.navbar .form-actions {
+.navbar .form-actions,
+#enemy-form .control-group,
+#enemy-form .form-actions {
 	display: inline-block;
 }
 .navbar .control-group.error .checkbox,
@@ -46,7 +68,8 @@
 	padding: 0 0 0 9px;
 	margin: 0 7px 0 0;
 }
-.navbar .form-actions {
+.navbar .form-actions,
+#enemy-form .form-actions {
 	padding: 0;
 	margin: 0;
 	background-color: transparent;
@@ -62,8 +85,6 @@
 .navbar label[for=new-initiative] {
 	display: inline;
 }
-.navbar input[type=checkbox] {
-}
 .navbar input[type=checkbox] + label {
 	display: inline-block;
 	vertical-align: baseline;
@@ -71,12 +92,16 @@
 .navbar input[type=checkbox] + label:after {
 	content: "";
 }
-.navbar input[type=number] {
+.navbar input[type=number],
+#enemy-form input[type=number],
+.current-and-max-hp input[type=number] {
 	width: 4em;
 }
 .navbar input[type=text],
 .navbar input[type=number],
-.navbar input[type=checkbox] + label {
+.navbar input[type=checkbox] + label,
+#enemy-form input[type=text],
+#enemy-form input[type=number] {
 	margin-right: 9px;
 }
 .navbar-form input,
@@ -106,6 +131,10 @@
 	#out-game-character-table .btn {
 		padding: 2px 8px 2px;
 	}
+input[type="text"],
+input[type="number"] {
+	margin-bottom: 0;
+}
 .table td,
 .table th {
 	text-align: center;

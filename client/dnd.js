@@ -1,4 +1,5 @@
 CharacterList = new Meteor.Collection("characters");
+EnemyList = new Meteor.Collection("enemies");
 
 var playCharacterName = function(charName) {
 		//console.debug("Going to play character audio " + charName);
@@ -66,6 +67,7 @@ var nextCharacter = function() {
 var setupDMView = function() {
 		console.debug("Setting up DM view");
 		$('#character-list-span').removeClass('span12').addClass('span6');
+		$('#dm-view').show();
 	};
 
 var setupDMViewIfNecessary = function() {
@@ -73,6 +75,53 @@ var setupDMViewIfNecessary = function() {
 			setupDMView();
 		}
 	};
+	
+var fieldHasValue = function(nameField) {
+		var name = nameField.val();
+		var nameControlGroup = nameField.closest('.control-group');
+		if ($.trim(name) == '') {
+			nameControlGroup.addClass('error');
+			return false;
+		}
+		nameControlGroup.removeClass('error');
+		return true;
+	};
+
+Template.enemy_form.events = {
+	'click #enemy-add-button': function() {
+		var id = $('#enemy-id').val();
+		var enemy = EnemyList.findOne({_id: id});
+		var nameField = $('#enemy-name');
+		var name = nameField.val();
+		if (!fieldHasValue(nameField)) {
+			return;
+		}
+		var initiative = parseInt($('#enemy-initiative').val(), 10);
+		var maxHP = parseInt($('#enemy-max-hp').val(), 10);
+		var curHP = maxHP;
+		if (null == enemy) {
+			EnemyList.insert({
+				name: name,
+				initiative: initiative,
+				active: false,
+				inGame: true,
+				maxHP: maxHP,
+				currentHP: curHP
+			});
+		} else {
+			console.debug("Updating enemy #" + id);
+			EnemyList.update({
+				_id: id
+			}, {
+				$set: {
+					initiative: initiative,
+					name: name,
+					maxHP: maxHP
+				}
+			});
+		}
+	}
+};
 
 Template.navbar.events = {
 	'click #add-button': function() {
@@ -82,12 +131,9 @@ Template.navbar.events = {
 		});
 		var nameField = $("#new-character");
 		var name = nameField.val();
-		var nameControlGroup = nameField.closest('.control-group');
-		if ($.trim(name) == '') {
-			nameControlGroup.addClass('error');
+		if (!fieldHasValue(nameField)) {
 			return;
 		}
-		nameControlGroup.removeClass('error');
 		var isEnemy = $('#new-enemy').is(':checked');
 		var isInGame = $('#in-game').is(':checked');
 		var initiativeVal = parseInt($("#new-initiative").val(), 10);
@@ -109,7 +155,7 @@ Template.navbar.events = {
 				char_will: charWill,
 				damage: damage
 			};
-			console.log("Inserting new character: " + JSON.stringify(charProps));
+			console.debug("Inserting new character: " + JSON.stringify(charProps));
 			CharacterList.insert(charProps);
 		} else {
 			console.debug("Updating character #" + id);
@@ -155,6 +201,17 @@ Template.characters.onCharactersLoaded = function() {
 	});
 };
 
+Template.enemy_list.enemies = function() {
+	return EnemyList.find({
+		inGame: true
+	}, {
+		sort: {
+			initiative: -1,
+			name: 1
+		}
+	});
+};
+
 Template.character_list.characters = function() {
 	return CharacterList.find({
 		char_in_game: true
@@ -164,6 +221,51 @@ Template.character_list.characters = function() {
 			name: 1
 		}
 	});
+};
+
+Template.enemy.isBloodied = function() {
+	return this.currentHP == (this.maxHP / 2);
+};
+
+Template.enemy.events = {
+	'click .delete': function() {
+		if (confirm("Are you sure you want to delete enemy " + this.name + "?")) {
+			EnemyList.remove(this._id);
+		}
+		return false;
+	},
+	'click .current-and-max-hp': function(event) {
+		var currentAndMaxHPSpan = $(event.currentTarget);
+		if (currentAndMaxHPSpan.hasClass('editing')) {
+			return;
+		}
+		currentAndMaxHPSpan.addClass('editing');
+		var currentHPSpan = $('.current-hp', currentAndMaxHPSpan);
+		var currentHP = currentHPSpan.text();
+		var input = $('<input type="number">');
+		input.val(currentHP);
+		currentHPSpan.html(input);
+		var enemy = this;
+		var updateCurrentHP = function() {
+			var newHP = parseInt(input.val(), 10);
+			EnemyList.update({
+				_id: enemy._id
+			}, {
+				$set: {
+					currentHP: newHP
+				}
+			});
+			input.remove();
+			currentHPSpan.text(newHP);
+			currentAndMaxHPSpan.removeClass('editing');
+		};
+		input.keypress(function(e) {
+		    if (e.which == 13) { // Enter
+				updateCurrentHP();
+			}
+		});
+		input.blur(updateCurrentHP);
+	}
 };
 
 Template.character.events = {
@@ -262,6 +364,10 @@ var activeRecord = function() {
 	};
 
 $(document).keydown(function(evt) {
+	if ($(evt.target).is(":input")) {
+		// Allow spaces in form fields without changing the active character
+	    return;
+	}
 	if (evt.keyCode == 32) { // space
 		evt.preventDefault();
 		nextCharacter();
