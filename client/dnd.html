@@ -137,17 +137,15 @@
 		{{> character_def_dmg}}
 		<td class="char-initiative">{{initiative}}</td>
 		<td>
-			<input type="button" value="X" class="delete btn btn-danger">
-			<a href="#retire" title="Move character out of game"><i class="icon-arrow-down"></i></a>
+			<a href="#delete" class="delete btn btn-danger"><i class="icon-white icon-trash"></i></a>
+			<a href="#retire" title="Move character out of game" class="btn"><i class="icon-arrow-down"></i></a>
 		</td>
 	</tr>  
 </template>
 
 <template name="out-game-character">
 	<section class="out-of-game">
-		<div class="page-header">
-			<h2 class="section-title">Out of the Game</h2>
-		</div>
+		<h2 class="page-header">Out of the Game</h2>
 		<div class="row-fluid">
 			<div class="span12">
 				{{> out_game_character_list}}
@@ -173,8 +171,8 @@
 		{{> character_def_dmg}}
  		<td>&mdash;</td>
 		<td>
-			<input type="button" value="X" class="delete btn btn-danger">
-			<a href="#bring-back" title="Return character to the game"><i class="icon-arrow-up"></i></a>
+			<a href="#delete" class="delete btn btn-danger"><i class="icon-white icon-trash"></i></a>
+			<a href="#bring-back" title="Return character to the game" class="btn"><i class="icon-arrow-up"></i></a>
 		</td>
 	</tr>
 </template>

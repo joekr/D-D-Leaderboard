@@ -1,3 +1,6 @@
+.btn + .btn {
+	margin-left: 5px;
+}
 .char_damage {
 	font-size: 200%;
 	font-weight: 700;
@@ -79,9 +82,27 @@
 .navbar-form .checkbox {
 	margin-top: 0;
 }
-.out-of-game {
-	
+#out-game-character-table {
+	color: #999999;
 }
+	#out-game-character-table td {
+		line-height: 22px;
+	}
+	#out-game-character-table td.char-name {
+		font-size: 22px;
+	}
+	#out-game-character-table .char_damage,
+	#out-game-character-table .defense {
+		font-size: 100%;
+		font-weight: normal;
+	}
+	#out-game-character-table .char_damage .icon-sword {
+		margin-top: 0;
+		opacity: 0.5;
+	}
+	#out-game-character-table .btn {
+		padding: 2px 8px 2px;
+	}
 .table td,
 .table th {
 	text-align: center;

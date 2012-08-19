@@ -151,6 +151,7 @@ Template.character.events = {
 		if (confirm("Are you sure you want to delete character " + this.name + "?")) {
 			CharacterList.remove(this._id);
 		}
+		return false;
 	},
 	'click .char-name': function() {
 		console.debug('edit' + this.active);
@@ -194,6 +195,7 @@ Template.out_game_character_list.events = {
 		if (confirm("Are you sure you want to delete " + this.name + "?")) {
 			CharacterList.remove(this._id);
 		}
+		return false;
 	},
 	'click .char-name': function() {
 		console.debug('edit' + this.active);
