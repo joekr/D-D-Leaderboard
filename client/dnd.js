@@ -62,6 +62,17 @@ var nextCharacter = function() {
 			setActiveTr(nextTr);
 		}
 	};
+	
+var setupDMView = function() {
+		console.debug("Setting up DM view");
+		$('#character-list-span').removeClass('span12').addClass('span6');
+	};
+
+var setupDMViewIfNecessary = function() {
+		if (window.location.hash == '#dm') {
+			setupDMView();
+		}
+	};
 
 Template.navbar.events = {
 	'click #add-button': function() {
@@ -136,6 +147,12 @@ Template.navbar.events = {
 		nextCharacter();
 		return false;
 	}
+};
+
+Template.characters.onCharactersLoaded = function() {
+	Meteor.defer(function () {
+		setupDMViewIfNecessary();
+	});
 };
 
 Template.character_list.characters = function() {
