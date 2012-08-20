@@ -5,24 +5,24 @@ var playCharacterAudio = function(char) {
 		//console.debug("Going to play character audio " + char.name);
 		var audio = $('#char-name-audio');
 		var audioPlayer = audio.get(0);
+
 		if (typeof audio.attr('src') != 'undefined') {
 			audioPlayer.pause();
 			audioPlayer.currentTime = 0;
 		}
+
 		var audibleNames = ['xavia', 'thar'];
 		var mp3Path = '/' + char.name + '.mp3';
-		//var m4aPath = '/' + char.name + '.m4a';
+		
 		if ($.inArray(char.name, audibleNames) > -1) {
 			audio.attr('src', mp3Path);
-			//console.debug(audio);
-			audioPlayer.play();
 		} else if (char.isEnemy) {
 			audio.attr('src', '/dragon.mp3');
-			audioPlayer.play();
 		} else {
 			audio.attr('src', '/next_character.mp3');
-			audioPlayer.play();
 		}
+
+		audioPlayer.play();
 	};
 
 var setActiveTr = function(tr) {
@@ -92,6 +92,7 @@ Template.enemy_form.events = {
 	'click #enemy-add-button': function() {
 		var id = $('#enemy-id').val();
 		var enemy = EnemyList.findOne({_id: id});
+
 		var nameField = $('#enemy-name');
 		var name = nameField.val();
 		if (!fieldHasValue(nameField)) {
@@ -99,8 +100,9 @@ Template.enemy_form.events = {
 		}
 		var initiative = parseInt($('#enemy-initiative').val(), 10);
 		var maxHP = parseInt($('#enemy-max-hp').val(), 10);
-		var curHP = maxHP;
+		var curHP = parseInt($('#enemy-hp').val(), 10);
 		if (null == enemy) {
+			console.debug("Adding enemy #" + id);
 			EnemyList.insert({
 				name: name,
 				initiative: initiative,
@@ -117,7 +119,8 @@ Template.enemy_form.events = {
 				$set: {
 					initiative: initiative,
 					name: name,
-					maxHP: maxHP
+					maxHP: maxHP,
+					currentHP: curHP
 				}
 			});
 		}
@@ -201,6 +204,19 @@ Template.characters.onCharactersLoaded = function() {
 		setupDMViewIfNecessary();
 	});
 };
+
+Template.enemy_list.events = {
+	'click .char-name': function() {
+		console.debug('edit'+this._id);		
+		$("#enemy-id").val(this._id);
+		$("#enemy-name").val(this.name);
+		$("#enemy-initiative").val(this.initiative);
+		$("#enemy-max-hp").val(this.maxHP);
+		$("#enemy-hp").val(this.currentHP);
+		
+		$('#enemy-add-button').val('Edit');
+	}
+}
 
 Template.enemy_list.enemies = function() {
 	return EnemyList.find({

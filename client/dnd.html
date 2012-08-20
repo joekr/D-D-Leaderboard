@@ -33,8 +33,12 @@
 			<input type="number" class="integer" id="enemy-initiative" placeholder="Init">
 		</div>
 		<div class="control-group">
+			<label for="enemy-hp">Health</label>
+			<input type="number" class="integer" id="enemy-hp" placeholder="HP">
+		</div>
+		<div class="control-group">
 			<label for="enemy-max-hp">Health</label>
-			<input type="number" class="integer" id="enemy-max-hp" placeholder="HP">
+			<input type="number" class="integer" id="enemy-max-hp" placeholder="Max HP">
 		</div>
 		<div class="form-actions">
 			<input type="button" id="enemy-add-button" class="btn btn-primary" value="Add">
@@ -143,7 +147,7 @@
 </template>
 
 <template name="enemy">
-	<tr>
+	<tr id={{_id}} class='char-name'>
 		<td>{{name}}</td>
 		<td>
 			{{#if isBloodied}}
