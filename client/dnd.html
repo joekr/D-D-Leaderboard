@@ -16,7 +16,10 @@
 	<div class="container">
 		{{> characters}}
 		{{> out-game-character}}
-		<div id="test"></div>
+		<hr>
+		<footer>
+			<a href="#dm">Dungeon Master view</a>
+		</footer>
 	</div>
 	<audio id="char-name-audio" style="display: none;"></audio>
 </body>
@@ -124,7 +127,7 @@
 			<th scope="col" class="char-defenses">Defenses</th>
 			<th scope="col" class="char-def-dmg">Default Damage</th>
 			<th scope="col" class="char-initiative">Initiative</th>
-			<th scope="col" class="char-options">Options</th>
+			<th scope="col" class="char-options options">Options</th>
 		</tr>
 	</thead>
 </template>
@@ -135,7 +138,7 @@
 			<tr>
 				<th scope="col">Enemy</th>
 				<th scope="col">Health</th>
-				<th scope="col">Options</th>
+				<th scope="col" class="options">Options</th>
 			</tr>
 		</thead>
 		<tbody>
@@ -198,20 +201,185 @@
 	{{/if}}
 </template>
 
+<template name="character_status_effects">
+	<div class="control-group character-blinded infrequent">
+		<div class="controls">
+			<input type="checkbox" id="character-{{_id}}-blinded">
+			<label for="character-{{_id}}-blinded">
+				Blinded
+			</label>
+		</div>
+	</div>
+	<div class="control-group character-bloodied">
+		<div class="controls">
+			<input type="checkbox" id="character-{{_id}}-bloodied">
+			<label for="character-{{_id}}-bloodied">
+				Bloodied
+			</label>
+		</div>
+	</div>
+	<div class="control-group character-dazed infrequent">
+		<div class="controls">
+			<input type="checkbox" id="character-{{_id}}-dazed">
+			<label for="character-{{_id}}-dazed">
+				Dazed
+			</label>
+		</div>
+	</div>
+	<div class="control-group character-deafened infrequent">
+		<div class="controls">
+			<input type="checkbox" id="character-{{_id}}-deafened">
+			<label for="character-{{_id}}-deafened">
+				Deafened
+			</label>
+		</div>
+	</div>
+	<div class="control-group character-dominated infrequent">
+		<div class="controls">
+			<input type="checkbox" id="character-{{_id}}-dominated">
+			<label for="character-{{_id}}-dominated">
+				Dominated
+			</label>
+		</div>
+	</div>
+	<div class="control-group character-dying">
+		<div class="controls">
+			<input type="checkbox" id="character-{{_id}}-dying">
+			<label for="character-{{_id}}-dying">
+				Dying
+			</label>
+		</div>
+	</div>
+	<div class="control-group character-grabbed">
+		<div class="controls">
+			<input type="checkbox" id="character-{{_id}}-grabbed">
+			<label for="character-{{_id}}-grabbed">
+				Grabbed
+			</label>
+		</div>
+	</div>
+	<div class="control-group character-helpless infrequent">
+		<div class="controls">
+			<input type="checkbox" id="character-{{_id}}-helpless">
+			<label for="character-{{_id}}-helpless">
+				Helpless
+			</label>
+		</div>
+	</div>
+	<div class="control-group character-immobilized infrequent">
+		<div class="controls">
+			<input type="checkbox" id="character-{{_id}}-immobilized">
+			<label for="character-{{_id}}-immobilized">
+				Immobilized
+			</label>
+		</div>
+	</div>
+	<div class="control-group character-marked infrequent">
+		<div class="controls">
+			<input type="checkbox" id="character-{{_id}}-marked">
+			<label for="character-{{_id}}-marked">
+				Marked
+			</label>
+		</div>
+	</div>
+	<div class="control-group character-petrified infrequent">
+		<div class="controls">
+			<input type="checkbox" id="character-{{_id}}-petrified">
+			<label for="character-{{_id}}-petrified">
+				Petrified
+			</label>
+		</div>
+	</div>
+	<div class="control-group character-prone">
+		<div class="controls">
+			<input type="checkbox" id="character-{{_id}}-prone">
+			<label for="character-{{_id}}-prone">
+				Prone
+			</label>
+		</div>
+	</div>
+	<div class="control-group character-restrained infrequent">
+		<div class="controls">
+			<input type="checkbox" id="character-{{_id}}-restrained">
+			<label for="character-{{_id}}-restrained">
+				Restrained
+			</label>
+		</div>
+	</div>
+	<div class="control-group character-slowed">
+		<div class="controls">
+			<input type="checkbox" id="character-{{_id}}-slowed">
+			<label for="character-{{_id}}-slowed">
+				Slowed
+			</label>
+		</div>
+	</div>
+	<div class="control-group character-stunned">
+		<div class="controls">
+			<input type="checkbox" id="character-{{_id}}-stunned">
+			<label for="character-{{_id}}-stunned">
+				Stunned
+			</label>
+		</div>
+	</div>
+	<div class="control-group character-surprised infrequent">
+		<div class="controls">
+			<input type="checkbox" id="character-{{_id}}-surprised">
+			<label for="character-{{_id}}-surprised">
+				Surprised
+			</label>
+		</div>
+	</div>
+	<div class="control-group character-unconscious">
+		<div class="controls">
+			<input type="checkbox" id="character-{{_id}}-unconscious">
+			<label for="character-{{_id}}-unconscious">
+				Unconscious
+			</label>
+		</div>
+	</div>
+	<div class="control-group character-weakened infrequent">
+		<div class="controls">
+			<input type="checkbox" id="character-{{_id}}-weakened">
+			<label for="character-{{_id}}-weakened">
+				Weakened
+			</label>
+		</div>
+	</div>
+</template>
+
 <template name="character">
 	{{#if active}}
-		<tr id={{_id}} class="active enemy-{{isEnemy}}">
+		<tr data-id="{{_id}}" class="active enemy-{{isEnemy}}">
 	{{else}}
-		<tr id={{_id}} class="enemy-{{isEnemy}}">
+		<tr data-id="{{_id}}" class="enemy-{{isEnemy}}">
 	{{/if}}
-		<td class="char-name">{{name}}</td>
+		{{#if isEnemy}}
+			<td class="char-name">
+		{{else}}
+			<td class="char-name" rowspan="2">
+		{{/if}}
+			{{name}}
+		</td>
 		{{> character_def_dmg}}
 		<td class="char-initiative">{{initiative}}</td>
-		<td>
+		<td class="options">
 			<a href="#delete" class="delete btn btn-danger"><i class="icon-white icon-trash"></i></a>
 			<a href="#retire" title="Move character out of game" class="btn"><i class="icon-arrow-down"></i></a>
 		</td>
-	</tr>  
+	</tr>
+	{{#if isEnemy}}
+	{{else}}
+		{{#if active}}
+			<tr data-id="{{_id}}" class="active enemy-{{isEnemy}} status-effects">
+		{{else}}
+			<tr data-id="{{_id}}" class="enemy-{{isEnemy}} status-effects">
+		{{/if}}
+			<td colspan="4">
+				{{> character_status_effects}}
+			</td>
+		</tr>
+	{{/if}}
 </template>
 
 <template name="out-game-character">

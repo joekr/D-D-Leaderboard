@@ -28,7 +28,7 @@ var playCharacterAudio = function(char) {
 var setActiveTr = function(tr) {
 		tr.addClass('active');
 		CharacterList.update({
-			_id: tr.attr('id')
+			_id: tr.attr('data-id')
 		}, {
 			$set: {
 				active: true
@@ -41,27 +41,31 @@ var setActiveTr = function(tr) {
 
 var nextCharacter = function() {
 		var tr = $('#character-table tbody tr.active');
+		var nextCharID;
 		if (tr.length < 1) {
 			// No current active character, start with the first in the table,
 			// i.e., the one with highest initiative
-			setActiveTr($('#character-table tbody tr:first-child'));
+			var firstRow = $('#character-table tbody tr:first-child');
+			nextCharID = firstRow.attr('data-id');
 		} else {
 			// Move to next character in the table, i.e., the one with the
 			// next highest initiative
 			tr.removeClass('active');
+			var charID = tr.attr('data-id');
 			CharacterList.update({
-				_id: tr.attr('id')
+				_id: charID
 			}, {
 				$set: {
 					active: false
 				}
 			});
-			var nextTr = tr.next();
-			if (nextTr.length < 1) {
-				nextTr = tr.parent().children('tr:first-child');
+			var nextCharRow = tr.next('[data-id!="' + charID + '"]');
+			if (nextCharRow.length < 1) {
+				nextCharRow = tr.parent().children('tr:first-child');
 			}
-			setActiveTr(nextTr);
-		}
+			nextCharID = nextCharRow.attr('data-id');
+		}	
+		setActiveTr($('#character-table tbody tr[data-id=' + nextCharID + ']'));
 	};
 	
 var setupDMView = function() {

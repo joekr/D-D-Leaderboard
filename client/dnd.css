@@ -14,6 +14,11 @@ body.dm .defense-label:nth-child(5n) {
 .btn + .btn {
 	margin-left: 5px;
 }
+.character-bloodied.control-group label {
+	background-repeat: no-repeat;
+	background-position: left center;
+	padding-left: 16px;
+}
 .char_damage {
 	font-size: 200%;
 	font-weight: 700;
@@ -59,7 +64,8 @@ body.dm .defense-label:nth-child(5n) {
 	width: 16px;
 	height: 16px;
 }
-.icon-blood {
+.icon-blood,
+.character-bloodied.control-group label {
 	background-image: url('/icon-blood.png');
 }
 .icon-sword {
@@ -152,12 +158,45 @@ input[type="text"],
 input[type="number"] {
 	margin-bottom: 0;
 }
+.table .status-effects .control-group {
+	opacity: 0.5;
+}
+.table .status-effects .control-group:hover {
+	opacity: 1;
+}
+.table .status-effects td {
+	text-align: left;
+	border-top: none;
+	line-height: 22px;
+}
+.table label {
+	display: inline;
+}
 .table td,
 .table th {
 	text-align: center;
 }
 .table td {
+	line-height: 32px;
+}
+.table .active td {
 	line-height: 42px;
+}
+.table .control-group {
+	display: inline-block;
+}
+.table .control-group.infrequent {
+	display: none;
+}
+.table .control-group + .control-group {
+	margin-left: 1em;
+}
+.table .control-group.infrequent:first-child + .control-group {
+	margin-left: 0;
+}
+.table thead .options,
+.table tbody .options {
+	width: 7em;
 }
 .table td.char-initiative {
 	font-size: 1.5em;
@@ -167,6 +206,10 @@ input[type="number"] {
 	text-align: left;
 }
 .table td.char-name {
+	font-size: 22px;
+	vertical-align: middle;
+}
+.table .active td.char-name {
 	font-size: 42px;
 }
 .table tr.enemy-true td,
@@ -174,23 +217,18 @@ input[type="number"] {
 	color: #FF4D4D;
 	font-style: italic;
 }
-.table tr.active,
-.table-striped tbody tr.active:nth-child(odd) td {
-}
 .table tr.active.enemy-true td,
 .table tr.active,
 .table-striped tbody tr.active:nth-child(odd) td,
 .table-striped tbody tr.active.enemy-true:nth-child(odd) td {
 	background-color: #FFE300;
 }
-.table tr.active:hover,
-.table tr.active:hover td,
-.table-striped tbody tr.active.enemy-true:nth-child(odd):hover td {
-	background-color: #FFD700;
+.table-striped tbody tr:nth-child(odd) td,
+.table-striped tbody tr:nth-child(odd) th,
+.table-striped tbody tr:hover td,
+.table-striped tbody tr:hover th {
+	background-color: white;
 }
-.table-striped tbody tr.enemy-true:nth-child(odd) td {
-	background-color: #FFEEEE;
-}
-.table-striped tbody tr.enemy-true:nth-child(odd):hover td {
-	background-color: #FFE4E4;
+.table-striped tbody tr.active:hover td {
+	background-color: #FFE300;
 }
