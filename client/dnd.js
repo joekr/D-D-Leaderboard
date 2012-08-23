@@ -338,6 +338,21 @@ Template.enemy.events = {
 	}
 };
 
+var editCharacter = function(character) {
+	$("#new-character").val(character.name);
+	$("#new-initiative").val(character.initiative);
+	$("#char-ac").val(character.char_ac);
+	$("#char-fort").val(character.char_fort);
+	$("#char-ref").val(character.char_ref);
+	$("#char-will").val(character.char_will);
+	$("#char-dmg").val(character.damage);
+	$('#new-enemy').attr('checked', character.isEnemy);
+	$('#in-game').attr('checked', character.char_in_game);
+	$('#character-id').val(character._id);
+	$('#add-button').val('Edit');
+	$('html, body').animate({scrollTop: 0}, 500);
+};
+
 Template.character.events = {
 	'click .delete': function() {
 		//console.debug('delete' + this);
@@ -347,18 +362,7 @@ Template.character.events = {
 		return false;
 	},
 	'click .char-name': function() {
-		//console.debug('edit' + this.active);
-		$("#new-character").val(this.name);
-		$("#new-initiative").val(this.initiative);
-		$("#char-ac").val(this.char_ac);
-		$("#char-fort").val(this.char_fort);
-		$("#char-ref").val(this.char_ref);
-		$("#char-will").val(this.char_will);
-		$("#char-dmg").val(this.damage);
-		$('#new-enemy').attr('checked', this.isEnemy);
-		$('#in-game').attr('checked', this.char_in_game);
-		$('#character-id').val(this._id);
-		$('#add-button').val('Edit');
+		editCharacter(this);
 	},
 	'click a[href=#retire]': function() {
 		//console.debug("Retiring " + this.name);
@@ -385,25 +389,14 @@ Template.out_game_character_list.characters = function() {
 
 Template.out_game_character_list.events = {
 	'click .delete': function() {
-		console.debug('delete' + this);
+		//console.debug('delete' + this);
 		if (confirm("Are you sure you want to delete " + this.name + "?")) {
 			CharacterList.remove(this._id);
 		}
 		return false;
 	},
 	'click .char-name': function() {
-		console.debug('edit' + this.active);
-		$("#new-character").val(this.name);
-		$("#new-initiative").val(this.initiative);
-		$("#char-ac").val(this.char_ac);
-		$("#char-fort").val(this.char_fort);
-		$("#char-ref").val(this.char_ref);
-		$("#char-will").val(this.char_will);
-		$("#char-dmg").val(this.damage);
-		$('#new-enemy').attr('checked', this.isEnemy);
-		$('#in-game').attr('checked', this.char_in_game);
-		$('#character-id').val(this._id);
-		$('#add-button').val('Edit');
+		editCharacter(this);
 	}
 };
 
