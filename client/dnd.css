@@ -177,14 +177,19 @@ input[type="number"] {
 	text-align: left;
 	border-top: none;
 	line-height: 22px;
+}
+.table .status-effects td .control-group,
+.table .status-effects td .collapse-expand {
 	opacity: 0;
 	-webkit-transition: opacity 0.5s ease-in-out;
 	-moz-transition: opacity 0.5s ease-in-out;
-    -ms-transition: opacity 0.5s ease-in-out;
-    -o-transition: opacity 0.5s ease-in-out;
+	-ms-transition: opacity 0.5s ease-in-out;
+	-o-transition: opacity 0.5s ease-in-out;
 	transition: opacity 0.5s ease-in-out;
 }
-.table .active.status-effects td {
+.table .active.status-effects td .control-group,
+.table .active.status-effects td .collapse-expand,
+.table .status-effects td .control-group.checked {
 	opacity: 1;
 }
 .table label {

@@ -202,7 +202,7 @@
 </template>
 
 <template name="character_status_effects">
-	<a href="#show-all"><i class="icon-chevron-right"></i></a>
+	<a href="#show-all" class="collapse-expand"><i class="icon-chevron-right"></i></a>
 	<div class="control-group character-blinded infrequent {{#if hasEffect "blinded"}}checked{{/if}}">
 		<div class="controls">
 			<input type="checkbox" id="character-{{_id}}-blinded" {{#if hasEffect "blinded"}}checked="checked"{{/if}}>
