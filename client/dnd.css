@@ -17,9 +17,25 @@ body.dm .defense-label:nth-child(5n) {
 .character-bloodied.control-group label {
 	padding-left: 16px;
 }
+.character-dying.control-group label {
+	background-image: url('/icon-skull.png');
+	padding-left: 18px;
+}
 .character-grabbed.control-group label {
 	background-image: url('/icon-hand.png');
 	padding-left: 18px;
+}
+.character-marked.control-group label {
+	background-image: url('/icon-target.png');
+	padding-left: 18px;
+}
+.character-surprised.control-group label {
+	background-image: url('/icon-surprise.png');
+	padding-left: 19px;
+}
+.character-unconscious.control-group label {
+	background-image: url('/icon-sleep.png');
+	padding-left: 20px;
 }
 td.char-damage {
 	font-size: 200%;
@@ -172,6 +188,7 @@ input[type="number"] {
 .status-effects .control-group label {
 	background-repeat: no-repeat;
 	background-position: left center;
+	min-height: 16px;
 }
 .table .status-effects td {
 	text-align: left;
@@ -180,17 +197,13 @@ input[type="number"] {
 }
 .table .status-effects td .control-group,
 .table .status-effects td .collapse-expand {
-	opacity: 0;
-	-webkit-transition: opacity 0.5s ease-in-out;
-	-moz-transition: opacity 0.5s ease-in-out;
-	-ms-transition: opacity 0.5s ease-in-out;
-	-o-transition: opacity 0.5s ease-in-out;
-	transition: opacity 0.5s ease-in-out;
+	display: none;
 }
 .table .active.status-effects td .control-group,
 .table .active.status-effects td .collapse-expand,
-.table .status-effects td .control-group.checked {
-	opacity: 1;
+.table .status-effects td .control-group.checked,
+.table .active.status-effects td .control-group input {
+	display: inline-block;
 }
 .table label {
 	display: inline;
@@ -201,15 +214,19 @@ input[type="number"] {
 }
 .table td {
 	line-height: 32px;
+	background-color: white;
 }
 .table .active td {
 	line-height: 42px;
 }
 .table .control-group,
-.table .control-group.infrequent.checked {
+.table .status-effects td .control-group.infrequent.checked {
 	display: inline-block;
 }
-.table .control-group.infrequent {
+.table .status-effects td .control-group.infrequent {
+	display: none;
+}
+.table .status-effects td .control-group input {
 	display: none;
 }
 .table .control-group + .control-group {
@@ -217,6 +234,19 @@ input[type="number"] {
 }
 .table .control-group.infrequent:first-child + .control-group {
 	margin-left: 0;
+}
+.table .status-effects .control-group {
+	border: 1px solid rgba(150,150,150,0.2);
+	background-color: rgba(150,150,150,0.1);
+	line-height: 1.3;
+	padding: 2px 4px;
+	-webkit-border-radius: 4px;
+	-moz-border-radius: 4px;
+	border-radius: 4px;
+}
+.table .status-effects.active .control-group {
+	border-color: rgba(187,169,17,0.3);
+	background-color: rgba(249,247,225,0.2);
 }
 .table thead .options,
 .table tbody .options {
@@ -256,23 +286,16 @@ input[type="number"] {
 .table .active td.char-name {
 	font-size: 42px;
 }
-.table tr.enemy-true td,
-.table-striped tbody tr.active.enemy-true:nth-child(odd) td {
+.table tr.enemy-true td {
 	color: #FF4D4D;
 	font-style: italic;
 }
 .table tr.active.enemy-true td,
-.table tr.active,
-.table-striped tbody tr.active:nth-child(odd) td,
-.table-striped tbody tr.active.enemy-true:nth-child(odd) td {
+.table .active td,
+.table tbody tr.active:hover td {
 	background-color: #FFE300;
 }
-.table-striped tbody tr:nth-child(odd) td,
-.table-striped tbody tr:nth-child(odd) th,
-.table-striped tbody tr:hover td,
-.table-striped tbody tr:hover th {
+.table tbody tr:hover td,
+.table tbody tr:hover th {
 	background-color: white;
-}
-.table-striped tbody tr.active:hover td {
-	background-color: #FFE300;
 }

@@ -431,7 +431,8 @@ $(document).keydown(function(evt) {
 		// Allow spaces in form fields without changing the active character
 	    return;
 	}
-	if (evt.keyCode == 32) { // space
+	var nextCharCodes = [32, 39, 40];
+	if ($.inArray(evt.keyCode, nextCharCodes) > -1) {
 		evt.preventDefault();
 		nextCharacter();
 	}
