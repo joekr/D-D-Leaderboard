@@ -15,9 +15,11 @@ body.dm .defense-label:nth-child(5n) {
 	margin-left: 5px;
 }
 .character-bloodied.control-group label {
-	background-repeat: no-repeat;
-	background-position: left center;
 	padding-left: 16px;
+}
+.character-grabbed.control-group label {
+	background-image: url('/icon-hand.png');
+	padding-left: 18px;
 }
 td.char-damage {
 	font-size: 200%;
@@ -76,6 +78,9 @@ td.char-damage {
 }
 .icon-sword {
 	background-image: url('/icon-sword.gif');
+}
+label[for] {
+	cursor: pointer;
 }
 .navbar .control-group,
 .navbar .form-actions,
@@ -164,12 +169,23 @@ input[type="text"],
 input[type="number"] {
 	margin-bottom: 0;
 }
-.table .status-effects .control-group {
+.status-effects .control-group label {
+	background-repeat: no-repeat;
+	background-position: left center;
 }
 .table .status-effects td {
 	text-align: left;
 	border-top: none;
 	line-height: 22px;
+	opacity: 0;
+	-webkit-transition: opacity 0.5s ease-in-out;
+	-moz-transition: opacity 0.5s ease-in-out;
+    -ms-transition: opacity 0.5s ease-in-out;
+    -o-transition: opacity 0.5s ease-in-out;
+	transition: opacity 0.5s ease-in-out;
+}
+.table .active.status-effects td {
+	opacity: 1;
 }
 .table label {
 	display: inline;
@@ -226,6 +242,10 @@ input[type="number"] {
 .table td.char-name {
 	font-size: 22px;
 	vertical-align: middle;
+	text-shadow: 1px 1px 1px rgba(0,0,0,0.2);
+}
+.table .enemy-true td.char-name {
+	text-shadow: 1px 1px 1px rgba(154,18,18,0.3);
 }
 .table .active td.char-name {
 	font-size: 42px;
