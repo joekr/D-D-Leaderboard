@@ -22,7 +22,7 @@ var playCharacterAudio = function(character) {
 			audio.attr('src', '/next_character.mp3');
 		}
 
-		audioPlayer.play();
+		//audioPlayer.play();
 	};
 
 var setActiveTr = function(tr) {
@@ -143,15 +143,18 @@ Template.character_status_effects.events = {
 		var character = CharacterList.findOne({
 			_id: this._id
 		});
+		var controlGroup = checkbox.closest('.control-group');
 		var effects = character.effects || [];
 		if (checkbox.is(':checked')) {
 			effects.push(statusEffect);
+			controlGroup.addClass('checked');
 		} else {
 			var idx = $.inArray(statusEffect, effects);
 			do {
 				effects.splice(idx, 1);
 				idx = $.inArray(statusEffect, effects);
 			} while (idx > -1);
+			controlGroup.removeClass('checked');
 		}
 		CharacterList.update({
 			_id: this._id
@@ -166,13 +169,12 @@ Template.character_status_effects.events = {
 		var link = $(event.currentTarget);
 		var icon = $('i', link);
 		var row = link.closest('tr.status-effects');
-		var infrequentEffects = $('.control-group.infrequent', row);
 		if (icon.hasClass('icon-chevron-right')) {
 			icon.removeClass('icon-chevron-right').addClass('icon-chevron-down');
-			infrequentEffects.fadeIn().css("display","inline-block");
+			$('.control-group.infrequent', row).fadeIn().css("display","inline-block");
 		} else {
 			icon.removeClass('icon-chevron-down').addClass('icon-chevron-right');
-			infrequentEffects.fadeOut();
+			$('.control-group.infrequent:not(.checked)', row).fadeOut();
 		}
 	}
 };
@@ -338,14 +340,14 @@ Template.enemy.events = {
 
 Template.character.events = {
 	'click .delete': function() {
-		console.debug('delete' + this);
+		//console.debug('delete' + this);
 		if (confirm("Are you sure you want to delete character " + this.name + "?")) {
 			CharacterList.remove(this._id);
 		}
 		return false;
 	},
 	'click .char-name': function() {
-		console.debug('edit' + this.active);
+		//console.debug('edit' + this.active);
 		$("#new-character").val(this.name);
 		$("#new-initiative").val(this.initiative);
 		$("#char-ac").val(this.char_ac);
@@ -359,7 +361,7 @@ Template.character.events = {
 		$('#add-button').val('Edit');
 	},
 	'click a[href=#retire]': function() {
-		console.debug("Retiring " + this.name);
+		//console.debug("Retiring " + this.name);
 		CharacterList.update({
 			_id: this._id
 		}, {

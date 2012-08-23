@@ -29,13 +29,14 @@ td.char-damage {
 .control-group {
 	margin-bottom: 0;
 }
+.control-group.checked label {
+	font-size: 120%;
+}
 .current-and-max-hp {
 	cursor: pointer;
 }
 .defense,
 .defense-label {
-	float: left;
-	display: block;
 }
 .defense {
 	font-size: 150%;
@@ -183,7 +184,8 @@ input[type="number"] {
 .table .active td {
 	line-height: 42px;
 }
-.table .control-group {
+.table .control-group,
+.table .control-group.infrequent.checked {
 	display: inline-block;
 }
 .table .control-group.infrequent {
@@ -206,7 +208,6 @@ input[type="number"] {
 }
 .table td.char-defenses,
 .table th.char-defenses {
-	min-width: 21em;
 	width: 40%;
 }
 .table td.char-initiative,
