@@ -22,7 +22,7 @@ var playCharacterAudio = function(character) {
 			audio.attr('src', '/next_character.mp3');
 		}
 
-		//audioPlayer.play();
+		audioPlayer.play();
 	};
 
 var setActiveTr = function(tr) {
@@ -160,6 +160,20 @@ Template.character_status_effects.events = {
 				effects: effects
 			}
 		});
+	},
+	'click a[href=#show-all]': function(event) {
+		event.preventDefault();
+		var link = $(event.currentTarget);
+		var icon = $('i', link);
+		var row = link.closest('tr.status-effects');
+		var infrequentEffects = $('.control-group.infrequent', row);
+		if (icon.hasClass('icon-chevron-right')) {
+			icon.removeClass('icon-chevron-right').addClass('icon-chevron-down');
+			infrequentEffects.fadeIn().css("display","inline-block");
+		} else {
+			icon.removeClass('icon-chevron-down').addClass('icon-chevron-right');
+			infrequentEffects.fadeOut();
+		}
 	}
 };
 
