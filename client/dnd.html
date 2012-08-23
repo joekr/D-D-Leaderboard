@@ -125,7 +125,7 @@
 		<tr>
 			<th scope="col" class="char-name">Character</th>
 			<th scope="col" class="char-defenses">Defenses</th>
-			<th scope="col" class="char-def-dmg">Default Damage</th>
+			<th scope="col" class="char-damage">Default Damage</th>
 			<th scope="col" class="char-initiative">Initiative</th>
 			<th scope="col" class="char-options options">Options</th>
 		</tr>
@@ -184,7 +184,7 @@
 		<td></td>
 		<td></td>
 	{{else}}
-		<td class="char_defenses">
+		<td class="char-defenses">
 			<span class="defense-label">AC</span>
 			<span class="armor-class defense">{{char_ac}}</span>
 			<span class="defense-label">Fort</span>
@@ -194,7 +194,7 @@
 			<span class="defense-label">Will</span>
 			<span class="willpower defense">{{char_will}}</span>
 		</td>
-		<td class="char_damage">
+		<td class="char-damage">
 			<i class="icon-sword"></i>
 			{{damage}}
 		</td>

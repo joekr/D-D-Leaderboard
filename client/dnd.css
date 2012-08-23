@@ -1,10 +1,10 @@
 body.dm .table td.char-name {
 	font-size: 28px;
 }
-body.dm .char_damage {
+body.dm .char-damage {
 	font-size: 18px;
 }
-body.dm .char_damage .icon-sword {
+body.dm .char-damage .icon-sword {
 	margin-top: 0.175em;
 }
 body.dm .defense-label:nth-child(5n) {
@@ -19,11 +19,11 @@ body.dm .defense-label:nth-child(5n) {
 	background-position: left center;
 	padding-left: 16px;
 }
-.char_damage {
+td.char-damage {
 	font-size: 200%;
 	font-weight: 700;
 }
-	.char_damage .icon-sword {
+	.char-damage .icon-sword {
 		margin-top: 0.275em;
 	}
 .control-group {
@@ -58,6 +58,11 @@ body.dm .defense-label:nth-child(5n) {
 	#enemy-form label {
 		display: none;
 	}
+.active .char-name,
+.active.enemy-true .char-name,
+.active.enemy-false .char-name {
+	line-height: 100px;
+}
 .icon-blood,
 .icon-sword {
 	background-position: left top;
@@ -160,8 +165,6 @@ input[type="number"] {
 }
 .table .status-effects .control-group {
 }
-.table .status-effects .control-group:hover {
-}
 .table .status-effects td {
 	text-align: left;
 	border-top: none;
@@ -195,6 +198,22 @@ input[type="number"] {
 .table thead .options,
 .table tbody .options {
 	width: 7em;
+}
+.table td.char-damage,
+.table th.char-damage {
+	min-width: 4.5em;
+	width: 15%;
+}
+.table td.char-defenses,
+.table th.char-defenses {
+	min-width: 21em;
+	width: 40%;
+}
+.table td.char-initiative,
+.table th.char-initiative {
+	min-width: 3em;
+	width: 15%;
+	text-align: center;
 }
 .table td.char-initiative {
 	font-size: 1.5em;

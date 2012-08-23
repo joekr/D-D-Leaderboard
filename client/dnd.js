@@ -22,20 +22,20 @@ var playCharacterAudio = function(character) {
 			audio.attr('src', '/next_character.mp3');
 		}
 
-		audioPlayer.play();
+		//audioPlayer.play();
 	};
 
 var setActiveTr = function(tr) {
 		tr.addClass('active');
+		var id = tr.attr('data-id');
 		CharacterList.update({
-			_id: tr.attr('data-id')
+			_id: id
 		}, {
 			$set: {
 				active: true
 			}
 		});
-		var character = CharacterList.findOne({_id: tr.attr('data-id')});
-		var activeCharName = $('.char-name', tr).text().toLowerCase();
+		var character = CharacterList.findOne({_id: id});
 		playCharacterAudio(character);
 	};
 
