@@ -159,10 +159,8 @@ input[type="number"] {
 	margin-bottom: 0;
 }
 .table .status-effects .control-group {
-	opacity: 0.5;
 }
 .table .status-effects .control-group:hover {
-	opacity: 1;
 }
 .table .status-effects td {
 	text-align: left;

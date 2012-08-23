@@ -2,6 +2,8 @@
 
 ![Dungeons and Dragons Leaderboard in Chrome](https://raw.github.com/joekr/D-D-Leaderboard/master/screenshot-1.png "Viewed in Chrome")
 
+See [Handlebars](http://handlebarsjs.com/) for the template system.
+
 ## Install Meteor
     $ curl install.meteor.com | /bin/sh
 

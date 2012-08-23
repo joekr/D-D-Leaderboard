@@ -204,7 +204,7 @@
 <template name="character_status_effects">
 	<div class="control-group character-blinded infrequent">
 		<div class="controls">
-			<input type="checkbox" id="character-{{_id}}-blinded">
+			<input type="checkbox" id="character-{{_id}}-blinded" {{#if hasEffect "blinded"}}checked="checked"{{/if}}>
 			<label for="character-{{_id}}-blinded">
 				Blinded
 			</label>
@@ -212,7 +212,7 @@
 	</div>
 	<div class="control-group character-bloodied">
 		<div class="controls">
-			<input type="checkbox" id="character-{{_id}}-bloodied">
+			<input type="checkbox" id="character-{{_id}}-bloodied" {{#if hasEffect "bloodied"}}checked="checked"{{/if}}>
 			<label for="character-{{_id}}-bloodied">
 				Bloodied
 			</label>
@@ -220,7 +220,7 @@
 	</div>
 	<div class="control-group character-dazed infrequent">
 		<div class="controls">
-			<input type="checkbox" id="character-{{_id}}-dazed">
+			<input type="checkbox" id="character-{{_id}}-dazed" {{#if hasEffect "dazed"}}checked="checked"{{/if}}>
 			<label for="character-{{_id}}-dazed">
 				Dazed
 			</label>
@@ -228,7 +228,7 @@
 	</div>
 	<div class="control-group character-deafened infrequent">
 		<div class="controls">
-			<input type="checkbox" id="character-{{_id}}-deafened">
+			<input type="checkbox" id="character-{{_id}}-deafened" {{#if hasEffect "deafened"}}checked="checked"{{/if}}>
 			<label for="character-{{_id}}-deafened">
 				Deafened
 			</label>
@@ -236,7 +236,7 @@
 	</div>
 	<div class="control-group character-dominated infrequent">
 		<div class="controls">
-			<input type="checkbox" id="character-{{_id}}-dominated">
+			<input type="checkbox" id="character-{{_id}}-dominated" {{#if hasEffect "dominated"}}checked="checked"{{/if}}>
 			<label for="character-{{_id}}-dominated">
 				Dominated
 			</label>
@@ -244,7 +244,7 @@
 	</div>
 	<div class="control-group character-dying">
 		<div class="controls">
-			<input type="checkbox" id="character-{{_id}}-dying">
+			<input type="checkbox" id="character-{{_id}}-dying" {{#if hasEffect "dying"}}checked="checked"{{/if}}>
 			<label for="character-{{_id}}-dying">
 				Dying
 			</label>
@@ -252,7 +252,7 @@
 	</div>
 	<div class="control-group character-grabbed">
 		<div class="controls">
-			<input type="checkbox" id="character-{{_id}}-grabbed">
+			<input type="checkbox" id="character-{{_id}}-grabbed" {{#if hasEffect "grabbed"}}checked="checked"{{/if}}>
 			<label for="character-{{_id}}-grabbed">
 				Grabbed
 			</label>
@@ -260,7 +260,7 @@
 	</div>
 	<div class="control-group character-helpless infrequent">
 		<div class="controls">
-			<input type="checkbox" id="character-{{_id}}-helpless">
+			<input type="checkbox" id="character-{{_id}}-helpless" {{#if hasEffect "helpless"}}checked="checked"{{/if}}>
 			<label for="character-{{_id}}-helpless">
 				Helpless
 			</label>
@@ -268,7 +268,7 @@
 	</div>
 	<div class="control-group character-immobilized infrequent">
 		<div class="controls">
-			<input type="checkbox" id="character-{{_id}}-immobilized">
+			<input type="checkbox" id="character-{{_id}}-immobilized" {{#if hasEffect "immobilized"}}checked="checked"{{/if}}>
 			<label for="character-{{_id}}-immobilized">
 				Immobilized
 			</label>
@@ -276,7 +276,7 @@
 	</div>
 	<div class="control-group character-marked infrequent">
 		<div class="controls">
-			<input type="checkbox" id="character-{{_id}}-marked">
+			<input type="checkbox" id="character-{{_id}}-marked" {{#if hasEffect "marked"}}checked="checked"{{/if}}>
 			<label for="character-{{_id}}-marked">
 				Marked
 			</label>
@@ -284,7 +284,7 @@
 	</div>
 	<div class="control-group character-petrified infrequent">
 		<div class="controls">
-			<input type="checkbox" id="character-{{_id}}-petrified">
+			<input type="checkbox" id="character-{{_id}}-petrified" {{#if hasEffect "petrified"}}checked="checked"{{/if}}>
 			<label for="character-{{_id}}-petrified">
 				Petrified
 			</label>
@@ -292,7 +292,7 @@
 	</div>
 	<div class="control-group character-prone">
 		<div class="controls">
-			<input type="checkbox" id="character-{{_id}}-prone">
+			<input type="checkbox" id="character-{{_id}}-prone" {{#if hasEffect "prone"}}checked="checked"{{/if}}>
 			<label for="character-{{_id}}-prone">
 				Prone
 			</label>
@@ -300,7 +300,7 @@
 	</div>
 	<div class="control-group character-restrained infrequent">
 		<div class="controls">
-			<input type="checkbox" id="character-{{_id}}-restrained">
+			<input type="checkbox" id="character-{{_id}}-restrained" {{#if hasEffect "restrained"}}checked="checked"{{/if}}>
 			<label for="character-{{_id}}-restrained">
 				Restrained
 			</label>
@@ -308,7 +308,7 @@
 	</div>
 	<div class="control-group character-slowed">
 		<div class="controls">
-			<input type="checkbox" id="character-{{_id}}-slowed">
+			<input type="checkbox" id="character-{{_id}}-slowed" {{#if hasEffect "slowed"}}checked="checked"{{/if}}>
 			<label for="character-{{_id}}-slowed">
 				Slowed
 			</label>
@@ -316,7 +316,7 @@
 	</div>
 	<div class="control-group character-stunned">
 		<div class="controls">
-			<input type="checkbox" id="character-{{_id}}-stunned">
+			<input type="checkbox" id="character-{{_id}}-stunned" {{#if hasEffect "stunned"}}checked="checked"{{/if}}>
 			<label for="character-{{_id}}-stunned">
 				Stunned
 			</label>
@@ -324,7 +324,7 @@
 	</div>
 	<div class="control-group character-surprised infrequent">
 		<div class="controls">
-			<input type="checkbox" id="character-{{_id}}-surprised">
+			<input type="checkbox" id="character-{{_id}}-surprised" {{#if hasEffect "surprised"}}checked="checked"{{/if}}>
 			<label for="character-{{_id}}-surprised">
 				Surprised
 			</label>
@@ -332,7 +332,7 @@
 	</div>
 	<div class="control-group character-unconscious">
 		<div class="controls">
-			<input type="checkbox" id="character-{{_id}}-unconscious">
+			<input type="checkbox" id="character-{{_id}}-unconscious" {{#if hasEffect "unconscious"}}checked="checked"{{/if}}>
 			<label for="character-{{_id}}-unconscious">
 				Unconscious
 			</label>
@@ -340,7 +340,7 @@
 	</div>
 	<div class="control-group character-weakened infrequent">
 		<div class="controls">
-			<input type="checkbox" id="character-{{_id}}-weakened">
+			<input type="checkbox" id="character-{{_id}}-weakened" {{#if hasEffect "weakened"}}checked="checked"{{/if}}>
 			<label for="character-{{_id}}-weakened">
 				Weakened
 			</label>
@@ -375,7 +375,7 @@
 		{{else}}
 			<tr data-id="{{_id}}" class="enemy-{{isEnemy}} status-effects">
 		{{/if}}
-			<td colspan="4">
+			<td colspan="4" class="">
 				{{> character_status_effects}}
 			</td>
 		</tr>

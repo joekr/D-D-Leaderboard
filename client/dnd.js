@@ -1,7 +1,7 @@
 CharacterList = new Meteor.Collection("characters");
 EnemyList = new Meteor.Collection("enemies");
 
-var playCharacterAudio = function(char) {
+var playCharacterAudio = function(character) {
 		//console.debug("Going to play character audio " + char.name);
 		var audio = $('#char-name-audio');
 		var audioPlayer = audio.get(0);
@@ -12,11 +12,11 @@ var playCharacterAudio = function(char) {
 		}
 
 		var audibleNames = ['xavia', 'thar'];
-		var mp3Path = '/' + char.name + '.mp3';
+		var mp3Path = '/' + character.name + '.mp3';
 		
-		if ($.inArray(char.name, audibleNames) > -1) {
+		if ($.inArray(character.name.toLowerCase(), audibleNames) > -1) {
 			audio.attr('src', mp3Path);
-		} else if (char.isEnemy) {
+		} else if (character.isEnemy) {
 			audio.attr('src', '/dragon.mp3');
 		} else {
 			audio.attr('src', '/next_character.mp3');
@@ -34,9 +34,9 @@ var setActiveTr = function(tr) {
 				active: true
 			}
 		});
-		var char = CharacterList.findOne({_id:tr.attr('id')});
+		var character = CharacterList.findOne({_id: tr.attr('data-id')});
 		var activeCharName = $('.char-name', tr).text().toLowerCase();
-		playCharacterAudio(char);
+		playCharacterAudio(character);
 	};
 
 var nextCharacter = function() {
@@ -64,7 +64,7 @@ var nextCharacter = function() {
 				nextCharRow = tr.parent().children('tr:first-child');
 			}
 			nextCharID = nextCharRow.attr('data-id');
-		}	
+		}
 		setActiveTr($('#character-table tbody tr[data-id=' + nextCharID + ']'));
 	};
 	
@@ -131,6 +131,38 @@ Template.enemy_form.events = {
 	}
 };
 
+Template.character_status_effects.hasEffect = function(effect) {
+	return $.inArray(effect, this.effects || []) > -1;
+};
+
+Template.character_status_effects.events = {
+	'change input[type=checkbox]': function(event) {
+		var checkbox = $(event.currentTarget);
+		var label = checkbox.next('label');
+		var statusEffect = label.text().trim().toLowerCase();
+		var character = CharacterList.findOne({
+			_id: this._id
+		});
+		var effects = character.effects || [];
+		if (checkbox.is(':checked')) {
+			effects.push(statusEffect);
+		} else {
+			var idx = $.inArray(statusEffect, effects);
+			do {
+				effects.splice(idx, 1);
+				idx = $.inArray(statusEffect, effects);
+			} while (idx > -1);
+		}
+		CharacterList.update({
+			_id: this._id
+		}, {
+			$set: {
+				effects: effects
+			}
+		});
+	}
+};
+
 Template.navbar.events = {
 	'click #add-button': function() {
 		var id = $('#character-id').val();
@@ -161,7 +193,8 @@ Template.navbar.events = {
 				char_fort: charFort,
 				char_ref: charRef,
 				char_will: charWill,
-				damage: damage
+				damage: damage,
+				effects: []
 			};
 			console.debug("Inserting new character: " + JSON.stringify(charProps));
 			CharacterList.insert(charProps);
