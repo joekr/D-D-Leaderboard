@@ -14,11 +14,25 @@ body.dm .defense-label:nth-child(5n) {
 .btn + .btn {
 	margin-left: 5px;
 }
+.character-blinded.control-group label {
+	background-image: url('/icon-blind.svg');
+	-o-background-size: 16px 100%;
+	-webkit-background-size: 16px 100%;
+	padding-left: 18px;
+}
 .character-bloodied.control-group label {
 	padding-left: 16px;
 }
+.character-deafened.control-group label {
+	background-image: url('/icon-ear.svg');
+	-o-background-size: 16px 100%;
+	-webkit-background-size: 16px 100%;
+	padding-left: 18px;
+}
 .character-dying.control-group label {
-	background-image: url('/icon-skull.png');
+	background-image: url('/icon-skull.svg');
+	-o-background-size: 16px 100%;
+	-webkit-background-size: 16px 100%;
 	padding-left: 18px;
 }
 .character-grabbed.control-group label {
@@ -26,7 +40,9 @@ body.dm .defense-label:nth-child(5n) {
 	padding-left: 18px;
 }
 .character-marked.control-group label {
-	background-image: url('/icon-target.png');
+	background-image: url('/icon-target.svg');
+	-o-background-size: 16px 100%;
+	-webkit-background-size: 16px 100%;
 	padding-left: 18px;
 }
 .character-surprised.control-group label {
@@ -252,14 +268,18 @@ input[type="number"] {
 .table tbody .options {
 	width: 7em;
 }
+.table thead th {
+	background-color: #f9f9f9;
+	vertical-align: middle;
+}
 .table td.char-damage,
 .table th.char-damage {
 	min-width: 4.5em;
 	width: 15%;
 }
-.table td.char-defenses,
-.table th.char-defenses {
-	width: 40%;
+.table td.char-defense,
+.table th.char-defense {
+	width: 9%;
 }
 .table td.char-initiative,
 .table th.char-initiative {
@@ -299,3 +319,14 @@ input[type="number"] {
 .table tbody tr:hover th {
 	background-color: white;
 }
+ul.inline {
+	margin: 0;
+	padding: 0;
+	list-style: none;
+}
+	ul.inline li {
+		display: inline-block;
+	}
+	ul.inline li + li {
+		margin-left: 1.5em;
+	}

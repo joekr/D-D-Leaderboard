@@ -18,7 +18,12 @@
 		{{> out-game-character}}
 		<hr>
 		<footer>
-			<a href="#dm">Dungeon Master view</a>
+			<ul class="inline">
+				<li><a href="#dm">Dungeon Master view</a></li>
+				<li>Thanks:</li>
+				<li><a href="http://thenounproject.com/noun/target/#icon-No308">The Noun Project</a></li>
+				<li><a href="http://thenounproject.com/noun/skull/#icon-No2992">Gabriele Fumero, from The Noun Project</a></li>
+				<li><a href="http://thenounproject.com/noun/blind/#icon-No3918">Jordan Delcros</a></li>
 		</footer>
 	</div>
 	<audio id="char-name-audio" style="display: none;"></audio>
@@ -124,8 +129,11 @@
 	<thead>
 		<tr>
 			<th scope="col" class="char-name">Character</th>
-			<th scope="col" class="char-defenses">Defenses</th>
-			<th scope="col" class="char-damage">Default Damage</th>
+			<th scope="col">A.C.</th>
+			<th scope="col">Fort.</th>
+			<th scope="col">Will.</th>
+			<th scope="col">Ref.</th>
+			<th scope="col" class="char-damage">Avg. Damage</th>
 			<th scope="col" class="char-initiative">Initiative</th>
 			<th scope="col" class="char-options options">Options</th>
 		</tr>
@@ -181,17 +189,18 @@
 
 <template name="character_def_dmg">
 	{{#if isEnemy}}
-		<td></td>
-		<td></td>
+		<td colspan="5"></td>
 	{{else}}
-		<td class="char-defenses">
-			<span class="defense-label">AC</span>
+		<td class="char-defense char-ac">
 			<span class="armor-class defense">{{char_ac}}</span>
-			<span class="defense-label">Fort</span>
+		</td>
+		<td class="char-defense char-fort">
 			<span class="fortitude defense">{{char_fort}}</span>
-			<span class="defense-label">Ref</span>
+		</td>
+		<td class="char-defense char-ref">
 			<span class="reflex defense">{{char_ref}}</span>
-			<span class="defense-label">Will</span>
+		</td>
+		<td class="char-defense char-will">
 			<span class="willpower defense">{{char_will}}</span>
 		</td>
 		<td class="char-damage">
@@ -376,7 +385,7 @@
 		{{else}}
 			<tr data-id="{{_id}}" class="enemy-{{isEnemy}} status-effects">
 		{{/if}}
-			<td colspan="4" class="">
+			<td colspan="7" class="">
 				{{> character_status_effects}}
 			</td>
 		</tr>
