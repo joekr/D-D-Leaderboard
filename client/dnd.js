@@ -1,5 +1,4 @@
 CharacterList = new Meteor.Collection("characters");
-EnemyList = new Meteor.Collection("enemies");
 
 var playCharacterAudio = function(character) {
 		//console.debug("Going to play character audio " + char.name);
@@ -67,20 +66,7 @@ var nextCharacter = function() {
 		}
 		setActiveTr($('#character-table tbody tr[data-id=' + nextCharID + ']'));
 	};
-	
-var setupDMView = function() {
-		console.debug("Setting up DM view");
-		$('body').addClass('dm');
-		$('#character-list-span').removeClass('span12').addClass('span6');
-		$('#dm-view').show();
-	};
 
-var setupDMViewIfNecessary = function() {
-		if (window.location.hash == '#dm') {
-			setupDMView();
-		}
-	};
-	
 var fieldHasValue = function(nameField) {
 		var name = nameField.val();
 		var nameControlGroup = nameField.closest('.control-group');
@@ -92,41 +78,17 @@ var fieldHasValue = function(nameField) {
 		return true;
 	};
 
-Template.enemy_form.events = {
-	'click #enemy-add-button': function() {
-		var id = $('#enemy-id').val();
-		var enemy = EnemyList.findOne({_id: id});
-
-		var nameField = $('#enemy-name');
-		var name = nameField.val();
-		if (!fieldHasValue(nameField)) {
-			return;
-		}
-		var initiative = parseInt($('#enemy-initiative').val(), 10);
-		var maxHP = parseInt($('#enemy-max-hp').val(), 10);
-		var curHP = parseInt($('#enemy-hp').val(), 10);
-		if (null == enemy) {
-			console.debug("Adding enemy #" + id);
-			EnemyList.insert({
-				name: name,
-				initiative: initiative,
-				active: false,
-				inGame: true,
-				maxHP: maxHP,
-				currentHP: curHP
-			});
-		} else {
-			console.debug("Updating enemy #" + id);
-			EnemyList.update({
-				_id: id
-			}, {
-				$set: {
-					initiative: initiative,
-					name: name,
-					maxHP: maxHP,
-					currentHP: curHP
-				}
-			});
+Template.footer.events = {
+	'click a[href=#dm]': function(event) {
+		event.preventDefault();
+		var body = $('body');
+		var link = $(event.currentTarget);
+		if (body.hasClass('dm')) {
+			body.removeClass('dm');
+			link.text('Dungeon Master view');
+		} else if (confirm("Are you sure you want to turn on Dungeon Master view?")) {
+			body.addClass('dm');
+			link.text('Regular player view');
 		}
 	}
 };
@@ -182,7 +144,7 @@ Template.character_status_effects.events = {
 Template.navbar.events = {
 	'click #add-button': function() {
 		var id = $('#character-id').val();
-		var obj = CharacterList.findOne({
+		var character = CharacterList.findOne({
 			_id: id
 		});
 		var nameField = $("#new-character");
@@ -198,7 +160,9 @@ Template.navbar.events = {
 		var charRef = parseInt($("#char-ref").val(), 10);
 		var charWill = parseInt($("#char-will").val(), 10);
 		var damage = parseInt($("#char-dmg").val(), 10);
-		if (null == obj) {
+		var currentHP = isEnemy ? parseInt($('#enemy-hp').val(), 10) : -1;
+		var maxHP = isEnemy ? parseInt($('#enemy-max-hp').val(), 10) : -1;
+		if (null == character) {
 			var charProps = {
 				name: name,
 				initiative: initiativeVal,
@@ -209,6 +173,8 @@ Template.navbar.events = {
 				char_fort: charFort,
 				char_ref: charRef,
 				char_will: charWill,
+				currentHP: currentHP,
+				maxHP: maxHP,
 				damage: damage,
 				effects: []
 			};
@@ -228,6 +194,8 @@ Template.navbar.events = {
 					char_ref: charRef,
 					char_will: charWill,
 					damage: damage,
+					currentHP: currentHP,
+					maxHP: maxHP,
 					char_in_game: isInGame
 				}
 			});
@@ -252,36 +220,6 @@ Template.navbar.events = {
 	}
 };
 
-Template.characters.onCharactersLoaded = function() {
-	Meteor.defer(function () {
-		setupDMViewIfNecessary();
-	});
-};
-
-Template.enemy_list.events = {
-	'click .char-name': function() {
-		console.debug('edit'+this._id);		
-		$("#enemy-id").val(this._id);
-		$("#enemy-name").val(this.name);
-		$("#enemy-initiative").val(this.initiative);
-		$("#enemy-max-hp").val(this.maxHP);
-		$("#enemy-hp").val(this.currentHP);
-		
-		$('#enemy-add-button').val('Edit');
-	}
-}
-
-Template.enemy_list.enemies = function() {
-	return EnemyList.find({
-		inGame: true
-	}, {
-		sort: {
-			initiative: -1,
-			name: 1
-		}
-	});
-};
-
 Template.character_list.characters = function() {
 	return CharacterList.find({
 		char_in_game: true
@@ -293,49 +231,8 @@ Template.character_list.characters = function() {
 	});
 };
 
-Template.enemy.isBloodied = function() {
-	return this.currentHP == (this.maxHP / 2);
-};
-
-Template.enemy.events = {
-	'click .delete': function() {
-		if (confirm("Are you sure you want to delete enemy " + this.name + "?")) {
-			EnemyList.remove(this._id);
-		}
-		return false;
-	},
-	'click .current-and-max-hp': function(event) {
-		var currentAndMaxHPSpan = $(event.currentTarget);
-		if (currentAndMaxHPSpan.hasClass('editing')) {
-			return;
-		}
-		currentAndMaxHPSpan.addClass('editing');
-		var currentHPSpan = $('.current-hp', currentAndMaxHPSpan);
-		var currentHP = currentHPSpan.text();
-		var input = $('<input type="number">');
-		input.val(currentHP);
-		currentHPSpan.html(input);
-		var enemy = this;
-		var updateCurrentHP = function() {
-			var newHP = parseInt(input.val(), 10);
-			EnemyList.update({
-				_id: enemy._id
-			}, {
-				$set: {
-					currentHP: newHP
-				}
-			});
-			input.remove();
-			currentHPSpan.text(newHP);
-			currentAndMaxHPSpan.removeClass('editing');
-		};
-		input.keypress(function(e) {
-		    if (e.which == 13) { // Enter
-				updateCurrentHP();
-			}
-		});
-		input.blur(updateCurrentHP);
-	}
+Template.character.isBloodied = function() {
+	return this.currentHP <= (this.maxHP / 2);
 };
 
 var editCharacter = function(character) {
@@ -348,6 +245,12 @@ var editCharacter = function(character) {
 	$("#char-dmg").val(character.damage);
 	$('#new-enemy').attr('checked', character.isEnemy);
 	$('#in-game').attr('checked', character.char_in_game);
+	if (character.isEnemy) {
+		$('#enemy-hp').removeAttr('disabled').val(character.currentHP);
+		$('#enemy-max-hp').removeAttr('disabled').val(character.maxHP);
+	} else {
+		$('#enemy-hp, #enemy-max-hp').attr('disabled', 'disabled');
+	}
 	$('#character-id').val(character._id);
 	$('#add-button').val('Edit');
 	$('html, body').animate({scrollTop: 0}, 500);
@@ -374,6 +277,38 @@ Template.character.events = {
 			}
 		});
 		return false;
+	},
+	'click .current-and-max-hp': function(event) {
+		var currentAndMaxHPSpan = $(event.currentTarget);
+		if (currentAndMaxHPSpan.hasClass('editing')) {
+			return;
+		}
+		currentAndMaxHPSpan.addClass('editing');
+		var currentHPSpan = $('.current-hp', currentAndMaxHPSpan);
+		var currentHP = currentHPSpan.text();
+		var input = $('<input type="number">');
+		input.val(currentHP);
+		currentHPSpan.html(input);
+		var enemy = this;
+		var updateCurrentHP = function() {
+			var newHP = parseInt(input.val(), 10);
+			CharacterList.update({
+				_id: enemy._id
+			}, {
+				$set: {
+					currentHP: newHP
+				}
+			});
+			input.remove();
+			currentHPSpan.text(newHP);
+			currentAndMaxHPSpan.removeClass('editing');
+		};
+		input.keypress(function(e) {
+		    if (e.which == 13) { // Enter
+				updateCurrentHP();
+			}
+		});
+		input.blur(updateCurrentHP);
 	}
 };
 

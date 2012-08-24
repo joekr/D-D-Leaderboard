@@ -1,16 +1,23 @@
-body.dm .table td.char-name {
-	font-size: 28px;
+.active .char-name,
+.active.enemy-true .char-name,
+.active.enemy-false .char-name {
+	line-height: 100px;
 }
-body.dm .char-damage {
-	font-size: 18px;
+body.dm {
+	background-color: #f2f2f2;
 }
-body.dm .char-damage .icon-sword {
-	margin-top: 0.175em;
-}
-body.dm .defense-label:nth-child(5n) {
-	clear: left;
-	margin-left: 0;
-}
+	body.dm div.dm,
+	body.dm fieldset.dm {
+		display: block;
+	}
+	body.dm td.dm,
+	body.dm th.dm {
+		display: table-cell;
+	}
+	body.dm .table td.char-defense,
+	body.dm .table th.char-defense {
+		width: 8%;
+	}
 .btn + .btn {
 	margin-left: 5px;
 }
@@ -68,6 +75,7 @@ td.char-damage {
 }
 .current-and-max-hp {
 	cursor: pointer;
+	font-size: 120%;
 }
 .defense,
 .defense-label {
@@ -85,18 +93,11 @@ td.char-damage {
 .defense-label:after {
 	content: ": ";
 }
-#dm-view {
+div.dm,
+div.control-group.dm,
+fieldset.dm,
+.navbar fieldset.dm {
 	display: none;
-}
-#enemy-form {
-}
-	#enemy-form label {
-		display: none;
-	}
-.active .char-name,
-.active.enemy-true .char-name,
-.active.enemy-false .char-name {
-	line-height: 100px;
 }
 .icon-blood,
 .icon-sword {
@@ -116,8 +117,7 @@ label[for] {
 }
 .navbar .control-group,
 .navbar .form-actions,
-#enemy-form .control-group,
-#enemy-form .form-actions {
+body.dm .navbar .control-group.dm {
 	display: inline-block;
 }
 .navbar .control-group.error .checkbox,
@@ -127,15 +127,20 @@ label[for] {
 .navbar .control-group.error textarea {
 	background-color: #FFDDD7;
 }
-.navbar fieldset {
+.navbar fieldset,
+body.dm .navbar fieldset.dm {
 	display: inline-block;
 	border-left: 1px solid rgb(90,90,90);
 	border-right: 1px solid rgb(90,90,90);
 	padding: 0 0 0 9px;
 	margin: 0 7px 0 0;
 }
-.navbar .form-actions,
-#enemy-form .form-actions {
+.navbar fieldset + fieldset,
+body.dm .navbar fieldset + fieldset.dm {
+	border-left: none;
+	padding-left: 0;
+}
+.navbar .form-actions {
 	padding: 0;
 	margin: 0;
 	background-color: transparent;
@@ -206,6 +211,13 @@ input[type="number"] {
 	background-position: left center;
 	min-height: 16px;
 }
+td.dm,
+th.dm {
+	display: none;
+}
+	td.dm .icon-blood {
+		vertical-align: baseline;
+	}
 .table .status-effects td {
 	text-align: left;
 	border-top: none;
@@ -279,7 +291,7 @@ input[type="number"] {
 }
 .table td.char-defense,
 .table th.char-defense {
-	width: 9%;
+	width: 9.5%;
 }
 .table td.char-initiative,
 .table th.char-initiative {
