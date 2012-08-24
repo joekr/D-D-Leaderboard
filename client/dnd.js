@@ -153,7 +153,6 @@ Template.navbar.events = {
 			return;
 		}
 		var isEnemy = $('#new-enemy').is(':checked');
-		var isInGame = $('#in-game').is(':checked');
 		var initiativeVal = parseInt($("#new-initiative").val(), 10);
 		var charAc = parseInt($("#char-ac").val(), 10);
 		var charFort = parseInt($("#char-fort").val(), 10);
@@ -168,7 +167,7 @@ Template.navbar.events = {
 				initiative: initiativeVal,
 				active: false,
 				isEnemy: isEnemy,
-				char_in_game: isInGame,
+				char_in_game: true,
 				char_ac: charAc,
 				char_fort: charFort,
 				char_ref: charRef,
@@ -195,8 +194,7 @@ Template.navbar.events = {
 					char_will: charWill,
 					damage: damage,
 					currentHP: currentHP,
-					maxHP: maxHP,
-					char_in_game: isInGame
+					maxHP: maxHP
 				}
 			});
 		}
@@ -204,7 +202,6 @@ Template.navbar.events = {
 	},
 	'click #reset-button': function() {
 		$('#new-enemy').attr('checked', false);
-		$('#in-game').attr('checked', true);
 		$('#add-button').val('Add');
 		$("#char-ac").val('');
 		$("#char-fort").val('');
@@ -213,10 +210,6 @@ Template.navbar.events = {
 		$("#char-dmg").val('');
 		$('#character-id').val('');
 		$('.navbar .control-group.error').removeClass('error');
-	},
-	'click #next-character-link': function() {
-		nextCharacter();
-		return false;
 	}
 };
 
@@ -244,7 +237,6 @@ var editCharacter = function(character) {
 	$("#char-will").val(character.char_will);
 	$("#char-dmg").val(character.damage);
 	$('#new-enemy').attr('checked', character.isEnemy);
-	$('#in-game').attr('checked', character.char_in_game);
 	if (character.isEnemy) {
 		$('#enemy-hp').removeAttr('disabled').val(character.currentHP);
 		$('#enemy-max-hp').removeAttr('disabled').val(character.maxHP);

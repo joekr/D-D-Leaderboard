@@ -35,58 +35,51 @@
 </template>
 
 <template name="navbar">
-	<ul class="nav">
-		<li><a href="#" id="next-character-link">Next Character</a></li>
-	</ul>
 	<form class="pull-right navbar-form form-inline">
 		<input type="hidden" id="character-id" value="">
 		<div class="control-group">
-			<label for="new-character">Name</label>
-			<input type="text" id="new-character" class="input-small" placeholder="New character">
+			<label for="new-character" class="hidden">Name</label>
+			<input type="text" id="new-character" class="input-small" placeholder="Character">
 		</div>
 		<div class="control-group">
-			<label for="new-initiative">Initiative</label>
+			<label for="new-initiative">Init</label>
 			<input type="number" class="integer" id="new-initiative" placeholder="Init">
 		</div>
 		<fieldset>
 			<div class="control-group">
-				<label for="char-ac">Armor class</label>
+				<label for="char-ac">AC</label>
 	    	<input type="number" id="char-ac" placeholder="AC" class="integer">
 			</div>
 			<div class="control-group">
-				<label for="char-fort">Fortitude</label>
+				<label for="char-fort">Fort</label>
 	    	<input type="number" id="char-fort" placeholder="Fort" class="integer">
 			</div>
 			<div class="control-group">
-				<label for="char-ref">Reflex</label>
+				<label for="char-ref">Ref</label>
 	    	<input type="number" id="char-ref" placeholder="Ref" class="integer">
 			</div>
 			<div class="control-group">
-				<label for="char-will">Willpower</label>
+				<label for="char-will">Will</label>
 	    	<input type="number" id="char-will" placeholder="Will" class="integer">
 			</div>
 		</fieldset>
 		<fieldset class="dm">
 			<div class="control-group dm">
-				<label for="enemy-hp">Current health</label>
+				<label for="enemy-hp">HP</label>
 				<input type="number" class="integer" id="enemy-hp" placeholder="HP">
 			</div>
 			<div class="control-group dm">
-				<label for="enemy-max-hp">Max health</label>
+				<label for="enemy-max-hp">Max HP</label>
 				<input type="number" class="integer" id="enemy-max-hp" placeholder="Max HP">
 			</div>
 		</fieldset>
 		<div class="control-group">
-			<label for="char-dmg">Default damage</label>
+			<label for="char-dmg">Avg Dmg</label>
     	<input type="number" id="char-dmg" placeholder="~Dmg">
 		</div>
 		<div class="control-group">
 			<input type="checkbox" id="new-enemy">
 			<label for="new-enemy">Enemy?</label>
-		</div>
-		<div class="control-group">
-			<input type="checkbox" id="in-game" checked="checked">
-			<label for="in-game">Playing?</label>
 		</div>
 		<div class="form-actions">
 			<input type="button" id="add-button" class="btn btn-primary btn-large" value="Add">
@@ -132,7 +125,7 @@
 	</table>
 </template>
 
-<template name="character_def_dmg">
+<template name="character_defenses_dmg">
 	{{#if isEnemy}}
 		<td colspan="5"></td>
 	{{else}}
@@ -303,6 +296,22 @@
 	</div>
 </template>
 
+<template name="character_hp">
+	{{#if isEnemy}}
+		<td class="dm">
+			{{#if isBloodied}}
+				<i class="icon-blood"></i>
+			{{/if}}
+			<span class="current-and-max-hp">
+				<span class="current-hp">{{currentHP}}</span> / 
+				<span class="max-hp">{{maxHP}}</span>
+			</span>
+		</td>
+	{{else}}
+		<td class="dm"></td>
+	{{/if}}
+</template>
+
 <template name="character">
 	<tr data-id="{{_id}}" class="{{#if active}}active{{/if}} enemy-{{isEnemy}}">
 		{{#if isEnemy}}
@@ -312,20 +321,8 @@
 		{{/if}}
 			{{name}}
 		</td>
-		{{#if isEnemy}}
-			<td class="dm">
-				{{#if isBloodied}}
-					<i class="icon-blood"></i>
-				{{/if}}
-				<span class="current-and-max-hp">
-					<span class="current-hp">{{currentHP}}</span> / 
-					<span class="max-hp">{{maxHP}}</span>
-				</span>
-			</td>
-		{{else}}
-			<td class="dm"></td>
-		{{/if}}
-		{{> character_def_dmg}}
+		{{> character_hp}}
+		{{> character_defenses_dmg}}
 		<td class="char-initiative">{{initiative}}</td>
 		<td class="options">
 			<a href="#delete" class="delete btn btn-danger"><i class="icon-white icon-trash"></i></a>
@@ -369,7 +366,8 @@
 <template name="out_character">
 	<tr id={{_id}} class="enemy-{{isEnemy}}">
 		<td class="char-name">{{name}}</td>
-		{{> character_def_dmg}}
+		{{> character_hp}}
+		{{> character_defenses_dmg}}
  		<td>&mdash;</td>
 		<td>
 			<a href="#delete" class="delete btn btn-danger"><i class="icon-white icon-trash"></i></a>

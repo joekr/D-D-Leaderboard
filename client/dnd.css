@@ -4,11 +4,28 @@
 	line-height: 100px;
 }
 body.dm {
-	background-color: #f2f2f2;
 }
 	body.dm div.dm,
 	body.dm fieldset.dm {
 		display: block;
+	}
+	body.dm .navbar .brand {
+		color: #D0EEB8;
+	}
+	body.dm .navbar form fieldset,
+	body.dm .navbar form fieldset.dm {
+		border-color: #7D9867;
+		border-right-color: #7D9867;
+	}
+	body.dm .navbar-inner {
+		background: #627d4d; /* Old browsers */
+		background: -moz-linear-gradient(top,  #627d4d 0%, #1f3b08 100%); /* FF3.6+ */
+		background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#627d4d), color-stop(100%,#1f3b08)); /* Chrome,Safari4+ */
+		background: -webkit-linear-gradient(top,  #627d4d 0%,#1f3b08 100%); /* Chrome10+,Safari5.1+ */
+		background: -o-linear-gradient(top,  #627d4d 0%,#1f3b08 100%); /* Opera 11.10+ */
+		background: -ms-linear-gradient(top,  #627d4d 0%,#1f3b08 100%); /* IE10+ */
+		background: linear-gradient(to bottom,  #627d4d 0%,#1f3b08 100%); /* W3C */
+		filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#627d4d', endColorstr='#1f3b08',GradientType=0 ); /* IE6-9 */
 	}
 	body.dm td.dm,
 	body.dm th.dm {
@@ -73,6 +90,9 @@ td.char-damage {
 .control-group.checked label {
 	font-size: 120%;
 }
+.active .control-group.checked label {
+	font-weight: bold;
+}
 .current-and-max-hp {
 	cursor: pointer;
 	font-size: 120%;
@@ -99,6 +119,12 @@ fieldset.dm,
 .navbar fieldset.dm {
 	display: none;
 }
+footer {
+	color: #B4B4B4;
+}
+	footer a {
+		color: #999999;
+	}
 .icon-blood,
 .icon-sword {
 	background-position: left top;
@@ -114,6 +140,15 @@ fieldset.dm,
 }
 label[for] {
 	cursor: pointer;
+}
+.navbar-inner {
+	-webkit-border-radius: 0;
+	-moz-border-radius: 0;
+	border-radius: 0;
+}
+.navbar .brand {
+	padding-left: 15px;
+	padding-right: 15px;
 }
 .navbar .control-group,
 .navbar .form-actions,
@@ -148,10 +183,12 @@ body.dm .navbar fieldset + fieldset.dm {
 }
 .navbar label {
 	color: white;
-	display: none;
 }
 .navbar label:after {
 	content: ": ";
+}
+.navbar label.hidden {
+	display: none;
 }
 .navbar label[for=new-initiative] {
 	display: inline;
@@ -190,6 +227,9 @@ body.dm .navbar fieldset + fieldset.dm {
 	#out-game-character-table td.char-name {
 		font-size: 22px;
 	}
+	#out-game-character-table .enemy-true td {
+		color: #967E7E;
+	}
 	#out-game-character-table .char_damage,
 	#out-game-character-table .defense {
 		font-size: 100%;
@@ -210,6 +250,12 @@ input[type="number"] {
 	background-repeat: no-repeat;
 	background-position: left center;
 	min-height: 16px;
+	cursor: url('/icon-check.png'), pointer;
+	opacity: 0.75;
+}
+.status-effects .control-group.checked label {
+	cursor: url('/icon-cross.png'), pointer;
+	opacity: 1;
 }
 td.dm,
 th.dm {
@@ -224,13 +270,13 @@ th.dm {
 	line-height: 22px;
 }
 .table .status-effects td .control-group,
-.table .status-effects td .collapse-expand {
+.table .status-effects td .collapse-expand,
+.table .active.status-effects td .control-group input {
 	display: none;
 }
 .table .active.status-effects td .control-group,
 .table .active.status-effects td .collapse-expand,
-.table .status-effects td .control-group.checked,
-.table .active.status-effects td .control-group input {
+.table .status-effects td .control-group.checked {
 	display: inline-block;
 }
 .table label {
