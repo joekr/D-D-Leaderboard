@@ -119,6 +119,8 @@ fieldset.dm,
 .navbar fieldset.dm {
 	display: none;
 }
+.enemy-breakdown .dm.options .create-new-sub-enemy {
+}
 footer {
 	color: #B4B4B4;
 }
@@ -137,6 +139,10 @@ footer {
 }
 .icon-sword {
 	background-image: url('/icon-sword.gif');
+}
+input.error {
+	border-color: #B94A48;
+	color: #B94A48;
 }
 label[for] {
 	cursor: pointer;
@@ -159,7 +165,8 @@ body.dm .navbar .control-group.dm {
 .navbar .control-group.error .radio,
 .navbar .control-group.error input,
 .navbar .control-group.error select,
-.navbar .control-group.error textarea {
+.navbar .control-group.error textarea,
+input.error {
 	background-color: #FFDDD7;
 }
 .navbar fieldset,

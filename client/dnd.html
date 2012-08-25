@@ -82,8 +82,8 @@
 			<label for="new-enemy">Enemy?</label>
 		</div>
 		<div class="form-actions">
-			<input type="button" id="add-button" class="btn btn-primary btn-large" value="Add">
-			<input type="reset" id="reset-button" class="btn btn-mini btn-danger" value="Reset">
+			<a href="#save" class="btn btn-success" id="add-button"><i class="icon-ok icon-white"></i></a>
+			<a href="#clear" class="btn btn-danger" id="reset-button"><i class="icon-remove icon-white"></i></a>
 		</div>
 	</form>
 </template>
@@ -296,21 +296,33 @@
 	</div>
 </template>
 
-<template name="character_hp">
-	<td class="dm">
-		{{#if isBloodied}}
-			<i class="icon-blood"></i>
-		{{/if}}
-		<span class="current-and-max-hp">
-			<span class="current-hp">{{currentHP}}</span> / 
-			<span class="max-hp">{{maxHP}}</span>
-		</span>
-	</td>
+<template name="sub_enemy_row">
+	<tr data-id="{{_id}}" data-char-id="{{charID}}" class="{{#if active}}active{{/if}} enemy-{{isEnemy}} enemy-breakdown">
+		<td class="dm">
+			{{#if isBloodied}}
+				<i class="icon-blood"></i>
+			{{/if}}
+			<span class="current-and-max-hp">
+				<span class="current-hp">{{currentHP}}</span> / 
+				<span class="max-hp">{{maxHP}}</span>
+			</span>
+		</td>
+		<td class="dm" colspan="6">
+			<form class="dm form-inline pull-left">
+				<input type="text" class="input-medium" id="sub-enemy-name" placeholder="Name" value="{{name}}">
+				<a href="#save" class="btn btn-success" id="sub-enemy-save"><i class="icon-white icon-ok"></i></a>
+			</form>
+		</td>
+		<td class="dm options">
+			<a href="#delete-sub-enemy" class="delete btn btn-danger"><i class="icon-white icon-trash"></i></a>
+			<a href="#create-new" class="btn btn-info create-new-sub-enemy"><i class="icon-white icon-plus"></i></a>
+		</td>
+	</tr>
 </template>
 
 <template name="character">
 	<tr data-id="{{_id}}" class="{{#if active}}active{{/if}} enemy-{{isEnemy}}">
-		<td class="char-name" rowspan="2">
+		<td class="char-name" rowspan="{{rowSpan}}">
 			{{name}}
 		</td>
 		<td class="dm"></td>
@@ -322,12 +334,9 @@
 		</td>
 	</tr>
 	{{#if isEnemy}}
-		<tr data-id="{{_id}}" class="{{#if active}}active{{/if}} enemy-{{isEnemy}} enemy-breakdown">
-			{{> character_hp}}
-			<td class="dm" colspan="7">
-				
-			</td>
-		</tr>
+		{{#each subEnemies}}
+			{{> sub_enemy_row}}
+		{{/each}}
 	{{else}}
 		<tr data-id="{{_id}}" class="{{#if active}}active{{/if}} enemy-{{isEnemy}} status-effects">
 			<td class="dm">

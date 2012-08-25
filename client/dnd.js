@@ -1,4 +1,15 @@
 CharacterList = new Meteor.Collection("characters");
+SubCharacterList = new Meteor.Collection("sub-characters");
+
+var addNewSubEnemy = function(charID, props) {
+		SubCharacterList.insert({
+			charID: charID,
+			name: props.name,
+			currentHP: props.currentHP,
+			maxHP: props.maxHP,
+			isEnemy: true
+		});
+	};
 
 var playCharacterAudio = function(character) {
 		//console.debug("Going to play character audio " + char.name);
@@ -157,7 +168,8 @@ Template.navbar.events = {
 	'change #new-enemy': function() {
 		showEnemyHealthFieldsetIfNecessary();
 	},
-	'click #add-button': function() {
+	'click #add-button': function(event) {
+		event.preventDefault();
 		var id = $('#character-id').val();
 		var character = CharacterList.findOne({
 			_id: id
@@ -174,8 +186,10 @@ Template.navbar.events = {
 		var charRef = parseInt($("#char-ref").val(), 10);
 		var charWill = parseInt($("#char-will").val(), 10);
 		var damage = parseInt($("#char-dmg").val(), 10);
-		var currentHP = isEnemy ? parseInt($('#enemy-hp').val(), 10) : -1;
-		var maxHP = isEnemy ? parseInt($('#enemy-max-hp').val(), 10) : -1;
+		var enemyHPRaw = $('#enemy-hp').val();
+		var maxEnemyHPRaw = $('#enemy-max-hp').val();
+		var currentHP = isEnemy && $.trim(enemyHPRaw) != '' ? parseInt(enemyHPRaw, 10) : 1;
+		var maxHP = isEnemy && $.trim(maxEnemyHPRaw) != '' ? parseInt(maxEnemyHPRaw, 10) : 1;
 		if (null == character) {
 			var charProps = {
 				name: name,
@@ -193,7 +207,10 @@ Template.navbar.events = {
 				effects: []
 			};
 			console.debug("Inserting new character: " + JSON.stringify(charProps));
-			CharacterList.insert(charProps);
+			var newCharID = CharacterList.insert(charProps);
+			if (isEnemy) {
+				addNewSubEnemy(newCharID, charProps);
+			}
 		} else {
 			console.debug("Updating character #" + id);
 			CharacterList.update({
@@ -215,15 +232,17 @@ Template.navbar.events = {
 		}
 		$('#reset-button').click();
 	},
-	'click #reset-button': function() {
+	'click #reset-button': function(event) {
+		event.preventDefault();
 		$('#new-enemy').attr('checked', false);
-		$('#add-button').val('Add');
 		$("#char-ac").val('');
 		$("#char-fort").val('');
 		$("#char-ref").val('');
 		$("#char-will").val('');
 		$("#char-dmg").val('');
 		$('#character-id').val('');
+		$('#enemy-hp').val('');
+		$('#enemy-max-hp').val('');
 		$('.navbar .control-group.error').removeClass('error');
 	}
 };
@@ -239,7 +258,7 @@ Template.character_list.characters = function() {
 	});
 };
 
-Template.character.isBloodied = function() {
+Template.sub_enemy_row.isBloodied = function() {
 	return this.currentHP <= (this.maxHP / 2);
 };
 
@@ -252,6 +271,7 @@ var editCharacter = function(character) {
 	$("#char-will").val(character.char_will);
 	$("#char-dmg").val(character.damage);
 	$('#new-enemy').attr('checked', character.isEnemy);
+	showEnemyHealthFieldsetIfNecessary();
 	if (character.isEnemy) {
 		$('#enemy-hp').removeAttr('disabled').val(character.currentHP);
 		$('#enemy-max-hp').removeAttr('disabled').val(character.maxHP);
@@ -259,29 +279,73 @@ var editCharacter = function(character) {
 		$('#enemy-hp, #enemy-max-hp').attr('disabled', 'disabled');
 	}
 	$('#character-id').val(character._id);
-	$('#add-button').val('Edit');
 	$('html, body').animate({scrollTop: 0}, 500);
 };
 
-Template.character.events = {
-	'click .delete': function() {
-		//console.debug('delete' + this);
-		if (confirm("Are you sure you want to delete character " + this.name + "?")) {
-			CharacterList.remove(this._id);
+Template.character.rowSpan = function() {
+	if (this.isEnemy) {
+		return SubCharacterList.find({
+			charID: this._id
+		}).count() + 1;
+	}
+	return 2;
+};
+
+Template.character.subEnemies = function() {
+	return SubCharacterList.find({
+		charID: this._id
+	}, {
+		sort: {
+			name: 1
+		}
+	});
+};
+
+Template.sub_enemy_row.events = {
+	'click a[href=#delete-sub-enemy]': function() {
+		if (confirm("Are you sure you want to delete enemy " + this.name + "?")) {
+			SubCharacterList.remove(this._id);
 		}
 		return false;
 	},
-	'click .char-name': function() {
-		editCharacter(this);
-	},
-	'click a[href=#retire]': function() {
-		//console.debug("Retiring " + this.name);
-		CharacterList.update({
+	'click a[href=#save]': function(event) {
+		var link = $(event.currentTarget);
+		var form = link.parent();
+		var nameInput = $('#sub-enemy-name', form);
+		var name = nameInput.val();
+		if ($.trim(name) == '') {
+			nameInput.addClass('error');
+			return false;
+		}
+		nameInput.removeClass('error');
+		SubCharacterList.update({
 			_id: this._id
 		}, {
 			$set: {
-				char_in_game: false
+				name: name
 			}
+		});
+		return false;
+	},
+	'click a[href=#create-new]': function(event) {
+		var link = $(event.currentTarget);
+		var charID = this.charID;
+		var subCharCount = link.closest('tbody').children('tr[data-char-id=' + charID + ']').length;
+		var name = this.name;
+		var namePrefix;
+		if (name.indexOf(' ') > -1) {
+			namePrefix = name.split(' ')[0];
+		} else if (name.indexOf('#') > -1) {
+			namePrefix = name.split('#')[0];
+		} else {
+			namePrefix = name;
+		}
+		SubCharacterList.insert({
+			charID: charID,
+			name: namePrefix + ' #' + (subCharCount + 1),
+			currentHP: this.maxHP,
+			maxHP: this.maxHP,
+			isEnemy: true
 		});
 		return false;
 	},
@@ -293,29 +357,60 @@ Template.character.events = {
 		currentAndMaxHPSpan.addClass('editing');
 		var currentHPSpan = $('.current-hp', currentAndMaxHPSpan);
 		var currentHP = currentHPSpan.text();
-		var input = $('<input type="number">');
+		var input = $('<input type="number" class="current-hp-edit">');
 		input.val(currentHP);
 		currentHPSpan.html(input);
 		var enemy = this;
 		var updateCurrentHP = function() {
-			var newHP = parseInt(input.val(), 10);
-			CharacterList.update({
-				_id: enemy._id
-			}, {
-				$set: {
-					currentHP: newHP
-				}
-			});
+			var newHPRaw = input.val();
+			if ($.trim(newHPRaw) != '') {
+				var newHP = parseInt(newHPRaw, 10);
+				SubCharacterList.update({
+					_id: enemy._id
+				}, {
+					$set: {
+						currentHP: newHP
+					}
+				});
+			}
 			input.remove();
 			currentHPSpan.text(newHP);
 			currentAndMaxHPSpan.removeClass('editing');
 		};
+		/*input.change(function() {
+			var idInEditForm = $('#character-id').val();
+			if (idInEditForm == enemy._id) {
+				$('#enemy-hp').val(input.val());
+			}
+		});*/
 		input.keypress(function(e) {
 		    if (e.which == 13) { // Enter
 				updateCurrentHP();
 			}
 		});
 		input.blur(updateCurrentHP);
+	}
+};
+
+Template.character.events = {
+	'click .delete': function() {
+		if (confirm("Are you sure you want to delete character " + this.name + "?")) {
+			CharacterList.remove(this._id);
+		}
+		return false;
+	},
+	'click .char-name': function() {
+		editCharacter(this);
+	},
+	'click a[href=#retire]': function() {
+		CharacterList.update({
+			_id: this._id
+		}, {
+			$set: {
+				char_in_game: false
+			}
+		});
+		return false;
 	}
 };
 
