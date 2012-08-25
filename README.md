@@ -2,7 +2,9 @@
 
 ## What is this?
 
-When our Dungeons and Dragons group got together, we found ourselves scribbling everyone's initiative and name on a markerboard so we could keep track of whose turn it was.  This project is designed to make that process smoother, and display some other useful info to players during the game.  What our group does is one person starts this app on their laptop (we've just tried it on Macs so far), our DM points his browser at the server URL (e.g., 192.168.1.215:3000), and we have one other screen that the players can see pointing at the app.  You could probably just use two screens, one being the server for the players to see, the other being the DM's view.
+When our Dungeons and Dragons group got together, we found ourselves scribbling everyone's initiative and name on a markerboard so we could keep track of whose turn it was.  This project is designed to make that process smoother, and display some other useful info to players during the game.  What our group does is one person starts this app on their laptop (we've just tried it on Macs so far), our DM points his browser at the server URL (e.g., 192.168.1.215:3000), and we have one other screen that the players can see pointing at the app.  You could probably just use two screens, one being the server for the players to see, the other being the DM's view.  See this fantastic and illuminating illustration:
+
+![How we use the DnD Leaderboard](https://raw.github.com/joekr/D-D-Leaderboard/master/dm-players.JPG "How we use the DnD Leaderboard")
 
 ## How does it work?
 
