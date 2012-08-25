@@ -37,7 +37,7 @@ var playCharacterAudio = function(character) {
 
 var setActiveTr = function(tr) {
 		tr.addClass('active');
-		var id = tr.attr('data-id');
+		var id = tr.attr('data-char-id');
 		CharacterList.update({
 			_id: id
 		}, {
@@ -46,7 +46,9 @@ var setActiveTr = function(tr) {
 			}
 		});
 		var character = CharacterList.findOne({_id: id});
-		playCharacterAudio(character);
+		if (typeof character !== 'undefined') {
+			playCharacterAudio(character);
+		}
 	};
 
 var nextCharacter = function() {
@@ -56,12 +58,12 @@ var nextCharacter = function() {
 			// No current active character, start with the first in the table,
 			// i.e., the one with highest initiative
 			var firstRow = $('#character-table tbody tr:first-child');
-			nextCharID = firstRow.attr('data-id');
+			nextCharID = firstRow.attr('data-char-id');
 		} else {
 			// Move to next character in the table, i.e., the one with the
 			// next highest initiative
 			tr.removeClass('active');
-			var charID = tr.attr('data-id');
+			var charID = tr.attr('data-char-id');
 			CharacterList.update({
 				_id: charID
 			}, {
@@ -69,13 +71,13 @@ var nextCharacter = function() {
 					active: false
 				}
 			});
-			var nextCharRow = tr.next('[data-id!="' + charID + '"]');
+			var nextCharRow = tr.next('[data-char-id!="' + charID + '"]');
 			if (nextCharRow.length < 1) {
 				nextCharRow = tr.parent().children('tr:first-child');
 			}
-			nextCharID = nextCharRow.attr('data-id');
+			nextCharID = nextCharRow.attr('data-char-id');
 		}
-		setActiveTr($('#character-table tbody tr[data-id=' + nextCharID + ']'));
+		setActiveTr($('#character-table tbody tr[data-char-id=' + nextCharID + ']'));
 	};
 
 var fieldHasValue = function(nameField) {
@@ -258,6 +260,10 @@ Template.character_list.characters = function() {
 	});
 };
 
+Template.sub_enemy_row.active = function() {
+	return CharacterList.findOne({_id: this.charID}).active;
+};
+
 Template.sub_enemy_row.isBloodied = function() {
 	return this.currentHP <= (this.maxHP / 2);
 };
@@ -284,9 +290,12 @@ var editCharacter = function(character) {
 
 Template.character.rowSpan = function() {
 	if (this.isEnemy) {
-		return SubCharacterList.find({
-			charID: this._id
-		}).count() + 1;
+		if ($('body').hasClass('dm')) {
+			return SubCharacterList.find({
+				charID: this._id
+			}).count() + 1;
+		}
+		return 1;
 	}
 	return 2;
 };

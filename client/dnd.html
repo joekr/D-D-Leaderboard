@@ -321,7 +321,7 @@
 </template>
 
 <template name="character">
-	<tr data-id="{{_id}}" class="{{#if active}}active{{/if}} enemy-{{isEnemy}}">
+	<tr data-id="{{_id}}" data-char-id="{{_id}}" class="{{#if active}}active{{/if}} enemy-{{isEnemy}}">
 		<td class="char-name" rowspan="{{rowSpan}}">
 			{{name}}
 		</td>
@@ -338,7 +338,7 @@
 			{{> sub_enemy_row}}
 		{{/each}}
 	{{else}}
-		<tr data-id="{{_id}}" class="{{#if active}}active{{/if}} enemy-{{isEnemy}} status-effects">
+		<tr data-id="{{_id}}" data-char-id="{{_id}}" class="{{#if active}}active{{/if}} enemy-{{isEnemy}} status-effects">
 			<td class="dm">
 			</td>
 			<td colspan="7">
