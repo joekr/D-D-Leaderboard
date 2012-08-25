@@ -102,6 +102,21 @@ var showEnemyHealthFieldsetIfNecessary = function() {
 		}
 	};
 
+var getRowSpanForEnemyInDMView = function(charID) {
+		return SubCharacterList.find({
+			charID: charID
+		}).count() + 1;
+	};
+
+var adjustRowSpans = function() {
+		$('table .enemy-true .char-name').each(function() {
+			var cell = $(this);
+			var charID = cell.parent().attr('data-char-id');
+			var rowspan = getRowSpanForEnemyInDMView(charID);
+			cell.attr('rowspan', rowspan);
+		});
+	};
+
 Template.footer.events = {
 	'click a[href=#dm]': function(event) {
 		event.preventDefault();
@@ -115,6 +130,7 @@ Template.footer.events = {
 			link.text('Regular player view');
 		}
 		showEnemyHealthFieldsetIfNecessary();
+		adjustRowSpans();
 	}
 };
 
@@ -291,9 +307,7 @@ var editCharacter = function(character) {
 Template.character.rowSpan = function() {
 	if (this.isEnemy) {
 		if ($('body').hasClass('dm')) {
-			return SubCharacterList.find({
-				charID: this._id
-			}).count() + 1;
+			return getRowSpanForEnemyInDMView(this._id);
 		}
 		return 1;
 	}
