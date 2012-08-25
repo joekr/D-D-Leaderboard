@@ -121,8 +121,6 @@ fieldset.dm,
 .navbar fieldset.dm {
 	display: none;
 }
-.enemy-breakdown .dm.options .create-new-sub-enemy {
-}
 footer {
 	color: #B4B4B4;
 }
@@ -334,6 +332,19 @@ th.dm {
 .table .control-group.infrequent:first-child + .control-group {
 	margin-left: 0;
 }
+.table .enemy-breakdown td:first-child {
+	border-left: 1px solid #dddddd;
+}
+.table .active.enemy-breakdown td:first-child {
+	border-left-color: #dbc300;
+}
+.table td.create-new-sub-enemy {
+	border-left: 1px solid #dddddd;
+	vertical-align: bottom;
+}
+.table .active td.create-new-sub-enemy {
+	border-left-color: #DBC300;
+}
 .table .status-effects .control-group {
 	border: 1px solid rgba(150,150,150,0.2);
 	background-color: rgba(150,150,150,0.1);
@@ -349,7 +360,7 @@ th.dm {
 }
 .table thead .options,
 .table tbody .options {
-	width: 7em;
+	width: 3em;
 }
 .table thead th {
 	background-color: #f9f9f9;

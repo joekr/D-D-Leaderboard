@@ -109,7 +109,7 @@
 			<th scope="col">Ref.</th>
 			<th scope="col" class="char-damage">Avg. Damage</th>
 			<th scope="col" class="char-initiative">Initiative</th>
-			<th scope="col" class="char-options options">Options</th>
+			<th scope="col" class="char-options options" colspan="2">Options</th>
 		</tr>
 	</thead>
 </template>
@@ -318,8 +318,12 @@
 		</td>
 		<td class="dm options">
 			<a href="#delete-sub-enemy" class="delete btn btn-danger"><i class="icon-white icon-trash"></i></a>
-			<a href="#create-new" class="btn btn-info create-new-sub-enemy"><i class="icon-white icon-plus"></i></a>
 		</td>
+		{{#if isFirst}}
+			<td class="dm options create-new-sub-enemy" rowspan="{{numSubEnemies}}">
+				<a href="#create-new" class="btn btn-info"><i class="icon-white icon-plus"></i></a>
+			</td>
+		{{/if}}
 	</tr>
 </template>
 
@@ -333,6 +337,8 @@
 		<td class="char-initiative">{{initiative}}</td>
 		<td class="options">
 			<a href="#delete" class="delete btn btn-danger"><i class="icon-white icon-trash"></i></a>
+		</td>
+		<td class="options">
 			<a href="#retire" title="Move character out of game" class="btn"><i class="icon-arrow-down"></i></a>
 		</td>
 	</tr>
@@ -344,7 +350,7 @@
 		<tr data-id="{{_id}}" data-char-id="{{_id}}" class="{{#if active}}active{{/if}} enemy-{{isEnemy}} status-effects">
 			<td class="dm">
 			</td>
-			<td colspan="7">
+			<td colspan="8">
 				{{> character_status_effects}}
 			</td>
 		</tr>

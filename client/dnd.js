@@ -238,13 +238,11 @@ Template.navbar.events = {
 				damage: damage,
 				effects: []
 			};
-			//console.debug("Inserting new character: " + JSON.stringify(charProps));
 			var newCharID = CharacterList.insert(charProps);
 			if (isEnemy) {
 				addNewSubEnemy(newCharID, charProps);
 			}
 		} else {
-			//console.debug("Updating character #" + id);
 			CharacterList.update({
 				_id: id
 			}, {
@@ -261,6 +259,17 @@ Template.navbar.events = {
 					maxHP: maxHP
 				}
 			});
+			if (isEnemy) {
+				SubCharacterList.update({
+					charID: id
+				}, {
+					$set: {
+						maxHP: maxHP
+					}
+				}, {
+					multi: true
+				});
+			}
 		}
 		resetCharacterForm();
 		return false;
@@ -280,6 +289,25 @@ Template.character_list.characters = function() {
 			name: 1
 		}
 	});
+};
+
+var getSubCharactersByID = function(charID) {
+		return SubCharacterList.find({
+			charID: charID
+		}, {
+			sort: {
+				name: 1
+			}
+		});
+	};
+	
+Template.sub_enemy_row.numSubEnemies = function() {
+	return getSubCharactersByID(this.charID).count();
+};
+
+Template.sub_enemy_row.isFirst = function() {
+	var subEnemies = getSubCharactersByID(this.charID).fetch();
+	return subEnemies[0]._id == this._id;
 };
 
 Template.sub_enemy_row.active = function() {
@@ -321,13 +349,7 @@ Template.character.rowSpan = function() {
 };
 
 Template.character.subEnemies = function() {
-	return SubCharacterList.find({
-		charID: this._id
-	}, {
-		sort: {
-			name: 1
-		}
-	});
+	return getSubCharactersByID(this._id);
 };
 
 Template.sub_enemy_row.events = {
