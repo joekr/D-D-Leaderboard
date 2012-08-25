@@ -458,7 +458,9 @@ Template.sub_enemy_row.events = {
 Template.character.events = {
 	'click .delete': function() {
 		if (confirm("Are you sure you want to delete character " + this.name + "?")) {
-			CharacterList.remove(this._id);
+			var charID = this._id;
+			CharacterList.remove(charID);
+			SubCharacterList.remove({charID: charID});
 		}
 		return false;
 	},
