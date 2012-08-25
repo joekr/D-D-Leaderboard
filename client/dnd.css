@@ -9,7 +9,8 @@
 body.dm {
 }
 	body.dm div.dm,
-	body.dm fieldset.dm {
+	body.dm fieldset.dm,
+	body.dm .row-fluid .dm[class*="span"] {
 		display: block;
 	}
 	body.dm .navbar .brand {
@@ -118,7 +119,8 @@ td.char-damage {
 div.dm,
 div.control-group.dm,
 fieldset.dm,
-.navbar fieldset.dm {
+.navbar fieldset.dm,
+.row-fluid .dm[class*="span"] {
 	display: none;
 }
 footer {

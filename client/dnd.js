@@ -116,6 +116,32 @@ var adjustRowSpans = function() {
 			cell.attr('rowspan', rowspan);
 		});
 	};
+	
+var adjustScratchPad = function() {
+		if (!$('body').hasClass('dm')) {
+			return;
+		}
+		var textarea = $('#scratch-pad');
+		var container = textarea.parent();
+		textarea.css('width', container.innerWidth() + 'px');
+		var height = $(window).height() - textarea.offset().top - 25;
+		textarea.css('height', height + 'px');
+		elRTE.prototype.options.panels.dndPanel = [
+			'bold', 'italic', 'underline', 'strikethrough', 'removeformat'
+		];
+		elRTE.prototype.options.toolbars.dndToolbar = ['dndPanel', 'lists', 'undoredo'];
+		textarea.elrte({
+			toolbar: 'dndToolbar'
+		});
+	};
+	
+var adjustDMColumns = function() {
+		if ($('body').hasClass('dm')) {
+			$('#character-list-span').removeClass('span12').addClass('span9');
+		} else {
+			$('#character-list-span').removeClass('span9').addClass('span12');
+		}
+	};
 
 Template.footer.events = {
 	'click a[href=#dm]': function(event) {
@@ -131,6 +157,8 @@ Template.footer.events = {
 		}
 		showEnemyHealthFieldsetIfNecessary();
 		adjustRowSpans();
+		adjustDMColumns();
+		adjustScratchPad();
 	}
 };
 
