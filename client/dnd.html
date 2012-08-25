@@ -307,8 +307,11 @@
 				<span class="max-hp">{{maxHP}}</span>
 			</span>
 		</td>
-		<td class="dm" colspan="6">
-			<form class="dm form-inline pull-left">
+		<td class="dm sub-enemy-details" colspan="6">
+			<span class="sub-enemy-name">
+				{{name}}
+			</span>
+			<form class="dm form-inline pull-left sub-enemy-name-form">
 				<input type="text" class="input-medium" id="sub-enemy-name" placeholder="Name" value="{{name}}">
 				<a href="#save" class="btn btn-success" id="sub-enemy-save"><i class="icon-white icon-ok"></i></a>
 			</form>

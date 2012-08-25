@@ -3,6 +3,9 @@
 .active.enemy-false .char-name {
 	line-height: 100px;
 }
+.active.enemy-breakdown td {
+	border-top-color: #DBC300;
+}
 body.dm {
 }
 	body.dm div.dm,
@@ -94,8 +97,7 @@ td.char-damage {
 	font-weight: bold;
 }
 .current-and-max-hp {
-	cursor: pointer;
-	font-size: 120%;
+	cursor: url('/icon-pencil.png'), pointer;
 }
 .defense,
 .defense-label {
@@ -264,6 +266,9 @@ input[type="number"] {
 	cursor: url('/icon-cross.png'), pointer;
 	opacity: 1;
 }
+.sub-enemy-name-form {
+	display: none;
+}
 td.dm,
 th.dm {
 	display: none;
@@ -285,6 +290,19 @@ th.dm {
 .table .active.status-effects td .collapse-expand,
 .table .status-effects td .control-group.checked {
 	display: inline-block;
+}
+.table tr.active.enemy-true.enemy-breakdown td {
+	background-color: #FCE84A;
+	font-size: 120%;
+}
+.table tr.enemy-true.enemy-breakdown td {
+	background-color: #f9f9f9;
+}
+.table .enemy-true.enemy-breakdown .sub-enemy-details {
+	text-align: left;
+}
+.table .enemy-true.enemy-breakdown .sub-enemy-name {
+	cursor: url('/icon-pencil.png'), pointer;
 }
 .table label {
 	display: inline;
