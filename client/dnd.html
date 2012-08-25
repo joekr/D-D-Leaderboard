@@ -63,7 +63,7 @@
 	    	<input type="number" id="char-will" placeholder="Will" class="integer">
 			</div>
 		</fieldset>
-		<fieldset class="dm">
+		<fieldset class="dm" style="display:none" id="enemy-health-fieldset">
 			<div class="control-group dm">
 				<label for="enemy-hp">HP</label>
 				<input type="number" class="integer" id="enemy-hp" placeholder="HP">
@@ -297,31 +297,23 @@
 </template>
 
 <template name="character_hp">
-	{{#if isEnemy}}
-		<td class="dm">
-			{{#if isBloodied}}
-				<i class="icon-blood"></i>
-			{{/if}}
-			<span class="current-and-max-hp">
-				<span class="current-hp">{{currentHP}}</span> / 
-				<span class="max-hp">{{maxHP}}</span>
-			</span>
-		</td>
-	{{else}}
-		<td class="dm"></td>
-	{{/if}}
+	<td class="dm">
+		{{#if isBloodied}}
+			<i class="icon-blood"></i>
+		{{/if}}
+		<span class="current-and-max-hp">
+			<span class="current-hp">{{currentHP}}</span> / 
+			<span class="max-hp">{{maxHP}}</span>
+		</span>
+	</td>
 </template>
 
 <template name="character">
 	<tr data-id="{{_id}}" class="{{#if active}}active{{/if}} enemy-{{isEnemy}}">
-		{{#if isEnemy}}
-			<td class="char-name">
-		{{else}}
-			<td class="char-name" rowspan="2">
-		{{/if}}
+		<td class="char-name" rowspan="2">
 			{{name}}
 		</td>
-		{{> character_hp}}
+		<td class="dm"></td>
 		{{> character_defenses_dmg}}
 		<td class="char-initiative">{{initiative}}</td>
 		<td class="options">
@@ -330,6 +322,12 @@
 		</td>
 	</tr>
 	{{#if isEnemy}}
+		<tr data-id="{{_id}}" class="{{#if active}}active{{/if}} enemy-{{isEnemy}} enemy-breakdown">
+			{{> character_hp}}
+			<td class="dm" colspan="7">
+				
+			</td>
+		</tr>
 	{{else}}
 		<tr data-id="{{_id}}" class="{{#if active}}active{{/if}} enemy-{{isEnemy}} status-effects">
 			<td class="dm">
@@ -366,9 +364,9 @@
 <template name="out_character">
 	<tr id={{_id}} class="enemy-{{isEnemy}}">
 		<td class="char-name">{{name}}</td>
-		{{> character_hp}}
+		<td class="dm"></td>
 		{{> character_defenses_dmg}}
- 		<td>&mdash;</td>
+ 		<td></td>
 		<td>
 			<a href="#delete" class="delete btn btn-danger"><i class="icon-white icon-trash"></i></a>
 			<a href="#bring-back" title="Return character to the game" class="btn"><i class="icon-arrow-up"></i></a>

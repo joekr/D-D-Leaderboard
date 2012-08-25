@@ -78,6 +78,17 @@ var fieldHasValue = function(nameField) {
 		return true;
 	};
 
+var showEnemyHealthFieldsetIfNecessary = function() {
+		var isEnemy = $('#new-enemy').is(':checked');
+		var isDungeonMaster = $('body').hasClass('dm');
+		var fieldset = $('#enemy-health-fieldset');
+		if (isEnemy && isDungeonMaster) {
+			fieldset.show();
+		} else {
+			fieldset.hide();
+		}
+	};
+
 Template.footer.events = {
 	'click a[href=#dm]': function(event) {
 		event.preventDefault();
@@ -90,6 +101,7 @@ Template.footer.events = {
 			body.addClass('dm');
 			link.text('Regular player view');
 		}
+		showEnemyHealthFieldsetIfNecessary();
 	}
 };
 
@@ -142,6 +154,9 @@ Template.character_status_effects.events = {
 };
 
 Template.navbar.events = {
+	'change #new-enemy': function() {
+		showEnemyHealthFieldsetIfNecessary();
+	},
 	'click #add-button': function() {
 		var id = $('#character-id').val();
 		var character = CharacterList.findOne({
