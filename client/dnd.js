@@ -1,6 +1,25 @@
 CharacterList = new Meteor.Collection("characters");
 SubCharacterList = new Meteor.Collection("sub-characters");
 ScratchPadList = new Meteor.Collection("scratch-pads");
+SettingsList = new Meteor.Collection("settings");
+
+var getAppSettings = function() {
+		return SettingsList.findOne() || {};
+	};
+	
+var saveAppSettings = function(settings) {
+		if (SettingsList.find().count() < 1) {
+			SettingsList.insert(settings);
+			return;
+		}
+		var id = settings._id;
+		delete settings['_id']; // prevent 500 error
+		SettingsList.update({
+			_id: id
+		}, {
+			$set: settings
+		});
+	};
 
 var addNewSubEnemy = function(charID, props) {
 		SubCharacterList.insert({
@@ -33,7 +52,7 @@ var playCharacterAudio = function(character) {
 			audio.attr('src', '/next_character.mp3');
 		}
 
-		//audioPlayer.play();
+		audioPlayer.play();
 	};
 
 var setActiveTr = function(tr) {
@@ -47,7 +66,8 @@ var setActiveTr = function(tr) {
 			}
 		});
 		var character = CharacterList.findOne({_id: id});
-		if (typeof character !== 'undefined') {
+		var settings = getAppSettings();
+		if (typeof character !== 'undefined' && settings.sound) {
 			playCharacterAudio(character);
 		}
 	};
@@ -81,9 +101,33 @@ var nextCharacter = function() {
 		setActiveTr($('#character-table tbody tr[data-char-id=' + nextCharID + ']'));
 	};
 	
+Template.navbar_outer.soundIcon = function() {
+	var settings = getAppSettings();
+	return settings.sound ? 'icon-volume-up' : 'icon-volume-off';
+};
+
+Template.navbar_outer.soundStatus = function() {
+	var settings = getAppSettings();
+	return settings.sound ? "on" : "off";
+};
+
 Template.navbar_outer.events = {
 	'click a[href=#next]': function(event) {
 		nextCharacter();
+		return false;
+	},
+	'click a[href=#sound]': function(event) {
+		var link = $(event.currentTarget);
+		var icon = $('i', link);
+		var settings = getAppSettings();
+		if (settings.sound) {
+			icon.removeClass('icon-volume-up').addClass('icon-volume-off');
+			settings.sound = false;
+		} else {
+			icon.removeClass('icon-volume-off').addClass('icon-volume-up');
+			settings.sound = true;
+		}
+		saveAppSettings(settings);
 		return false;
 	}
 };

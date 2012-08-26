@@ -198,10 +198,9 @@ input.error {
 .navbar fieldset,
 body.dm .navbar fieldset.dm {
     display: inline-block;
-    border-left: 1px solid rgb(90,90,90);
-    border-right: 1px solid rgb(90,90,90);
-    padding: 0 0 0 9px;
-    margin: 0 7px 0 0;
+	border: none;
+    padding: 0;
+    margin: 0;
 }
 	.navbar fieldset + fieldset,
 	body.dm .navbar fieldset + fieldset.dm {
