@@ -117,7 +117,7 @@ var adjustRowSpans = function() {
 			cell.attr('rowspan', rowspan);
 		});
 	};
-	
+
 var getLatestScratchPadContent = function() {
 		if (ScratchPadList.find().count() < 1) {
 			return "";
@@ -127,17 +127,22 @@ var getLatestScratchPadContent = function() {
 	
 var saveScratchPad = function(body) {
 		var time = new Date();
-		console.log("Saving scratch pad at " + time);
 		var revisionLimit = 10;
 		var numRevisions = ScratchPadList.find().count();
-		if (numRevisions < revisionLimit) {
-			ScratchPadList.insert({
-				time: time,
-				content: body.html()
-			});
-		} else {
-			console.log("Limit reached");
+		while (numRevisions >= revisionLimit) {
+			var oldest = ScratchPadList.findOne({}, {sort: {time: 1}});
+			ScratchPadList.remove({_id: oldest._id});
+			numRevisions = ScratchPadList.find().count();
 		}
+		ScratchPadList.insert({
+			time: time,
+			content: body.html()
+		});
+		var saveIndicator = $('#scratch-pad-save-indicator');
+		saveIndicator.fadeIn();
+		setTimeout(function() {
+			saveIndicator.fadeOut();
+		}, 1000);
 	};
 	
 var setupScratchPadRevisionsTab = function() {
@@ -172,7 +177,7 @@ var setupScratchPad = function() {
 			clearTimeout(timeout);
 			timeout = setTimeout(function() {
 				saveScratchPad(editBody);
-			}, 2000);
+			}, 4000);
 		});
 	};
 	

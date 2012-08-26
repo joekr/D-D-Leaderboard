@@ -88,6 +88,11 @@ td.char-damage {
 	.char-damage .icon-sword {
 		margin-top: 0.275em;
 	}
+.container,
+.navbar-fixed-top .container,
+.navbar-fixed-bottom .container {
+	width: 98%;
+}
 .control-group {
 	margin-bottom: 0;
 }
@@ -130,6 +135,7 @@ footer {
 		color: #999999;
 	}
 .icon-blood,
+.icon-save,
 .icon-sword {
 	background-position: left top;
 	width: 16px;
@@ -138,6 +144,11 @@ footer {
 .icon-blood,
 .character-bloodied.control-group label {
 	background-image: url('/icon-blood.png');
+}
+.icon-save {
+	background-image: url('/icon-save.png');
+	width: 20px;
+	height: 20px;
 }
 .icon-sword {
 	background-image: url('/icon-sword.gif');
@@ -270,6 +281,10 @@ input[type="number"] {
 }
 .scratch-pad-revisions.table thead th {
 	background-color: white;
+}
+#scratch-pad-save-indicator {
+	display: none;
+	float: right;
 }
 .status-effects .control-group label {
 	background-repeat: no-repeat;
