@@ -23,13 +23,16 @@
 </body>
 
 <template name="footer">
-	<footer>
-		<ul class="inline">
-			<li><a href="#dm">Dungeon Master view</a></li>
+	<footer class="clearfix">
+		<ul class="inline pull-left">
+			<li><a href="#dm"><i class="icon-omega"></i> Dungeon Master view</a></li>
+		</ul>
+		<ul class="inline pull-right">
 			<li>Thanks:</li>
 			<li><a href="http://thenounproject.com/noun/target/#icon-No308">The Noun Project</a></li>
 			<li><a href="http://thenounproject.com/noun/skull/#icon-No2992">Gabriele Fumero, from The Noun Project</a></li>
 			<li><a href="http://thenounproject.com/noun/blind/#icon-No3918">Jordan Delcros</a></li>
+			<li><a href="http://glyphicons.com/">Glyphicons</a></li>
 		</ul>
 	</footer>
 </template>
@@ -93,6 +96,8 @@
 		<td>
 			<span class="date">{{prettyDate}}</span>
 			<span class="time">{{prettyTime}}</span>
+			<a href="#restore" title="Restore this revision" class="btn"><i class="icon-unshare"></i></a>
+			<a href="#delete" title="Delete this revision" class="btn btn-danger"><i class="icon-trash icon-white"></i></a>
 		</td>
 		<td>
 			{{{content}}}

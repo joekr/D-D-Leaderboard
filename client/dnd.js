@@ -145,11 +145,12 @@ var saveScratchPad = function(body) {
 		}, 1000);
 	};
 	
+var elrteBottomTabHeight = 52;
 var setupScratchPadRevisionsTab = function() {
 		var characterListHeight = $('#character-list-span').height();
 		var revisionTab = $('#scratch-pad-revisions-tab');
 		var tabs = $('#scratch-pad-span .nav-tabs');
-		var height = characterListHeight - tabs.height();
+		var height = characterListHeight - tabs.outerHeight() - elrteBottomTabHeight;
 		revisionTab.css('height', height + 'px');
 	};
 	
@@ -161,7 +162,9 @@ var setupScratchPad = function() {
 		var textarea = $('#scratch-pad');
 		var container = textarea.parent();
 		textarea.css('width', container.innerWidth() + 'px');
-		var height = $(window).height() - textarea.offset().top - 25;
+		var tabs = $('#scratch-pad-span .nav-tabs');
+		var characterListHeight = $('#character-list-span').height();
+		var height = characterListHeight - textarea.offset().top - tabs.height() - elrteBottomTabHeight;
 		textarea.css('height', height + 'px');
 		elRTE.prototype.options.panels.dndPanel = [
 			'bold', 'italic', 'underline', 'strikethrough'
@@ -169,7 +172,9 @@ var setupScratchPad = function() {
 		elRTE.prototype.options.toolbars.dndToolbar = ['dndPanel', 'lists', 'undoredo'];
 		textarea.val(getLatestScratchPadContent());
 		textarea.elrte({
-			toolbar: 'dndToolbar'
+			toolbar: 'dndToolbar',
+			height: height,
+			resizable: false
 		});
 		var timeout = null;
 		var editBody = $($('#scratch-pad-span .el-rte .workzone iframe')[0].contentDocument.body);
@@ -232,11 +237,39 @@ Template.scratch_pad_revision.prettyTime = function() {
 	minute = minute < 10 ? '0' + minute : minute;
 	var amPM = hour > 12 ? "PM" : "AM";
 	hour = hour > 12 ? hour - 12 : hour;
+	hour = 0 == hour ? 12 : hour;
 	return hour + ":" + minute + " " + amPM;
 };
 
 Template.character_status_effects.hasEffect = function(effect) {
 	return $.inArray(effect, this.effects || []) > -1;
+};
+
+Template.scratch_pad_revision.events = {
+	'click a[href=#restore]': function(event) {
+		if (!confirm("Are you sure you want to restore this revision?")) {
+			return false;
+		}
+		var content = this.content;
+		var editBody = $($('#scratch-pad-span .el-rte .workzone iframe')[0].contentDocument.body);
+		editBody.html(content);
+		ScratchPadList.update({
+			_id: this._id
+		}, {
+			$set: {
+				time: new Date()
+			}
+		});
+		$('a[href=#scratch-pad-tab]').click();
+		return false;
+	},
+	'click a[href=#delete]': function(event) {
+		if (!confirm("Are you sure you want to delete this revision, Big Brother?")) {
+			return false;
+		}
+		ScratchPadList.remove({_id: this._id});
+		return false;
+	}
 };
 
 Template.character_status_effects.events = {

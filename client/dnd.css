@@ -135,8 +135,10 @@ footer {
 		color: #999999;
 	}
 .icon-blood,
+.icon-omega,
 .icon-save,
-.icon-sword {
+.icon-sword,
+.icon-unshare {
 	background-position: left top;
 	width: 16px;
 	height: 16px;
@@ -145,6 +147,9 @@ footer {
 .character-bloodied.control-group label {
 	background-image: url('/icon-blood.png');
 }
+.icon-omega {
+	background-image: url('/icon-omega.png');
+}
 .icon-save {
 	background-image: url('/icon-save.png');
 	width: 20px;
@@ -152,6 +157,12 @@ footer {
 }
 .icon-sword {
 	background-image: url('/icon-sword.gif');
+}
+.icon-unshare {
+	background-image: url('/glyphicons_221_unshare.png');
+	width: 24px;
+	height: 18px;
+	display: inline-block;
 }
 input.error {
 	border-color: #B94A48;
@@ -237,6 +248,9 @@ body.dm .navbar fieldset + fieldset.dm {
 .navbar-form .radio,
 .navbar-form .checkbox {
 	margin-top: 0;
+}
+.nav-tabs {
+	margin-bottom: 2px;
 }
 #out-game-character-table {
 	color: #999999;
