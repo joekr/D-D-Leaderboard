@@ -1,5 +1,6 @@
 CharacterList = new Meteor.Collection("characters");
 SubCharacterList = new Meteor.Collection("sub-characters");
+ScratchPadList = new Meteor.Collection("scratch-pads");
 
 var addNewSubEnemy = function(charID, props) {
 		SubCharacterList.insert({
@@ -117,7 +118,29 @@ var adjustRowSpans = function() {
 		});
 	};
 	
-var adjustScratchPad = function() {
+var getLatestScratchPadContent = function() {
+		if (ScratchPadList.find().count() < 1) {
+			return "";
+		}
+		return ScratchPadList.findOne({}, {sort: {time: -1}}).content;
+	};
+	
+var saveScratchPad = function(body) {
+		var time = new Date();
+		console.log("Saving scratch pad at " + time);
+		var revisionLimit = 10;
+		var numRevisions = ScratchPadList.find().count();
+		if (numRevisions < revisionLimit) {
+			ScratchPadList.insert({
+				time: time,
+				content: body.html()
+			});
+		} else {
+			console.log("Limit reached");
+		}
+	};
+	
+var setupScratchPad = function() {
 		if (!$('body').hasClass('dm')) {
 			return;
 		}
@@ -127,11 +150,20 @@ var adjustScratchPad = function() {
 		var height = $(window).height() - textarea.offset().top - 25;
 		textarea.css('height', height + 'px');
 		elRTE.prototype.options.panels.dndPanel = [
-			'bold', 'italic', 'underline', 'strikethrough', 'removeformat'
+			'bold', 'italic', 'underline', 'strikethrough'
 		];
 		elRTE.prototype.options.toolbars.dndToolbar = ['dndPanel', 'lists', 'undoredo'];
+		textarea.val(getLatestScratchPadContent());
 		textarea.elrte({
 			toolbar: 'dndToolbar'
+		});
+		var timeout = null;
+		var editBody = $($('#scratch-pad-span .el-rte .workzone iframe')[0].contentDocument.body);
+		editBody.keypress(function() {
+			clearTimeout(timeout);
+			timeout = setTimeout(function() {
+				saveScratchPad(editBody);
+			}, 2000);
 		});
 	};
 	
@@ -158,8 +190,17 @@ Template.footer.events = {
 		showEnemyHealthFieldsetIfNecessary();
 		adjustRowSpans();
 		adjustDMColumns();
-		adjustScratchPad();
+		setupScratchPad();
 	}
+};
+
+Template.scratch_pad.scratchPadRevisions = function() {
+	return ScratchPadList.find({
+	}, {
+		sort: {
+			time: -1
+		}
+	});
 };
 
 Template.character_status_effects.hasEffect = function(effect) {

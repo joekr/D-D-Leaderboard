@@ -88,6 +88,40 @@
 	</form>
 </template>
 
+<template name="scratch_pad_revision">
+	<tr>
+		<td>{{time}}</td>
+		<td>{{content}}</td>
+	</tr>
+</template>
+
+<template name="scratch_pad">
+	<ul class="nav nav-tabs">
+		<li class="active"><a href="#scratch-pad-tab" data-toggle="tab">Editor</a></li>
+		<li><a href="#scratch-pad-revisions-tab" data-toggle="tab">History</a></li>
+	</ul>
+	<div class="tab-content">
+		<div class="tab-pane active" id="scratch-pad-tab">
+			<textarea id="scratch-pad" rows="5"></textarea>
+		</div>
+		<div class="tab-pane" id="scratch-pad-revisions-tab">
+			<table class="table table-striped">
+				<thead>
+					<tr>
+						<th>Date</th>
+						<th>Content</th>
+					</tr>
+				</thead>
+				<tbody>
+					{{#each scratchPadRevisions}}
+						{{> scratch_pad_revision}}
+					{{/each}}
+				</tbody>
+			</table>
+		</div>
+	</div>
+</template>
+
 <template name="characters">
 	<section id="characters-view">
 		<div class="row-fluid">
@@ -95,7 +129,7 @@
 				{{> character_list}}
 			</div>
 			<div class="span3 dm" id="scratch-pad-span">
-				<textarea id="scratch-pad" rows="5"></textarea>
+				{{> scratch_pad}}
 			</div>
 		</div>
 	</section>
