@@ -3,16 +3,7 @@
 </head>
 
 <body>
-	<div class="navbar">
-		<div class="navbar-inner">
-			<div id="new-character-box" class="container">
-				<a class="brand" href="#">D&amp;D Leaderboard</a>
-				<div class="nav-collapse">
-					{{> navbar}}
-				</div>
-			</div>
-		</div>
-	</div>
+	{{> navbar_outer}}
 	<div class="container">
 		{{> characters}}
 		{{> out-game-character}}
@@ -21,6 +12,25 @@
 	</div>
 	<audio id="char-name-audio" style="display: none;"></audio>
 </body>
+
+<template name="navbar_outer">
+	<div class="navbar">
+		<div class="navbar-inner">
+			<div id="new-character-box" class="container">
+				<a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+				</a>
+				<a class="brand" href="#">D&amp;D</a>
+				<a href="#next" title="Next character" class="btn btn-inverse pull-left"><i class="icon-white icon-forward"></i></a>
+				<div class="nav-collapse">
+					{{> navbar}}
+				</div>
+			</div>
+		</div>
+	</div>
+</template>
 
 <template name="footer">
 	<footer class="clearfix">

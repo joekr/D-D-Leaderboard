@@ -80,6 +80,13 @@ var nextCharacter = function() {
 		}
 		setActiveTr($('#character-table tbody tr[data-char-id=' + nextCharID + ']'));
 	};
+	
+Template.navbar_outer.events = {
+	'click a[href=#next]': function(event) {
+		nextCharacter();
+		return false;
+	}
+};
 
 var fieldHasValue = function(nameField) {
 		var name = nameField.val();
