@@ -255,6 +255,22 @@ input[type="text"],
 input[type="number"] {
 	margin-bottom: 0;
 }
+.scratch-pad-revision .date,
+.scratch-pad-revision .time {
+	display: block;
+	white-space: nowrap;
+}
+.scratch-pad-revision .time {
+	text-transform: uppercase;
+	color: #999999;
+	font-size: 12px;
+}
+#scratch-pad-revisions-tab {
+	overflow: auto;
+}
+.scratch-pad-revisions.table thead th {
+	background-color: white;
+}
 .status-effects .control-group label {
 	background-repeat: no-repeat;
 	background-position: left center;
@@ -276,6 +292,9 @@ th.dm {
 	td.dm .icon-blood {
 		vertical-align: baseline;
 	}
+.table .scratch-pad-revision td {
+	text-align: left;
+}
 .table .status-effects td {
 	text-align: left;
 	border-top: none;

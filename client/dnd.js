@@ -140,10 +140,19 @@ var saveScratchPad = function(body) {
 		}
 	};
 	
+var setupScratchPadRevisionsTab = function() {
+		var characterListHeight = $('#character-list-span').height();
+		var revisionTab = $('#scratch-pad-revisions-tab');
+		var tabs = $('#scratch-pad-span .nav-tabs');
+		var height = characterListHeight - tabs.height();
+		revisionTab.css('height', height + 'px');
+	};
+	
 var setupScratchPad = function() {
 		if (!$('body').hasClass('dm')) {
 			return;
 		}
+		setupScratchPadRevisionsTab();
 		var textarea = $('#scratch-pad');
 		var container = textarea.parent();
 		textarea.css('width', container.innerWidth() + 'px');
@@ -201,6 +210,24 @@ Template.scratch_pad.scratchPadRevisions = function() {
 			time: -1
 		}
 	});
+};
+
+Template.scratch_pad_revision.prettyDate = function() {
+	var time = new Date(this.time);
+	var year = time.getFullYear();
+	var month = time.getMonth() + 1;
+	var day = time.getDate();
+	return year + "/" + month + "/" + day;
+};
+
+Template.scratch_pad_revision.prettyTime = function() {
+	var time = new Date(this.time);
+	var hour = time.getHours();
+	var minute = time.getMinutes();
+	minute = minute < 10 ? '0' + minute : minute;
+	var amPM = hour > 12 ? "PM" : "AM";
+	hour = hour > 12 ? hour - 12 : hour;
+	return hour + ":" + minute + " " + amPM;
 };
 
 Template.character_status_effects.hasEffect = function(effect) {
