@@ -144,14 +144,34 @@
 	</div>
 </template>
 
+<template name="dashboard">
+	<h2>Party Dashboard</h2>
+	<div class="icon-save" id="scratch-pad-save-indicator"></div>
+	<ul class="nav nav-tabs">
+		<li class="active"><a href="#pary-buffs" data-toggle="tab">Buffs</a></li>
+	</ul>
+	<table class="table table-hover">
+		<tbody>
+			{{#each allPartyBuffs}}
+				<tr class="success">
+					<td>{{name}}</td>
+				</tr>
+			{{/each}}
+		</tbody>
+	</table>
+</template>
+
 <template name="characters">
 	<section id="characters-view">
 		<div class="row-fluid">
-			<div class="span12" id="character-list-span">
+			<div class="span9" id="character-list-span">
 				{{> character_list}}
 			</div>
 			<div class="span3 dm" id="scratch-pad-span">
 				{{> scratch_pad}}
+			</div>
+			<div class="span3" id="dashboard-span">
+				{{> dashboard}}
 			</div>
 		</div>
 	</section>
@@ -355,6 +375,15 @@
 	</div>
 </template>
 
+<template name="char_buff_row">
+	<div rowspan="{{_id}}"  style="display:inline-block; padding-right:10px">
+		<span class="char-buff" style="padding-right:10px">			
+			<span class="name" id="{{_id}}">{{name}}</span>
+		</span>
+		<a href="#remove-buff" class="delete btn btn-danger"><i class="icon-white icon-trash"></i></a>
+	</div>
+</template>
+
 <template name="sub_enemy_row">
 	<tr data-id="{{_id}}" data-char-id="{{charID}}" class="{{#if active}}active{{/if}} enemy-{{isEnemy}} enemy-breakdown">
 		<td class="dm">
@@ -409,8 +438,19 @@
 		<tr data-id="{{_id}}" data-char-id="{{_id}}" class="{{#if active}}active{{/if}} enemy-{{isEnemy}} status-effects">
 			<td class="dm">
 			</td>
-			<td colspan="8">
+			<td colspan="10">
 				{{> character_status_effects}}
+			</td>
+		</tr>	
+		<tr data-id="{{_id}}" data-char-id="{{_id}}" class="{{#if active}}active{{/if}} enemy-{{isEnemy}}" style="{{#if active}}display:table-row;{{else}}display:none;{{/if}}">
+			<td rowspan="1" id="add-char-buffs" style="display:table-cell;">
+				<strong style="padding-right:20px;">Add Party Buff</strong>
+				<a href="#create-new-buff" class="btn btn-info"><i class="icon-white icon-plus"></i></a>				
+			</td>
+			<td colspan="10">
+				{{#each partyBuffs}}
+					{{> char_buff_row}}
+				{{/each}}		
 			</td>
 		</tr>
 	{{/if}}

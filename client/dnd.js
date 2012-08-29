@@ -1,5 +1,6 @@
 CharacterList = new Meteor.Collection("characters");
 SubCharacterList = new Meteor.Collection("sub-characters");
+PartyBuffList = new Meteor.Collection("party-buffs");
 ScratchPadList = new Meteor.Collection("scratch-pads");
 SettingsList = new Meteor.Collection("settings");
 
@@ -158,6 +159,19 @@ var getRowSpanForEnemyInDMView = function(charID) {
 		return SubCharacterList.find({
 			charID: charID
 		}).count() + 1;
+	};
+
+var getPartyBuffForCharacter = function(charID) {
+		return PartyBuffList.find({charID: charID});
+	};
+
+var getAllPartyBuffs = function() {
+		var allCharInGame = CharacterList.find({char_in_game:true});
+		var ids = new Array();
+		allCharInGame.forEach(function(character){
+			ids.push(character._id);
+		});
+		return PartyBuffList.find({charID: {$in:ids}});
 	};
 
 var adjustRowSpans = function() {
@@ -476,6 +490,16 @@ Template.character_list.characters = function() {
 	});
 };
 
+
+Template.character.partyBuffs = function() {
+	console.debug(this._id+" "+(PartyBuffList.find({charID:this._id})).count());
+	return getPartyBuffForCharacter(this._id);
+};
+
+Template.dashboard.allPartyBuffs = function() {
+	return getAllPartyBuffs();
+};
+
 var getSubCharactersByID = function(charID) {
 		return SubCharacterList.find({
 			charID: charID
@@ -661,6 +685,31 @@ Template.character.events = {
 			}
 		});
 		return false;
+	},
+		'click a[href=#create-new-buff]': function(event) {
+		var link = $(event.currentTarget);
+		var charID = this.charID;
+		var name = this.name;		
+
+		PartyBuffList.insert({
+			charID: this._id,
+			name: "New Buff"
+		});
+		console.debug("INSERT "+PartyBuffList.find().count());
+		return false;
+	},
+	'click a[href=#show-all-buffs]': function(event) {
+		event.preventDefault();
+		var link = $(event.currentTarget);
+		var icon = $('i', link);
+		var row = link.closest('td.char-buffs');
+		if (icon.hasClass('icon-chevron-right')) {
+			icon.removeClass('icon-chevron-right').addClass('icon-chevron-down');
+			$('.control-group.infrequent', row).fadeIn().css("display","inline-block");
+		} else {
+			icon.removeClass('icon-chevron-down').addClass('icon-chevron-right');
+			$('.control-group.infrequent:not(.checked)', row).fadeOut();
+		}
 	}
 };
 
@@ -699,6 +748,50 @@ Template.out_character.events = {
 		});
 		return false;
 	}
+};
+
+Template.char_buff_row.events = {
+	'click a[href=#remove-buff]': function() {
+		PartyBuffList.remove({_id: this._id});
+		return false;
+	},
+	'click .char-buff': function(event) {
+		var charBuffSpan = $(event.currentTarget);
+		if (charBuffSpan.hasClass('editing')) {
+			return;
+		}
+		charBuffSpan.addClass('editing');
+		var buffNameSpan = $('.name', charBuffSpan);
+		var buffDelete = $('.delete', charBuffSpan.parent());
+		buffDelete.css("display","inline-block");
+		var buffNameText = buffNameSpan.text();
+		var input = $('<input type="text" class="current-buff-edit">');
+		input.val(buffNameText);
+		buffNameSpan.html(input);
+		input.focus();
+		var enemy = this;
+		var updateBuf = function() {
+			var newBuffName = input.val();
+			if ($.trim(newBuffName) != '') {			
+				PartyBuffList.update({
+					_id: buffNameSpan.attr("id")
+				}, {
+					$set: {
+						name: newBuffName
+					}
+				});
+			}
+			input.remove();
+			buffNameSpan.text(newBuffName);
+			charBuffSpan.removeClass('editing');
+		};
+		input.keypress(function(e) {
+		    if (e.which == 13) { // Enter
+				updateBuf();
+			}
+		});
+		input.blur(updateBuf);
+	},
 };
 
 var hasActiveChar = function() {
