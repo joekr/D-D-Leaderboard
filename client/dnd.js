@@ -670,6 +670,7 @@ Template.character.events = {
 			var charID = this._id;
 			CharacterList.remove(charID);
 			SubCharacterList.remove({charID: charID});
+			PartyBuffList.remove({charID: charID});
 		}
 		return false;
 	},
@@ -728,6 +729,7 @@ Template.out_game_character_list.events = {
 		//console.debug('delete' + this);
 		if (confirm("Are you sure you want to delete " + this.name + "?")) {
 			CharacterList.remove(this._id);
+			PartyBuffList.remove({charID: this._id});
 		}
 		return false;
 	},
