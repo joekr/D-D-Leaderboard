@@ -603,6 +603,21 @@ ul.inline {
 	    padding-left: 10px;
 	}
 }
+
+.char-buff-div{
+	float:left;
+	display:inline-block; 
+	padding-right:10px;
+}
+
+.char-buff{
+	padding-right:10px;
+}
+
+.add-char-buffs{
+	display:table-cell;
+}
+
 @media (max-width: 767px) { 
 	body {
 	    padding-left: 0;

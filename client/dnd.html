@@ -376,8 +376,8 @@
 </template>
 
 <template name="char_buff_row">
-	<div rowspan="{{_id}}"  style="display:inline-block; padding-right:10px">
-		<span class="char-buff" style="padding-right:10px">			
+	<div rowspan="{{_id}}" class="char-buff-div">
+		<span class="char-buff">			
 			<span class="name" id="{{_id}}">{{name}}</span>
 		</span>
 		<a href="#remove-buff" class="delete btn btn-danger"><i class="icon-white icon-trash"></i></a>
@@ -443,7 +443,7 @@
 			</td>
 		</tr>	
 		<tr data-id="{{_id}}" data-char-id="{{_id}}" class="{{#if active}}active{{/if}} enemy-{{isEnemy}}" style="{{#if active}}display:table-row;{{else}}display:none;{{/if}}">
-			<td rowspan="1" id="add-char-buffs" style="display:table-cell;">
+			<td rowspan="1" class="add-char-buffs">
 				<strong style="padding-right:20px;">Add Party Buff</strong>
 				<a href="#create-new-buff" class="btn btn-info"><i class="icon-white icon-plus"></i></a>				
 			</td>
