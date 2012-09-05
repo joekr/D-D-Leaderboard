@@ -275,6 +275,12 @@ Template.footer.events = {
 		adjustRowSpans();
 		adjustDMColumns();
 		setupScratchPad();
+	},
+	'click a[href=#export]': function(event){
+		Meteor.call("export_db", function(error) {
+        	console.debug("error", error);
+    	});
+
 	}
 };
 
