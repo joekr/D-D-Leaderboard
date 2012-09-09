@@ -137,8 +137,10 @@ footer {
 	    color: #999999
 	}
 .icon-blood,
+.icon-heart-red,
 .icon-omega,
 .icon-save,
+.icon-shield,
 .icon-sword,
 .icon-unshare {
     background-position: left top;
@@ -149,6 +151,9 @@ footer {
 .character-bloodied.control-group label {
     background-image: url('/icon-blood.png')
 }
+.icon-heart-red {
+	background-image: url('/icon-heart.png');
+}
 .icon-omega {
     background-image: url('/icon-omega.png')
 }
@@ -156,6 +161,9 @@ footer {
     background-image: url('/icon-save.png');
     width: 20px;
     height: 20px;
+}
+.icon-shield {
+	background-image: url('/icon-shield.png');
 }
 .icon-sword {
     background-image: url('/icon-sword.gif')
@@ -449,16 +457,22 @@ th.dm {
 .table .enemy-true td.char-name {
     text-shadow: 1px 1px 1px rgba(154,18,18,0.3)
 }
-.table .active td.char-name {
-    font-size: 42px
+.table .active td.char-name,
+.table .active span.char-name {
+    font-size: 42px;
 }
-.table tr.enemy-true td {
+.table tr.enemy-true td,
+.table td.enemy-true,
+.table thead .enemy-true {
     color: #FF4D4D;
     font-style: italic;
 }
 .table tr.active.enemy-true td,
 .table .active td,
-.table tbody tr.active:hover td {
+.table tbody tr.active:hover td,
+.table td.active,
+.table tbody tr:hover td.active,
+.table-striped tbody tr:nth-child(odd) td.active {
     background-color: #FFE300
 }
 .table tbody tr:hover td,
@@ -476,6 +490,28 @@ ul.inline {
 		ul.inline li + li {
 		    margin-left: 1.5em
 		}
+.vert-character-table .char-name {
+	display: block;
+	-moz-transform: scale(1) rotate(-60deg) translateX(0px) translateY(0px) skewX(0deg) skewY(0deg);
+	-webkit-transform: scale(1) rotate(-60deg) translateX(0px) translateY(0px) skewX(0deg) skewY(0deg);
+	-o-transform: scale(1) rotate(-60deg) translateX(0px) translateY(0px) skewX(0deg) skewY(0deg);
+	-ms-transform: scale(1) rotate(-60deg) translateX(0px) translateY(0px) skewX(0deg) skewY(0deg);
+	transform: scale(1) rotate(-60deg) translateX(0px) translateY(0px) skewX(0deg) skewY(0deg);
+}
+.vert-character-table tbody td {
+	border-left: 1px solid #dddddd;
+}
+.vert-character-table tbody th {
+	text-align: right;
+	width: 5em;
+	vertical-align: middle;
+}
+.vert-character-table tbody th:after {
+	content: ":";
+}
+.vert-character-table thead th {
+	background-color: transparent;
+}
 @media (max-width: 980px) { 
 	body {
 	    padding-top: 0

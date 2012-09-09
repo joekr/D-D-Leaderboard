@@ -195,6 +195,91 @@
 </template>
 
 <template name="character_list">
+	<table class="table vert-character-table table-striped">
+		<thead>
+			<tr>
+				<th></th>
+				{{#each characters}}
+					<th data-id="{{_id}}" data-char-id="{{_id}}" class="{{#if active}}active{{/if}} enemy-{{isEnemy}}">
+						<span class="char-name">{{name}}</span>
+					</th>
+				{{/each}}
+			</tr>
+		</thead>
+		<tbody>
+			<tr class="dm">
+				<th><i class="icon-heart-red"></i> Health</th>
+				{{#each characters}}
+					<td data-id="{{_id}}" data-char-id="{{_id}}" class="{{#if active}}active{{/if}} enemy-{{isEnemy}}">
+						{{#if isBloodied}}
+							<i class="icon-blood"></i>
+						{{/if}}
+						<span class="current-and-max-hp">
+							<span class="current-hp">{{currentHP}}</span> / 
+							<span class="max-hp">{{maxHP}}</span>
+						</span>
+					</td>
+				{{/each}}
+			</tr>
+			<tr>
+				<th>Init</th>
+				{{#each characters}}
+					<td data-id="{{_id}}" data-char-id="{{_id}}" class="{{#if active}}active{{/if}} enemy-{{isEnemy}}">
+						{{initiative}}
+					</td>
+				{{/each}}
+			</tr>
+			<tr>
+				<th><i class="icon-shield"></i> AC</th>
+				{{#each characters}}
+					<td data-id="{{_id}}" data-char-id="{{_id}}" class="{{#if active}}active{{/if}} enemy-{{isEnemy}}">
+						{{char_ac}}
+					</td>
+				{{/each}}
+			</tr>
+			<tr>
+				<th>Fort</th>
+				{{#each characters}}
+					<td data-id="{{_id}}" data-char-id="{{_id}}" class="{{#if active}}active{{/if}} enemy-{{isEnemy}}">
+						{{char_fort}}
+					</td>
+				{{/each}}
+			</tr>
+			<tr>
+				<th>Ref</th>
+				{{#each characters}}
+					<td data-id="{{_id}}" data-char-id="{{_id}}" class="{{#if active}}active{{/if}} enemy-{{isEnemy}}">
+						{{char_ref}}
+					</td>
+				{{/each}}
+			</tr>
+			<tr>
+				<th>Will</th>
+				{{#each characters}}
+					<td data-id="{{_id}}" data-char-id="{{_id}}" class="{{#if active}}active{{/if}} enemy-{{isEnemy}}">
+						{{char_will}}
+					</td>
+				{{/each}}
+			</tr>
+			<tr>
+				<th><i class="icon-sword"></i> ~Dmg</th>
+				{{#each characters}}
+					<td data-id="{{_id}}" data-char-id="{{_id}}" class="{{#if active}}active{{/if}} enemy-{{isEnemy}}">
+						{{damage}}
+					</td>
+				{{/each}}
+			</tr>
+			<tr>
+				<th>Options</th>
+				{{#each characters}}
+					<td data-id="{{_id}}" data-char-id="{{_id}}" class="{{#if active}}active{{/if}} enemy-{{isEnemy}}">
+						<a href="#delete" class="delete btn btn-danger"><i class="icon-white icon-trash"></i></a>
+						<a href="#retire" title="Move character out of game" class="btn"><i class="icon-arrow-down"></i></a>
+					</td>
+				{{/each}}
+			</tr>
+		</tbody>
+	</table>
 	<table id="character-table" class="table">
 		{{> char_table_header}}
 		<tbody>

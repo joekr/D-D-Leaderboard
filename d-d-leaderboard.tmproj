@@ -3,7 +3,7 @@
 <plist version="1.0">
 <dict>
 	<key>currentDocument</key>
-	<string>client/dnd.css</string>
+	<string>client/dnd.html</string>
 	<key>documents</key>
 	<array>
 		<dict>
@@ -101,7 +101,7 @@
 			<key>firstVisibleColumn</key>
 			<integer>0</integer>
 			<key>firstVisibleLine</key>
-			<integer>3</integer>
+			<integer>0</integer>
 		</dict>
 		<key>client/dnd.js</key>
 		<dict>
