@@ -161,10 +161,6 @@ var getRowSpanForEnemyInDMView = function(charID) {
 		}).count() + 1;
 	};
 
-var getPartyBuffForCharacter = function(charID) {
-		return PartyBuffList.find({charID: charID});
-	};
-
 var getAllPartyBuffs = function() {
 		var allCharInGame = CharacterList.find({char_in_game:true});
 		var ids = new Array();
@@ -242,7 +238,7 @@ var setupScratchPad = function() {
 			resizable: false
 		});
 		var timeout = null;
-		var editBody = $($('#scratch-pad-span .el-rte .workzone iframe')[0].contentDocument.body);
+		var editBody = $($('#dashboard-span .el-rte .workzone iframe')[0].contentDocument.body);
 		editBody.keypress(function() {
 			clearTimeout(timeout);
 			timeout = setTimeout(function() {
@@ -284,7 +280,23 @@ Template.footer.events = {
 	}
 };
 
-Template.scratch_pad.scratchPadRevisions = function() {
+Template.dashboard.events = {
+	'click a[href=#remove-buff]': function() {
+		if (confirm("Are you sure you want to remove this buff?")) {
+			PartyBuffList.remove({_id: this._id});
+		}
+		return false;
+	}
+};
+
+Template.dashboard.getBuffSource = function() {
+	var character = CharacterList.findOne({
+		_id: this.charID
+	});
+	return character.name
+};
+
+Template.dashboard.scratchPadRevisions = function() {
 	return ScratchPadList.find({
 	}, {
 		sort: {
@@ -388,7 +400,7 @@ Template.character_status_effects.events = {
 };
 
 var resetCharacterForm = function() {
-		$('#new-enemy').attr('checked', false);
+		$('#new-enemy').attr('checked', true);
 		$("#char-ac").val('');
 		$("#char-fort").val('');
 		$("#char-ref").val('');
@@ -498,8 +510,7 @@ Template.character_list.characters = function() {
 
 
 Template.character.partyBuffs = function() {
-	console.debug(this._id+" "+(PartyBuffList.find({charID:this._id})).count());
-	return getPartyBuffForCharacter(this._id);
+	return PartyBuffList.find({charID: this._id});
 };
 
 Template.dashboard.allPartyBuffs = function() {
@@ -693,16 +704,14 @@ Template.character.events = {
 		});
 		return false;
 	},
-		'click a[href=#create-new-buff]': function(event) {
+	'click a[href=#create-new-buff]': function(event) {
 		var link = $(event.currentTarget);
 		var charID = this.charID;
-		var name = this.name;		
-
+		var name = this.name;
 		PartyBuffList.insert({
 			charID: this._id,
 			name: "New Buff"
 		});
-		console.debug("INSERT "+PartyBuffList.find().count());
 		return false;
 	},
 	'click a[href=#show-all-buffs]': function(event) {
@@ -759,10 +768,6 @@ Template.out_character.events = {
 };
 
 Template.char_buff_row.events = {
-	'click a[href=#remove-buff]': function() {
-		PartyBuffList.remove({_id: this._id});
-		return false;
-	},
 	'click .char-buff': function(event) {
 		var charBuffSpan = $(event.currentTarget);
 		if (charBuffSpan.hasClass('editing')) {

@@ -93,7 +93,7 @@
     	<input type="number" id="char-dmg" placeholder="~Dmg">
 		</div>
 		<div class="control-group">
-			<input type="checkbox" id="new-enemy">
+			<input type="checkbox" id="new-enemy" checked="checked">
 			<label for="new-enemy">Enemy?</label>
 		</div>
 		<div class="form-actions">
@@ -117,49 +117,49 @@
 	</tr>
 </template>
 
-<template name="scratch_pad">
+<template name="dashboard">
 	<div class="icon-save" id="scratch-pad-save-indicator"></div>
 	<ul class="nav nav-tabs">
-		<li class="active"><a href="#scratch-pad-tab" data-toggle="tab">Editor</a></li>
-		<li><a href="#scratch-pad-revisions-tab" data-toggle="tab">History</a></li>
+		<li class="dm"><a href="#scratch-pad-tab" data-toggle="tab">Editor</a></li>
+		<li class="dm"><a href="#scratch-pad-revisions-tab" data-toggle="tab">History</a></li>
+		<li class="active"><a href="#party-buffs-tab" data-toggle="tab">Buffs</a></li>
 	</ul>
 	<div class="tab-content">
-		<div class="tab-pane active" id="scratch-pad-tab">
-			<textarea id="scratch-pad" rows="5"></textarea>
+		<div class="tab-pane" id="scratch-pad-tab">
+			<div class="dm">
+				<textarea id="scratch-pad" rows="5"></textarea>
+			</div>
 		</div>
 		<div class="tab-pane" id="scratch-pad-revisions-tab">
-			<table class="table table-striped scratch-pad-revisions">
-				<thead>
-					<tr>
-						<th>Date</th>
-						<th>Content</th>
-					</tr>
-				</thead>
-				<tbody>
-					{{#each scratchPadRevisions}}
-						{{> scratch_pad_revision}}
-					{{/each}}
-				</tbody>
-			</table>
+			<div class="dm">
+				<table class="table table-striped scratch-pad-revisions">
+					<thead>
+						<tr>
+							<th>Date</th>
+							<th>Content</th>
+						</tr>
+					</thead>
+					<tbody>
+						{{#each scratchPadRevisions}}
+							{{> scratch_pad_revision}}
+						{{/each}}
+					</tbody>
+				</table>
+			</div>
+		</div>
+		<div class="tab-pane active" id="party-buffs-tab">
+			<ul class="buff-list">
+				{{#each allPartyBuffs}}
+					<li class="clearfix">
+						<a href="#remove-buff" class="pull-right delete btn btn-danger"><i class="icon-white icon-trash"></i></a>
+						<span class="buff-name">{{name}}</span>
+						<span class="buff-sep">from</span>
+						<span class="buff-source">{{getBuffSource}}</span>
+					</li>
+				{{/each}}
+			</ul>
 		</div>
 	</div>
-</template>
-
-<template name="dashboard">
-	<h2>Party Dashboard</h2>
-	<div class="icon-save" id="scratch-pad-save-indicator"></div>
-	<ul class="nav nav-tabs">
-		<li class="active"><a href="#pary-buffs" data-toggle="tab">Buffs</a></li>
-	</ul>
-	<table class="table table-hover">
-		<tbody>
-			{{#each allPartyBuffs}}
-				<tr class="success">
-					<td>{{name}}</td>
-				</tr>
-			{{/each}}
-		</tbody>
-	</table>
 </template>
 
 <template name="characters">
@@ -167,9 +167,6 @@
 		<div class="row-fluid">
 			<div class="span9" id="character-list-span">
 				{{> character_list}}
-			</div>
-			<div class="span3 dm" id="scratch-pad-span">
-				{{> scratch_pad}}
 			</div>
 			<div class="span3" id="dashboard-span">
 				{{> dashboard}}

@@ -7,12 +7,15 @@
     border-top-color: #DBC300
 }
 body.dm {
-
 }
 	body.dm div.dm,
 	body.dm fieldset.dm,
+	body.dm div.tab-pane.active.dm,
 	body.dm .row-fluid .dm[class*="span"] {
-	    display: block
+	    display: block;
+	}
+	body.dm li.dm {
+		display: list-item;
 	}
 	body.dm .navbar .brand {
 	    color: #D0EEB8
@@ -42,6 +45,24 @@ body.dm {
 	}
 .btn + .btn {
     margin-left: 5px
+}
+.buff-list {
+	padding-left: 0;
+	margin-left: 0;
+	list-style: none;
+}
+	.buff-list li + li {
+		border-top: 1px solid #dddddd;
+		margin-top: 5px;
+		padding-top: 5px;
+	}
+.buff-name {
+	font-weight: bold;
+	display: block;
+}
+.buff-sep {
+}
+.buff-source {
 }
 .character-blinded.control-group label {
     background-image: url('/icon-blind.svg');
@@ -81,6 +102,10 @@ body.dm {
 .character-unconscious.control-group label {
     background-image: url('/icon-sleep.png');
     padding-left: 20px;
+}
+div.dm,
+div.dm.tab-pane.active {
+	display: none;
 }
 td.char-damage {
     font-size: 200%;
@@ -128,7 +153,7 @@ div.control-group.dm,
 fieldset.dm,
 .navbar fieldset.dm,
 .row-fluid .dm[class*="span"] {
-    display: none
+    display: none;
 }
 footer {
     color: #B4B4B4
@@ -180,6 +205,9 @@ input.error {
 }
 label[for] {
     cursor: pointer
+}
+li.dm {
+	display: none;
 }
 .navbar-inner {
     -webkit-border-radius: 0;
@@ -323,6 +351,9 @@ input[type="number"] {
 }
 .sub-enemy-name-form {
     display: none
+}
+.tab-pane ul {
+	margin-top: 0.5em;
 }
 td.dm,
 th.dm {
