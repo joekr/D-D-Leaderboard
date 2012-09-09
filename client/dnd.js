@@ -497,6 +497,23 @@ Template.navbar.events = {
 	}
 };
 
+Template.character_list.events = {
+	'click a[href=#create-new-buff]': function(event) {
+		//var link = $(event.currentTarget);
+		var charID = this.charID;
+		var name = this.name;
+		var buffName = prompt("New buff from character " + name + ":");
+		if (null == buffName || "" == $.trim(buffName)) {
+			return false;
+		}
+		PartyBuffList.insert({
+			charID: this._id,
+			name: buffName
+		});
+		return false;
+	}
+};
+
 Template.character_list.characters = function() {
 	return CharacterList.find({
 		char_in_game: true
@@ -701,16 +718,6 @@ Template.character.events = {
 			$set: {
 				char_in_game: false
 			}
-		});
-		return false;
-	},
-	'click a[href=#create-new-buff]': function(event) {
-		var link = $(event.currentTarget);
-		var charID = this.charID;
-		var name = this.name;
-		PartyBuffList.insert({
-			charID: this._id,
-			name: "New Buff"
 		});
 		return false;
 	},

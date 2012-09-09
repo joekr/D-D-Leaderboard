@@ -449,10 +449,6 @@ th.dm {
     border-color: rgba(187,169,17,0.3);
     background-color: rgba(249,247,225,0.2);
 }
-.table thead .options,
-.table tbody .options {
-    width: 3em
-}
 .table thead th {
     background-color: #f9f9f9;
     vertical-align: middle;
@@ -528,6 +524,8 @@ ul.inline {
 	-o-transform: scale(1) rotate(-60deg) translateX(0px) translateY(0px) skewX(0deg) skewY(0deg);
 	-ms-transform: scale(1) rotate(-60deg) translateX(0px) translateY(0px) skewX(0deg) skewY(0deg);
 	transform: scale(1) rotate(-60deg) translateX(0px) translateY(0px) skewX(0deg) skewY(0deg);
+}
+.vert-character-table .options .btn {
 }
 .vert-character-table tbody td {
 	border-left: 1px solid #dddddd;
